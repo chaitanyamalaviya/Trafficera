@@ -85,7 +85,10 @@ class UniNodeDialog(QtGui.QDialog, Ui_UniNode):
     def update(self):
         self.errorMessage.setText("")
         self.info = {}
-        uninodeList = []
+        nodeList = []
+        lanelist = []
+        lanepairlist = []
+
 
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
@@ -93,16 +96,17 @@ class UniNodeDialog(QtGui.QDialog, Ui_UniNode):
         root = tree.getroot()
 
         for uniNode in root.iter('UniNode'):
-            uninodeList.append(uniNode.find('nodeID').text)
+            nodeList.append(uniNode.find('nodeID').text)
 
-
+        for mulNode in root.iter('Intersection'):
+            nodeList.append(mulNode.find('nodeID').text)
 
         nodeId = self.nodeId.text()
         if nodeId.isdigit() is False:
             self.errorMessage.setText("nodeId is invalid. It must be a number.")
             return
 
-        if nodeId in uninodeList :
+        if nodeId in nodeList :
             self.errorMessage.setText("Node ID exists. Please enter another ID.")
             return
 
@@ -133,10 +137,28 @@ class UniNodeDialog(QtGui.QDialog, Ui_UniNode):
 
         self.info["connectors"] = self.parseConnectors(connectors)
         if self.info["connectors"] is None:
-            self.errorMessage.setText("the connectors is invalid format.")
-            return              
+            self.errorMessage.setText("The connectors are in invalid format. Please enter in format 'laneFrom, laneTo'.")
+            return
+
+        for con in root.iter('Connector'):
+            lf = int(con.find('laneFrom').text)
+            lt = int(con.find('laneTo').text)
+            lanepairlist.append([lf,lt])
+
+        for lane in root.iter('Lane'):
+            lanelist.append(lane.find('laneID').text)
+
+
+        for connector in self.info["connectors"]:
+            if connector in lanepairlist :
+                self.errorMessage.setText("A turning already exists between these lanes ")
+                return
+            if str(connector[0]) not in lanelist or str(connector[1]) not in lanelist :
+                self.errorMessage.setText("The laneid does not exist.")
+                return
+            if connector[0] == connector[1] :
+                self.errorMessage.setText("Lanefrom id and Laneto id cannot be the same.")
+                return
 
         self.isModified = True
         self.accept()
-
-

@@ -193,8 +193,8 @@ class ActionHandler():
         ElementTree.SubElement(multiNode, 'nodeID').text = str(nodeData["id"])
         #add location
         location = ElementTree.SubElement(multiNode, 'location')
-        ElementTree.SubElement(location, 'xPos').text = "--"
-        ElementTree.SubElement(location, 'yPos').text = "--"
+        ElementTree.SubElement(location, 'xPos').text = str(feat.geometry().asPoint().x())
+        ElementTree.SubElement(location, 'yPos').text = str(feat.geometry().asPoint().y())
         #add originalDB_ID
         ElementTree.SubElement(multiNode, 'originalDB_ID').text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
         #add roadSegmentsAt

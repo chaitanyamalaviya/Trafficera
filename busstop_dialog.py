@@ -70,6 +70,28 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
         self.errorMessage.setText("")
         self.info = {}
         busstopList = []
+
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory,nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+
+        geom = f.geometry()
+        print geom.asPoint()
+        QgsPoint
+        self.info["segmentId"]
+
+
+
+
+
+
+
+
+
+
+
+
         id = self.id.text()
         if id.isdigit() is False:
             self.errorMessage.setText("id is invalid. It must be a number.")
