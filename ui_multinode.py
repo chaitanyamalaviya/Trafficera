@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui_multinode.ui'
 #
-# Created: Thu May  8 12:43:49 2014
-#      by: PyQt4 UI code generator 4.10.3
+# Created: Tue Mar 10 15:55:09 2015
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -27,7 +27,7 @@ class Ui_MultiNode(object):
     def setupUi(self, MultiNode):
         MultiNode.setObjectName(_fromUtf8("MultiNode"))
         MultiNode.setEnabled(True)
-        MultiNode.resize(531, 489)
+        MultiNode.resize(479, 462)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Tahoma"))
         font.setPointSize(13)
@@ -73,14 +73,20 @@ class Ui_MultiNode(object):
         self.horizontalLayout.addWidget(self.aimsunId)
         self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 1)
         self.verticalLayout.addWidget(self.attributeGroup)
+        self.generateid = QtGui.QPushButton(MultiNode)
+        self.generateid.setObjectName(_fromUtf8("generateid"))
+        self.verticalLayout.addWidget(self.generateid)
         self.roadSegmentGroup = QtGui.QGroupBox(MultiNode)
         self.roadSegmentGroup.setObjectName(_fromUtf8("roadSegmentGroup"))
         self.gridLayout_2 = QtGui.QGridLayout(self.roadSegmentGroup)
         self.gridLayout_2.setMargin(5)
         self.gridLayout_2.setObjectName(_fromUtf8("gridLayout_2"))
+        self.segmentIDcomboBox = QtGui.QComboBox(self.roadSegmentGroup)
+        self.segmentIDcomboBox.setObjectName(_fromUtf8("segmentIDcomboBox"))
+        self.gridLayout_2.addWidget(self.segmentIDcomboBox, 0, 0, 1, 1)
         self.roadSegmentEdit = QtGui.QTextEdit(self.roadSegmentGroup)
         self.roadSegmentEdit.setObjectName(_fromUtf8("roadSegmentEdit"))
-        self.gridLayout_2.addWidget(self.roadSegmentEdit, 0, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.roadSegmentEdit, 1, 0, 1, 1)
         self.verticalLayout.addWidget(self.roadSegmentGroup)
         self.mulConnectorGroup = QtGui.QGroupBox(MultiNode)
         self.mulConnectorGroup.setObjectName(_fromUtf8("mulConnectorGroup"))
@@ -114,6 +120,7 @@ class Ui_MultiNode(object):
         self.titleLabel.setText(_translate("MultiNode", "MULTINODE", None))
         self.nodeIdLabel.setText(_translate("MultiNode", "Node Id*", None))
         self.aimsunIdLabel.setText(_translate("MultiNode", "Aimsun Id*", None))
+        self.generateid.setText(_translate("MultiNode", "Auto Generate Node ID", None))
         self.roadSegmentGroup.setTitle(_translate("MultiNode", "RoadSegmentsAt", None))
         self.mulConnectorGroup.setTitle(_translate("MultiNode", "MultiConnectors", None))
         self.actionButton.setText(_translate("MultiNode", "ADD", None))

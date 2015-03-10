@@ -63,9 +63,10 @@ class UniNodeDialog(QtGui.QDialog, Ui_UniNode):
             self.connectorEdit.setPlainText("\n".join(connectors))
         else:
             self.actionButton.setText("ADD")
+
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
-    
+
     def parsePairField(self, pairText):
         if pairText == "":
             return 0
@@ -119,7 +120,7 @@ class UniNodeDialog(QtGui.QDialog, Ui_UniNode):
             self.errorMessage.setText("NodeId is invalid. It must be a number.")
             return
 
-        if len(nodeId) > 6 :
+        if len(nodeId) > 5 :
             self.errorMessage.setText("NodeId is beyond range. Enter a shorter NodeID.")
             return
 
@@ -137,9 +138,9 @@ class UniNodeDialog(QtGui.QDialog, Ui_UniNode):
         self.info["aimsunId"] = int(aimsunId)
 
         firstPair = self.firstPair.text()
-        if not firstPair:
-            self.errorMessage.setText("the first pair can not be empty.")               # firstPair cannot be empty, only firstPair specified - means unidirection link
-            return
+        # if not firstPair:
+        #     self.errorMessage.setText("the first pair can not be empty.")               # firstPair cannot be empty, only firstPair specified - means unidirection link
+        #     return
 
         self.info["firstPair"] = self.parsePairField(firstPair)
         if self.info["firstPair"] is None:

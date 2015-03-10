@@ -85,6 +85,11 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
             self.errorMessage.setText("id is invalid. It must be a number.")
             return
 
+
+        if len(id) > 5 :
+            self.errorMessage.setText("BusStopId is beyond range. Enter a shorter BusStopID.")
+            return
+
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory,nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')

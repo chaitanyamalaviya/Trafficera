@@ -101,6 +101,10 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.errorMessage.setText("id is invalid. It must be a number.")
             return
 
+        if len(id) > 10 :                                                                                   # unsigned long in data structure
+            self.errorMessage.setText("SegmentId is beyond range. Enter a shorter SegmentID.")
+            return
+
         if id in seglist and id != original_id:
             self.errorMessage.setText("Segment ID exists. Please enter another ID.")
             return

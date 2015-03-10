@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>531</width>
-    <height>489</height>
+    <width>479</width>
+    <height>462</height>
    </rect>
   </property>
   <property name="font">
@@ -103,6 +103,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="generateid">
+       <property name="text">
+        <string>Auto Generate Node ID</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QGroupBox" name="roadSegmentGroup">
        <property name="title">
         <string>RoadSegmentsAt</string>
@@ -121,6 +128,9 @@
          <number>5</number>
         </property>
         <item row="0" column="0">
+         <widget class="QComboBox" name="segmentIDcomboBox"/>
+        </item>
+        <item row="1" column="0">
          <widget class="QTextEdit" name="roadSegmentEdit"/>
         </item>
        </layout>
