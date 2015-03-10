@@ -71,10 +71,11 @@ class ActionHandler():
             ElementTree.SubElement(secondPair, 'second').text = str(nodeData["secondPair"][1])
 
         connectorsEle = ElementTree.SubElement(node, 'Connectors')
-        for connector in nodeData["connectors"]:       
-            connectorEle = ElementTree.SubElement(connectorsEle, 'Connector')
-            ElementTree.SubElement(connectorEle, 'laneFrom').text = str(connector[0])
-            ElementTree.SubElement(connectorEle, 'laneTo').text = str(connector[1])
+        if nodeData["connectors"] :
+            for connector in nodeData["connectors"]:
+                connectorEle = ElementTree.SubElement(connectorsEle, 'Connector')
+                ElementTree.SubElement(connectorEle, 'laneFrom').text = str(connector[0])
+                ElementTree.SubElement(connectorEle, 'laneTo').text = str(connector[1])
 
     def updateUninode(self, feature, nodeData):
         #update feature if necessary
@@ -116,12 +117,13 @@ class ActionHandler():
                 selectedNode.remove(firstPair)
         #secondPair
         secondPair = selectedNode.find("secondPair")
-        if secondPair is None and nodeData["secondPair"] is not 0:
-            newSecondPair = ElementTree.SubElement(selectedNode, 'secondPair')
-            ElementTree.SubElement(newSecondPair, 'first').text = str(nodeData["secondPair"][0])
-            ElementTree.SubElement(newSecondPair, 'second').text = str(nodeData["secondPair"][1])
-        if secondPair is not None:
+        if secondPair is None and nodeData["secondPair"] is not None:
             if nodeData["secondPair"] is not 0:
+                newSecondPair = ElementTree.SubElement(selectedNode, 'secondPair')
+                ElementTree.SubElement(newSecondPair, 'first').text = str(nodeData["secondPair"][0])
+                ElementTree.SubElement(newSecondPair, 'second').text = str(nodeData["secondPair"][1])
+        if secondPair is not None:
+            if nodeData["secondPair"] is not None and nodeData["secondPair"] is not 0:
                 secondPair.find("first").text = str(nodeData["secondPair"][0])
                 secondPair.find("second").text = str(nodeData["secondPair"][1])
             else:
@@ -131,10 +133,11 @@ class ActionHandler():
         if connectors is not None:
             selectedNode.remove(connectors)
         connectorsEle = ElementTree.SubElement(selectedNode, 'Connectors')
-        for connector in nodeData["connectors"]:       
-            connectorEle = ElementTree.SubElement(connectorsEle, 'Connector')
-            ElementTree.SubElement(connectorEle, 'laneFrom').text = str(connector[0])
-            ElementTree.SubElement(connectorEle, 'laneTo').text = str(connector[1])
+        if nodeData["connectors"] :
+            for connector in nodeData["connectors"]:
+                connectorEle = ElementTree.SubElement(connectorsEle, 'Connector')
+                ElementTree.SubElement(connectorEle, 'laneFrom').text = str(connector[0])
+                ElementTree.SubElement(connectorEle, 'laneTo').text = str(connector[1])
 
 
     def getUninode(self, feature):
@@ -153,7 +156,7 @@ class ActionHandler():
                 if nodeId == id:
                     selectedNode = uniNode
                     break
-        if selectedNode is not None:
+        if selectedNode is not None:            # Modifying existing node
             info = {}
             info["id"] = selectedNode.find("nodeID").text
             aimsunIdStr = selectedNode.find("originalDB_ID").text
@@ -161,7 +164,7 @@ class ActionHandler():
             info["aimsunId"] = aimsunIds[0]
             info["firstPair"] = None
             firstPair = selectedNode.find("firstPair")
-            if firstPair is not None:
+            if firstPair is not None and firstPair is not 0:
                 info["firstPair"] = [int(firstPair.find("first").text), int(firstPair.find("second").text)]
             info["secondPair"] = None
             secondPair = selectedNode.find("secondPair")

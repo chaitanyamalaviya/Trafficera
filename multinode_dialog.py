@@ -30,6 +30,9 @@ from qgis.utils import *
 
 
 class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
+
+    original_id = 0
+
     def __init__(self):
         QtGui.QDialog.__init__(self)
         # Set up the user interface from Designer.
@@ -43,9 +46,12 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
     def setInfo(self, info):
         self.info = info
-        if self.info is not None:
+        global original_id
+        if self.info is not None:               # updating existing element
+            self.isModified = True
             self.actionButton.setText("SAVE")
             self.nodeId.setText(str(self.info["id"]))
+            original_id = self.info["id"]
             self.aimsunId.setText(str(self.info["aimsunId"]))
             if self.info["roadSegmentsAt"] is not None:
                 roadSegmentsAtStr = "\n".join(self.info["roadSegmentsAt"])
@@ -95,11 +101,13 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         return result
 
     def update(self):
+        global original_id
         self.errorMessage.setText("")
         self.info = {}
         nodeList = []
         lanelist = []
         lanepairlist =[]
+        seglist = []
 
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
@@ -112,12 +120,19 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         for uniNode in root.iter('UniNode'):
             nodeList.append(uniNode.find('nodeID').text)
 
+        for seg in root.iter('Segment'):
+            seglist.append(seg.find('segmentID').text)
+
         nodeId = self.nodeId.text()
         if nodeId.isdigit() is False:
-            self.errorMessage.setText("nodeId is invalid. It must be a number.")
+            self.errorMessage.setText("NodeId is invalid. It must be a number.")
             return
 
-        if nodeId in nodeList :
+        if len(nodeId) > 6 :
+            self.errorMessage.setText("NodeId is beyond range. Enter a shorter NodeID.")
+            return
+
+        if nodeId in nodeList and nodeId != original_id :
             self.errorMessage.setText("Node ID exists. Please enter another ID.")
             return
 
@@ -133,6 +148,12 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         roadSegments = self.roadSegmentEdit.toPlainText()
         if roadSegments:
             self.info["roadSegments"] = self.parseRoadSegments(roadSegments)
+            for seg in self.info["roadSegments"] :
+                if seg not in seglist :
+                    self.errorMessage.setText("Segment id does not exist. Please enter existing segment id.")
+                    return
+
+
 
         self.info["multiConnectors"] = []
         mulConnectors = self.mulConnectorEdit.toPlainText()
@@ -158,8 +179,11 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 # and self.info["multiConnectors"][0][1][0][1] in laneTolist)
 
         for multiconnector in self.info["multiConnectors"]:
-            if multiconnector[1][0] in lanepairlist :
+            if multiconnector[1][0] in lanepairlist and and nodeId != original_id:
                 self.errorMessage.setText("A turning already exists between these lanes ")
+                return
+            if str(multiconnector[0]) not in seglist :
+                self.errorMessage.setText("The segmentid in multiconnectors does not exist.")
                 return
             if str(multiconnector[1][0][0]) not in lanelist or str(multiconnector[1][0][1]) not in lanelist :
                 self.errorMessage.setText("The laneid does not exist.")
@@ -169,4 +193,8 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
                 return
 
         self.isModified = True
+
+        #self.errorMessage.setText(str(self.isModified))
+        #return
+
         self.accept()

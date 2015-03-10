@@ -30,6 +30,7 @@ from qgis.utils import *
 
 class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
+    original_id = 0
 
     def __init__(self):
         QtGui.QDialog.__init__(self)
@@ -52,13 +53,14 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
     def setInfo(self, info):
         self.info = info
-
+        global original_id
         if self.info is not None:
             linkId = int(self.info["linkId"])
             self.linkIdComboBox.setCurrentIndex(self.listLinks.keys().index(linkId))
             self.linkName.setText(self.listLinks[linkId])
             self.actionButton.setText("SAVE")
             self.id.setText(str(self.info["id"]))
+            original_id = self.info["id"]
             self.aimsunId.setText(str(self.info["aimsunId"]))
             self.startNode.setText(str(self.info["startingNode"]))
             self.endNode.setText(str(self.info["endingNode"]))
@@ -75,6 +77,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         self.linkName.setText(self.listLinks[int(textLinkId)])
 
     def update(self):
+        global original_id
         self.errorMessage.setText("")
         self.info = {}
         seglist = []
@@ -98,7 +101,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.errorMessage.setText("id is invalid. It must be a number.")
             return
 
-        if id in seglist and self.isModified is False:
+        if id in seglist and id != original_id:
             self.errorMessage.setText("Segment ID exists. Please enter another ID.")
             return
 
@@ -120,7 +123,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.errorMessage.setText("endNode is invalid. It must be a number.")
             return
 
-        if self.isModified is False:
+        if id != original_id:
             for Segment in root.iter('Segment'):
                 startingNode = Segment.find('startingNode').text
                 endingNode = Segment.find('endingNode').text
