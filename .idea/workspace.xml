@@ -5,61 +5,61 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4bf4ab31-cdb8-4870-ab55-332688e2b5e7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lane_dialog.py" afterPath="$PROJECT_DIR$/lane_dialog.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_segment.py" afterPath="$PROJECT_DIR$/ui_segment.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_uninode.ui" afterPath="$PROJECT_DIR$/ui_uninode.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_multinode.ui" afterPath="$PROJECT_DIR$/ui_multinode.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/metadata.txt" afterPath="$PROJECT_DIR$/metadata.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/converter_dialog.py" afterPath="$PROJECT_DIR$/converter_dialog.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/__init__.py" afterPath="$PROJECT_DIR$/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/crossing_dialog.py" afterPath="$PROJECT_DIR$/crossing_dialog.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/open.png" afterPath="$PROJECT_DIR$/icons/open.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/add_lane.png" afterPath="$PROJECT_DIR$/icons/add_lane.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/add.png" afterPath="$PROJECT_DIR$/icons/add.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/edit.png" afterPath="$PROJECT_DIR$/icons/edit.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.html" afterPath="$PROJECT_DIR$/README.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_converter.ui" afterPath="$PROJECT_DIR$/ui_converter.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Makefile" afterPath="$PROJECT_DIR$/Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/busstop_dialog.py" afterPath="$PROJECT_DIR$/busstop_dialog.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_linkmanager.ui" afterPath="$PROJECT_DIR$/ui_linkmanager.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/help/Makefile" afterPath="$PROJECT_DIR$/help/Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simgdc.py" afterPath="$PROJECT_DIR$/simgdc.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_lane.ui" afterPath="$PROJECT_DIR$/ui_lane.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/xmlToShapefile.py" afterPath="$PROJECT_DIR$/xmlToShapefile.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_converter.py" afterPath="$PROJECT_DIR$/ui_converter.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_linkmanager.py" afterPath="$PROJECT_DIR$/ui_linkmanager.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/multinode_dialog.py" afterPath="$PROJECT_DIR$/multinode_dialog.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.txt" afterPath="$PROJECT_DIR$/README.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_busstop.ui" afterPath="$PROJECT_DIR$/ui_busstop.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.html" afterPath="$PROJECT_DIR$/README.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_uninode.py" afterPath="$PROJECT_DIR$/ui_uninode.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_converter.py" afterPath="$PROJECT_DIR$/ui_converter.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/xmlToShapefile.py" afterPath="$PROJECT_DIR$/xmlToShapefile.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/add_lane.png" afterPath="$PROJECT_DIR$/icons/add_lane.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/help/source/conf.py" afterPath="$PROJECT_DIR$/help/source/conf.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/add.png" afterPath="$PROJECT_DIR$/icons/add.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/metadata.txt" afterPath="$PROJECT_DIR$/metadata.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_multinode.ui" afterPath="$PROJECT_DIR$/ui_multinode.ui" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/converter.png" afterPath="$PROJECT_DIR$/icons/converter.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/help/source/index.rst" afterPath="$PROJECT_DIR$/help/source/index.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_converter.ui" afterPath="$PROJECT_DIR$/ui_converter.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_busstop.py" afterPath="$PROJECT_DIR$/ui_busstop.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/open.png" afterPath="$PROJECT_DIR$/icons/open.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/linkmanager_dialog.py" afterPath="$PROJECT_DIR$/linkmanager_dialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_crossing.ui" afterPath="$PROJECT_DIR$/ui_crossing.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/busstop_dialog.py" afterPath="$PROJECT_DIR$/busstop_dialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/__init__.py" afterPath="$PROJECT_DIR$/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_laneedge.ui" afterPath="$PROJECT_DIR$/ui_laneedge.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/help/Makefile" afterPath="$PROJECT_DIR$/help/Makefile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actionHandler.py" afterPath="$PROJECT_DIR$/actionHandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shapefileIO.py" afterPath="$PROJECT_DIR$/shapefileIO.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin_upload.py" afterPath="$PROJECT_DIR$/plugin_upload.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/template.xml" afterPath="$PROJECT_DIR$/template/template.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_lane.py" afterPath="$PROJECT_DIR$/ui_lane.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_linkmanager.ui" afterPath="$PROJECT_DIR$/ui_linkmanager.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_multinode.py" afterPath="$PROJECT_DIR$/ui_multinode.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lane_dialog.py" afterPath="$PROJECT_DIR$/lane_dialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.txt" afterPath="$PROJECT_DIR$/README.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/notepad-icon.png" afterPath="$PROJECT_DIR$/icons/notepad-icon.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_uninode.ui" afterPath="$PROJECT_DIR$/ui_uninode.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/multinode_dialog.py" afterPath="$PROJECT_DIR$/multinode_dialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_laneedge.py" afterPath="$PROJECT_DIR$/ui_laneedge.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/edit.png" afterPath="$PROJECT_DIR$/icons/edit.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shapefileToXml.py" afterPath="$PROJECT_DIR$/shapefileToXml.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/converter_dialog.py" afterPath="$PROJECT_DIR$/converter_dialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_busstop.ui" afterPath="$PROJECT_DIR$/ui_busstop.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/help/source/index.rst" afterPath="$PROJECT_DIR$/help/source/index.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_lane.ui" afterPath="$PROJECT_DIR$/ui_lane.ui" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/uninode_dialog.py" afterPath="$PROJECT_DIR$/uninode_dialog.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources.qrc" afterPath="$PROJECT_DIR$/resources.qrc" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template/template.xml" afterPath="$PROJECT_DIR$/template/template.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_uninode.py" afterPath="$PROJECT_DIR$/ui_uninode.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_segment.ui" afterPath="$PROJECT_DIR$/ui_segment.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_multinode.py" afterPath="$PROJECT_DIR$/ui_multinode.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_crossing.ui" afterPath="$PROJECT_DIR$/ui_crossing.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_lane.py" afterPath="$PROJECT_DIR$/ui_lane.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/laneedge_dialog.py" afterPath="$PROJECT_DIR$/laneedge_dialog.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources.py" afterPath="$PROJECT_DIR$/resources.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/segment_dialog.py" afterPath="$PROJECT_DIR$/segment_dialog.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/linkmanager_dialog.py" afterPath="$PROJECT_DIR$/linkmanager_dialog.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/linkmanager.png" afterPath="$PROJECT_DIR$/icons/linkmanager.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/actionHandler.py" afterPath="$PROJECT_DIR$/actionHandler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin_upload.py" afterPath="$PROJECT_DIR$/plugin_upload.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_segment.ui" afterPath="$PROJECT_DIR$/ui_segment.ui" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/delete.png" afterPath="$PROJECT_DIR$/icons/delete.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/laneedge_dialog.py" afterPath="$PROJECT_DIR$/laneedge_dialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_segment.py" afterPath="$PROJECT_DIR$/ui_segment.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/icons/notepad-icon.png" afterPath="$PROJECT_DIR$/icons/notepad-icon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/help/make.bat" afterPath="$PROJECT_DIR$/help/make.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Makefile" afterPath="$PROJECT_DIR$/Makefile" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/simgdc.py" afterPath="$PROJECT_DIR$/simgdc.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_crossing.py" afterPath="$PROJECT_DIR$/ui_crossing.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_busstop.py" afterPath="$PROJECT_DIR$/ui_busstop.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_laneedge.ui" afterPath="$PROJECT_DIR$/ui_laneedge.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui_laneedge.py" afterPath="$PROJECT_DIR$/ui_laneedge.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shapefileToXml.py" afterPath="$PROJECT_DIR$/shapefileToXml.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/help/make.bat" afterPath="$PROJECT_DIR$/help/make.bat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/segment_dialog.py" afterPath="$PROJECT_DIR$/segment_dialog.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources.py" afterPath="$PROJECT_DIR$/resources.py" />
     </list>
     <ignored path="SimGDC.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,22 +86,10 @@
       <file leaf-file-name="actionHandler.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/actionHandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2883" max-vertical-offset="20060">
-              <caret line="244" column="30" selection-start-line="244" selection-start-column="30" selection-end-line="244" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="10166" max-vertical-offset="20128">
+              <caret line="610" column="28" selection-start-line="610" selection-start-column="28" selection-end-line="610" selection-end-column="28" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="simgdc.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/simgdc.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3825" max-vertical-offset="8976">
-              <caret line="243" column="43" selection-start-line="243" selection-start-column="32" selection-end-line="243" selection-end-column="43" />
-              <folding>
-                <element signature="e#1136#1162#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -110,8 +98,8 @@
       <file leaf-file-name="uninode_dialog.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/uninode_dialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1552" max-vertical-offset="3349">
-              <caret line="141" column="20" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="20" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="328" max-vertical-offset="3349">
+              <caret line="62" column="25" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
               <folding>
                 <element signature="e#1082#1113#0" expanded="true" />
               </folding>
@@ -119,11 +107,53 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="busstop_dialog.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ui_uninode.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui_uninode.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1261" max-vertical-offset="2312">
+              <caret line="98" column="13" selection-start-line="98" selection-start-column="13" selection-end-line="98" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="xmlToShapefile.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/xmlToShapefile.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="731" max-vertical-offset="3111">
+              <caret line="86" column="66" selection-start-line="86" selection-start-column="66" selection-end-line="86" selection-end-column="66" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shapefileIO.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shapefileIO.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="850" max-vertical-offset="2023">
+              <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="converter_dialog.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/converter_dialog.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="192" max-vertical-offset="2363">
+              <caret line="47" column="18" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="busstop_dialog.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/busstop_dialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1229" max-vertical-offset="2516">
-              <caret line="89" column="89" selection-start-line="89" selection-start-column="89" selection-end-line="89" selection-end-column="89" />
+            <state vertical-scroll-proportion="0.4921875" vertical-offset="1344" max-vertical-offset="2516">
+              <caret line="105" column="33" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
               <folding>
                 <element signature="e#1082#1113#0" expanded="true" />
               </folding>
@@ -131,11 +161,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="multinode_dialog.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="multinode_dialog.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/multinode_dialog.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.30357143" vertical-offset="663" max-vertical-offset="4165">
-              <caret line="55" column="53" selection-start-line="55" selection-start-column="53" selection-end-line="55" selection-end-column="53" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1379" max-vertical-offset="4165">
+              <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
               <folding>
                 <element signature="e#1082#1113#0" expanded="true" />
               </folding>
@@ -143,46 +173,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="segment_dialog.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/segment_dialog.py">
+      <file leaf-file-name="ui_multinode.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui_multinode.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="991" max-vertical-offset="3145">
-              <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-              <folding>
-                <element signature="e#1082#1113#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="linkmanager_dialog.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/linkmanager_dialog.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1887">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3461" max-vertical-offset="5015">
+              <caret line="289" column="0" selection-start-line="289" selection-start-column="0" selection-end-line="289" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="laneedge_dialog.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/laneedge_dialog.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#1082#1113#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -198,12 +194,14 @@
         <option value="$PROJECT_DIR$/ui_busstop.py" />
         <option value="$PROJECT_DIR$/simgdc.py" />
         <option value="$PROJECT_DIR$/linkmanager_dialog.py" />
-        <option value="$PROJECT_DIR$/actionHandler.py" />
         <option value="$PROJECT_DIR$/segment_dialog.py" />
         <option value="$PROJECT_DIR$/busstop_dialog.py" />
+        <option value="$PROJECT_DIR$/uninode_dialog.py" />
+        <option value="$PROJECT_DIR$/xmlToShapefile.py" />
+        <option value="$PROJECT_DIR$/shapefileIO.py" />
         <option value="$PROJECT_DIR$/ui_multinode.py" />
         <option value="$PROJECT_DIR$/multinode_dialog.py" />
-        <option value="$PROJECT_DIR$/uninode_dialog.py" />
+        <option value="$PROJECT_DIR$/actionHandler.py" />
       </list>
     </option>
   </component>
@@ -236,6 +234,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -256,16 +255,16 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../SimGDC_sm_tool/sm-tools/ConsistencyCheck/check_network" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/chaitanya/.qgis2/python/plugins/SimGDC/busstop_dialog.py" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -456,7 +455,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32819384" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31493506" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.254329" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
@@ -500,61 +499,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="python-line">
-          <url>file://$PROJECT_DIR$/busstop_dialog.py</url>
-          <line>21</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
       <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/busstop_dialog.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1229" max-vertical-offset="2516">
-          <caret line="89" column="89" selection-start-line="89" selection-start-column="89" selection-end-line="89" selection-end-column="89" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/multinode_dialog.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="4165">
-          <caret line="75" column="69" selection-start-line="75" selection-start-column="69" selection-end-line="75" selection-end-column="69" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/segment_dialog.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="991" max-vertical-offset="3145">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/linkmanager_dialog.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="153" max-vertical-offset="1887">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -562,9 +515,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -582,9 +532,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="430" max-vertical-offset="8976">
           <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding>
-            <element signature="e#1136#1162#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -622,9 +569,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1331" max-vertical-offset="2992">
           <caret line="131" column="26" selection-start-line="131" selection-start-column="26" selection-end-line="131" selection-end-column="26" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -632,7 +576,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -640,9 +583,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -660,9 +600,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8249" max-vertical-offset="8976">
           <caret line="394" column="16" selection-start-line="394" selection-start-column="16" selection-end-line="394" selection-end-column="16" />
-          <folding>
-            <element signature="e#1136#1162#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -700,9 +637,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1127" max-vertical-offset="2941">
           <caret line="100" column="31" selection-start-line="100" selection-start-column="31" selection-end-line="100" selection-end-column="31" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -710,7 +644,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -718,9 +651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -728,9 +658,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="8976">
           <caret line="6" column="36" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="36" />
-          <folding>
-            <element signature="e#1136#1162#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -768,9 +695,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="56" max-vertical-offset="2941">
           <caret line="122" column="10" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -788,7 +712,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -796,9 +719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -806,9 +726,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="7390" max-vertical-offset="8925">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding>
-            <element signature="e#1136#1162#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -846,9 +763,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="56" max-vertical-offset="2941">
           <caret line="122" column="10" selection-start-line="122" selection-start-column="10" selection-end-line="122" selection-end-column="10" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -873,7 +787,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="561">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -881,9 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1258">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -894,18 +804,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui_uninode.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="1416" max-vertical-offset="2312">
-          <caret line="98" column="13" selection-start-line="98" selection-start-column="13" selection-end-line="98" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="896">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -913,9 +815,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1224">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -923,14 +822,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1887">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui_multinode.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37388393" vertical-offset="1127" max-vertical-offset="2261">
-          <caret line="86" column="56" selection-start-line="86" selection-start-column="56" selection-end-line="86" selection-end-column="56" />
         </state>
       </provider>
     </entry>
@@ -938,19 +829,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3825" max-vertical-offset="8976">
           <caret line="243" column="43" selection-start-line="243" selection-start-column="32" selection-end-line="243" selection-end-column="43" />
-          <folding>
-            <element signature="e#1136#1162#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/busstop_dialog.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1229" max-vertical-offset="2516">
-          <caret line="89" column="89" selection-start-line="89" selection-start-column="89" selection-end-line="89" selection-end-column="89" />
-          <folding>
-            <element signature="e#1082#1113#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -958,36 +836,92 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="532" max-vertical-offset="3145">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/uninode_dialog.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="328" max-vertical-offset="3349">
+          <caret line="62" column="25" selection-start-line="62" selection-start-column="25" selection-end-line="62" selection-end-column="25" />
           <folding>
             <element signature="e#1082#1113#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ui_uninode.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1261" max-vertical-offset="2312">
+          <caret line="98" column="13" selection-start-line="98" selection-start-column="13" selection-end-line="98" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/converter_dialog.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="192" max-vertical-offset="2363">
+          <caret line="47" column="18" selection-start-line="47" selection-start-column="18" selection-end-line="47" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui_multinode.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3461" max-vertical-offset="5015">
+          <caret line="289" column="0" selection-start-line="289" selection-start-column="0" selection-end-line="289" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/actionHandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2883" max-vertical-offset="20060">
-          <caret line="244" column="30" selection-start-line="244" selection-start-column="30" selection-end-line="244" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="10166" max-vertical-offset="20128">
+          <caret line="610" column="28" selection-start-line="610" selection-start-column="28" selection-end-line="610" selection-end-column="28" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/uninode_dialog.py">
+    <entry file="file://$PROJECT_DIR$/Makefile">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1552" max-vertical-offset="3349">
-          <caret line="141" column="20" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.33282906" vertical-offset="1038" max-vertical-offset="2125">
+          <caret line="74" column="4" selection-start-line="74" selection-start-column="4" selection-end-line="74" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/multinode_dialog.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1379" max-vertical-offset="4165">
+          <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
           <folding>
             <element signature="e#1082#1113#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/multinode_dialog.py">
+    <entry file="file://$PROJECT_DIR$/shapefileIO.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30357143" vertical-offset="663" max-vertical-offset="4165">
-          <caret line="55" column="53" selection-start-line="55" selection-start-column="53" selection-end-line="55" selection-end-column="53" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="850" max-vertical-offset="2023">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xmlToShapefile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1649" max-vertical-offset="3111">
+          <caret line="86" column="66" selection-start-line="86" selection-start-column="66" selection-end-line="86" selection-end-column="66" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/busstop_dialog.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4921875" vertical-offset="1344" max-vertical-offset="2516">
+          <caret line="105" column="33" selection-start-line="105" selection-start-column="33" selection-end-line="105" selection-end-column="33" />
           <folding>
             <element signature="e#1082#1113#0" expanded="true" />
           </folding>

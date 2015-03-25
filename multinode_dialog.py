@@ -56,15 +56,15 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.nodeId.setText(str(self.info["id"]))
             original_id = self.info["id"]
             self.aimsunId.setText(str(self.info["aimsunId"]))
-            if self.info["roadSegmentsAt"] is not None:
-                roadSegmentsAtStr = "\n".join(self.info["roadSegmentsAt"])
-                self.roadSegmentEdit.setPlainText(roadSegmentsAtStr)
-            if self.info["connectors"] is not None:
-                connectorStr = []
-                for multiconnector in self.info["connectors"]:
-                    tempStr = "%s\n%s"%(str(multiconnector[0]), "\n".join(multiconnector[1]))
-                    connectorStr.append(tempStr)
-                self.mulConnectorEdit.setPlainText("\n".join(connectorStr))
+            # if self.info["roadSegmentsAt"] is not None:
+            #     roadSegmentsAtStr = "\n".join(self.info["roadSegmentsAt"])
+            #     self.roadSegmentEdit.setPlainText(roadSegmentsAtStr)
+            # if self.info["connectors"] is not None:
+            #     connectorStr = []
+            #     for multiconnector in self.info["connectors"]:
+            #         tempStr = "%s\n%s"%(str(multiconnector[0]), "\n".join(multiconnector[1]))
+            #         connectorStr.append(tempStr)
+            #     self.mulConnectorEdit.setPlainText("\n".join(connectorStr))
         else:
             self.actionButton.setText("ADD")
 
@@ -194,13 +194,13 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
 
 
-        self.info["multiConnectors"] = []
-        mulConnectors = self.mulConnectorEdit.toPlainText()
-        if mulConnectors:
-            self.info["multiConnectors"] = self.parseMultiConnectors(mulConnectors)
-            if self.info["multiConnectors"] is None:
-                self.errorMessage.setText("The multiconnectors are in invalid format. Please enter in format 'laneFrom, laneTo'.")
-                return
+        # self.info["multiConnectors"] = []
+        # mulConnectors = self.mulConnectorEdit.toPlainText()
+        # if mulConnectors:
+        #     self.info["multiConnectors"] = self.parseMultiConnectors(mulConnectors)
+        #     if self.info["multiConnectors"] is None:
+        #         self.errorMessage.setText("The multiconnectors are in invalid format. Please enter in format 'laneFrom, laneTo'.")
+        #         return
 
 
 

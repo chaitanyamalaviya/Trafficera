@@ -13,7 +13,7 @@ TAGS = {TYPE.UNINODE: "uninode", TYPE.MULNODE: "mulnode", TYPE.SEGMENT: "segment
 SCHEMA = {}
 SCHEMA[TYPE.UNINODE] = [QGis.WKBPoint, [QgsField("id", QVariant.Int)]]
 SCHEMA[TYPE.MULNODE] = [QGis.WKBPoint, [QgsField("id", QVariant.Int)]] 
-SCHEMA[TYPE.SEGMENT] = [QGis.WKBPolygon, [QgsField("link-id", QVariant.Int), QgsField("segmentID", QVariant.Int)]]
+SCHEMA[TYPE.SEGMENT] = [QGis.WKBLineString, [QgsField("link-id", QVariant.Int), QgsField("segmentID", QVariant.Int)]]
 SCHEMA[TYPE.LANE]    = [QGis.WKBLineString, [QgsField("segmentID", QVariant.Int), QgsField("laneID", QVariant.Int)]]
 SCHEMA[TYPE.CROSSING]= [QGis.WKBPolygon, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]
 SCHEMA[TYPE.BUSSTOP] = [QGis.WKBPoint, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]    
@@ -97,7 +97,7 @@ class ShapefileReader:
                 if attr[0] not in self.data[typeid]:
                     self.data[typeid][attr[0]] = {}
 
-                if typeid == TYPE.SEGMENT or typeid == TYPE.CROSSING:
+                if typeid == TYPE.CROSSING:
                     self.data[typeid][attr[0]][attr[1]] = feature.geometry().asPolygon()
                 elif typeid == TYPE.BUSSTOP:
                     self.data[typeid][attr[0]][attr[1]] = feature.geometry().asPoint()

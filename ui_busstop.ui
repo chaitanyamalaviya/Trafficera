@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>512</width>
-    <height>296</height>
+    <height>317</height>
    </rect>
   </property>
   <property name="font">
@@ -44,6 +44,7 @@
       <widget class="QLabel" name="titleLabel">
        <property name="font">
         <font>
+         <family>Times New Roman</family>
          <pointsize>13</pointsize>
          <weight>75</weight>
          <bold>true</bold>
@@ -59,6 +60,12 @@
      </item>
      <item>
       <widget class="QGroupBox" name="SegmentGroupBox">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string>Segment</string>
        </property>
@@ -77,6 +84,12 @@
         </property>
         <item row="2" column="0">
          <widget class="QLabel" name="segmentId">
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string/>
           </property>
@@ -90,8 +103,14 @@
             <height>100</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
           <property name="text">
-           <string>SegmentId*jk</string>
+           <string>SegmentId*</string>
           </property>
          </widget>
         </item>
@@ -100,6 +119,12 @@
      </item>
      <item>
       <widget class="QGroupBox" name="attributeGroup">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string/>
        </property>
@@ -108,23 +133,49 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QLabel" name="idLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Id*</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="id"/>
+           <widget class="QLineEdit" name="id">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="OffsetLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Offset*</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="offset"/>
+           <widget class="QLineEdit" name="offset">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -132,23 +183,49 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QLabel" name="busCapacityLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>BusCapacity*</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="busCapacity"/>
+           <widget class="QLineEdit" name="busCapacity">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="busstopNoLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>BusStopNo*</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="busstopNo"/>
+           <widget class="QLineEdit" name="busstopNo">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -156,6 +233,12 @@
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QCheckBox" name="isTerminal">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Terminal</string>
             </property>
@@ -163,6 +246,12 @@
           </item>
           <item>
            <widget class="QCheckBox" name="isBay">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>13</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Bay</string>
             </property>
@@ -172,6 +261,12 @@
         </item>
         <item row="3" column="0">
          <widget class="QCheckBox" name="hasShelter">
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>Has Shelter</string>
           </property>
@@ -182,12 +277,20 @@
      </item>
      <item>
       <widget class="QSplitter" name="splitter">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
        <widget class="QLabel" name="errorMessage">
         <property name="font">
          <font>
+          <family>Times New Roman</family>
+          <pointsize>13</pointsize>
           <italic>true</italic>
          </font>
         </property>
@@ -204,6 +307,12 @@
           <width>100</width>
           <height>100</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>13</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>ADD</string>

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>479</width>
-    <height>462</height>
+    <width>489</width>
+    <height>505</height>
    </rect>
   </property>
   <property name="font">
@@ -39,26 +39,170 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
    <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="titleLabel">
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>471</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Times New Roman</family>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="tabsClosable">
+      <bool>false</bool>
+     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Node</string>
+      </attribute>
+      <widget class="QPushButton" name="generateid">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>70</y>
+         <width>211</width>
+         <height>21</height>
+        </rect>
+       </property>
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>MULTINODE</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+        <string>Auto Generate ID</string>
        </property>
       </widget>
-     </item>
-     <item>
+      <widget class="QLabel" name="TrafficLightIDlabel">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>110</y>
+         <width>111</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Traffic Light ID</string>
+       </property>
+       <property name="buddy">
+        <cstring>trafficLightID</cstring>
+       </property>
+      </widget>
+      <widget class="QLabel" name="NodeTypelabel">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>81</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Node Type</string>
+       </property>
+       <property name="buddy">
+        <cstring>nodeType</cstring>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="nodeType">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>110</y>
+         <width>131</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <item>
+        <property name="text">
+         <string>Default Node</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Urban Intersection with Signal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Urban Intersection without signal</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Priority Merge Node</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Non-Priority Merge Node</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLineEdit" name="trafficLightID">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>110</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
       <widget class="QGroupBox" name="attributeGroup">
+       <property name="geometry">
+        <rect>
+         <x>1</x>
+         <y>28</y>
+         <width>463</width>
+         <height>45</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string/>
        </property>
@@ -79,95 +223,83 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QLabel" name="nodeIdLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Node Id*</string>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="nodeId"/>
-          </item>
-          <item>
-           <widget class="QLabel" name="aimsunIdLabel">
-            <property name="text">
-             <string>Aimsun Id*</string>
+            <property name="buddy">
+             <cstring>nodeId</cstring>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="aimsunId"/>
+           <widget class="QLineEdit" name="nodeId">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="aimsunIdLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Aimsun Id*</string>
+            </property>
+            <property name="buddy">
+             <cstring>aimsunId</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="aimsunId">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
        </layout>
       </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="generateid">
-       <property name="text">
-        <string>Auto Generate Node ID</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="roadSegmentGroup">
-       <property name="title">
-        <string>RoadSegmentsAt</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <property name="leftMargin">
-         <number>5</number>
-        </property>
-        <property name="topMargin">
-         <number>5</number>
-        </property>
-        <property name="rightMargin">
-         <number>5</number>
-        </property>
-        <property name="bottomMargin">
-         <number>5</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QComboBox" name="segmentIDcomboBox"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTextEdit" name="roadSegmentEdit"/>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="mulConnectorGroup">
-       <property name="title">
-        <string>MultiConnectors</string>
-       </property>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <property name="leftMargin">
-         <number>5</number>
-        </property>
-        <property name="topMargin">
-         <number>5</number>
-        </property>
-        <property name="rightMargin">
-         <number>5</number>
-        </property>
-        <property name="bottomMargin">
-         <number>5</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QTextEdit" name="mulConnectorEdit"/>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
       <widget class="QSplitter" name="splitter">
+       <property name="geometry">
+        <rect>
+         <x>290</x>
+         <y>390</y>
+         <width>121</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
        <widget class="QLabel" name="errorMessage">
         <property name="font">
          <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
           <italic>true</italic>
          </font>
         </property>
@@ -185,13 +317,322 @@
           <height>100</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string>ADD</string>
         </property>
        </widget>
       </widget>
-     </item>
-    </layout>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Turnings</string>
+      </attribute>
+      <widget class="QGroupBox" name="turningGroup">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>10</y>
+         <width>451</width>
+         <height>121</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="title">
+        <string>Turning Group</string>
+       </property>
+       <widget class="QLabel" name="turningGroupIDlabel">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>111</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Turning Group ID</string>
+        </property>
+        <property name="buddy">
+         <cstring>turningGroupID</cstring>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="turningGroupID">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>29</y>
+          <width>101</width>
+          <height>21</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="fromLinklabel">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>61</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>fromLink</string>
+        </property>
+        <property name="buddy">
+         <cstring>fromLink</cstring>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="fromLink">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>60</y>
+          <width>151</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="toLinklabel">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>60</y>
+          <width>51</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>toLink</string>
+        </property>
+        <property name="buddy">
+         <cstring>toLink</cstring>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="toLink">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>60</y>
+          <width>151</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="Phaseslabel">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>47</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Phases</string>
+        </property>
+        <property name="buddy">
+         <cstring>Phases</cstring>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="Rules">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>90</y>
+          <width>151</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="Ruleslabel">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>90</y>
+          <width>47</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Rules</string>
+        </property>
+        <property name="buddy">
+         <cstring>Rules</cstring>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="newturningGroup">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>30</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Add new</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="Phases">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>90</y>
+          <width>151</width>
+          <height>20</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QTableWidget" name="TurningGroupTable">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>431</width>
+         <height>91</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="turningPath">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>250</y>
+         <width>451</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="title">
+        <string>Turning Path</string>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <widget class="QLabel" name="TurningPathIDlabel">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>111</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Turning Path ID</string>
+        </property>
+        <property name="buddy">
+         <cstring>TurningPath</cstring>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="TurningPath">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>30</y>
+          <width>101</width>
+          <height>20</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="fromLanelabel">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>60</y>
+          <width>61</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>fromLane</string>
+        </property>
+        <property name="buddy">
+         <cstring>fromLane</cstring>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="fromLane">
+        <property name="geometry">
+         <rect>
+          <x>80</x>
+          <y>60</y>
+          <width>151</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="toLanelabel">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>60</y>
+          <width>51</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>toLane</string>
+        </property>
+        <property name="buddy">
+         <cstring>toLane</cstring>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="toLane">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>60</y>
+          <width>151</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="newTurningPath">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>30</y>
+          <width>75</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Add new</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QTableWidget" name="TurningPathTable">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>350</y>
+         <width>431</width>
+         <height>91</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </widget>
    </item>
   </layout>
  </widget>

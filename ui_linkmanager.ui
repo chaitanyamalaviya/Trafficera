@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>481</width>
+    <width>431</width>
     <height>233</height>
    </rect>
   </property>
@@ -44,7 +44,8 @@
       <widget class="QLabel" name="titleLabel">
        <property name="font">
         <font>
-         <pointsize>13</pointsize>
+         <family>Times New Roman</family>
+         <pointsize>11</pointsize>
          <weight>75</weight>
          <bold>true</bold>
         </font>
@@ -59,6 +60,12 @@
      </item>
      <item>
       <widget class="QGroupBox" name="linkGroupBox">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string>Links</string>
        </property>
@@ -77,19 +84,38 @@
         </property>
         <item row="0" column="0">
          <widget class="QLabel" name="linkIdLabel">
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
           <property name="text">
            <string>LinkId*</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QComboBox" name="linkIdComboBox"/>
+         <widget class="QComboBox" name="linkIdComboBox">
+          <property name="font">
+           <font>
+            <family>Times New Roman</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
      </item>
      <item>
       <widget class="QGroupBox" name="attributeGroup">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
        <property name="title">
         <string/>
        </property>
@@ -110,23 +136,49 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QLabel" name="idLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>LinkId*</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="id"/>
-          </item>
-          <item>
-           <widget class="QLabel" name="roadNameLabel">
-            <property name="text">
-             <string>roadName*</string>
+           <widget class="QLineEdit" name="id">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="roadName"/>
+           <widget class="QLabel" name="roadNameLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Road Name*</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="roadName">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -134,23 +186,49 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <widget class="QLabel" name="startNodeLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>StartNode*</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="startNode"/>
+           <widget class="QLineEdit" name="startNode">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="endNodeLabel">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>EndNode*</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="endNode"/>
+           <widget class="QLineEdit" name="endNode">
+            <property name="font">
+             <font>
+              <family>Times New Roman</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -159,12 +237,20 @@
      </item>
      <item>
       <widget class="QSplitter" name="splitter">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
        <widget class="QLabel" name="errorMessage">
         <property name="font">
          <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
           <italic>true</italic>
          </font>
         </property>
@@ -181,6 +267,12 @@
           <width>100</width>
           <height>100</height>
          </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>ADD</string>

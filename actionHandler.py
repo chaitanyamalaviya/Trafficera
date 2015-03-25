@@ -194,6 +194,8 @@ class ActionHandler():
         multiNode = ElementTree.SubElement(intersectionsParent, 'Intersection')
         #add Id
         ElementTree.SubElement(multiNode, 'nodeID').text = str(nodeData["id"])
+        #addType
+        ElementTree.SubElement(nodeType, 'nodeType').text = str(nodeData["type"])
         #add location
         location = ElementTree.SubElement(multiNode, 'location')
         ElementTree.SubElement(location, 'xPos').text = str(feat.geometry().asPoint().x())
@@ -240,6 +242,8 @@ class ActionHandler():
             return
         #update id
         selectedNode.find("nodeID").text = str(nodeData["id"])
+        #update type
+        selectedNode.find("nodeType").text = str(nodeData["type"])
         #update aimsunId
         selectedNode.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
         #update roadSegmentsAt
@@ -250,18 +254,18 @@ class ActionHandler():
         for roadSegment in nodeData["roadSegments"]:
             ElementTree.SubElement(roadSegmentsAt, 'segmentID').text = str(roadSegment)
         #update connectors
-        connectorsEle = selectedNode.find("Connectors")
-        if connectorsEle is not None:
-            selectedNode.remove(connectorsEle)
-        connectorsEle = ElementTree.SubElement(selectedNode, 'Connectors')
-        for multiConnector in nodeData["multiConnectors"]:
-            multiConnectorEle = ElementTree.SubElement(connectorsEle, 'MultiConnectors')
-            ElementTree.SubElement(multiConnectorEle, 'RoadSegment').text = str(multiConnector[0])
-            connectors = ElementTree.SubElement(multiConnectorEle, 'Connectors')
-            for innerConnector in multiConnector[1]:
-                connector = ElementTree.SubElement(connectors, 'Connector')
-                ElementTree.SubElement(connector, 'laneFrom').text = str(innerConnector[0])
-                ElementTree.SubElement(connector, 'laneTo').text = str(innerConnector[1])  
+        # connectorsEle = selectedNode.find("Connectors")
+        # if connectorsEle is not None:
+        #     selectedNode.remove(connectorsEle)
+        # connectorsEle = ElementTree.SubElement(selectedNode, 'Connectors')
+        # for multiConnector in nodeData["multiConnectors"]:
+        #     multiConnectorEle = ElementTree.SubElement(connectorsEle, 'MultiConnectors')
+        #     ElementTree.SubElement(multiConnectorEle, 'RoadSegment').text = str(multiConnector[0])
+        #     connectors = ElementTree.SubElement(multiConnectorEle, 'Connectors')
+        #     for innerConnector in multiConnector[1]:
+        #         connector = ElementTree.SubElement(connectors, 'Connector')
+        #         ElementTree.SubElement(connector, 'laneFrom').text = str(innerConnector[0])
+        #         ElementTree.SubElement(connector, 'laneTo').text = str(innerConnector[1])
 
 
     def getMultiNode(self, feature):

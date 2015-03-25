@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui_uninode.ui'
 #
-# Created: Thu May  8 12:26:46 2014
-#      by: PyQt4 UI code generator 4.10.3
+# Created: Mon Mar 23 17:00:39 2015
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 

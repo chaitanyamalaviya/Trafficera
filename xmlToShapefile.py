@@ -75,7 +75,7 @@ class XmlToShapefile(QObject):
         nearLine = crossing.find("nearLine")
         if nearLine is None:
             QgsMessageLog.logMessage("No nearLine in crossing %s"%crossingId, 'SimGDC')
-            return 
+            return
         coordinates[0] = self.parseLocation(nearLine.find('first'))
         coordinates[1] = self.parseLocation(nearLine.find('second'))
         farLine = crossing.find("farLine")
@@ -125,7 +125,7 @@ class XmlToShapefile(QObject):
                     self.parseCrossing(segmentId, obstacle)
                 elif obstacle.tag == "BusStop":
                     self.parseBusstop(segmentId, obstacle)
-        self.writer.addPolygon(SHTYPE.SEGMENT, coordinates, attr)
+        self.writer.addPolyline(SHTYPE.SEGMENT, coordinates, attr)
 
     def run(self):
         if self.document == None:
