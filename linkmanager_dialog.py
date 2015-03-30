@@ -5,9 +5,9 @@
                                  A QGIS plugin
  iSim converter
                              -------------------
-        begin                : 2014-02-03
-        copyright            : (C) 2014 by nhudinhtuan
-        email                : nhudinhtuan@gmail.com
+        begin                : 2015-03-30
+        copyright            : (C) 2015 by chaitanyamalaviya
+        email                : chaitanyamalaviya@gmail.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -38,6 +38,8 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
         self.listLinks = None
         self.isModified = False
 
+
+
     def setLinkList(self, links):
         self.listLinks = links
         self.linkIdComboBox.clear()
@@ -52,7 +54,9 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
     def updateLinkName(self, textLinkId):
         if textLinkId == "add new link":
             self.actionButton.setText("ADD")
-            self.id.setText("")
+            for link in self.listLinks:
+                linkidlist.append(listLinks.index(link))
+            self.id.setText(str(max(self.listLinks[][0])+1))
             self.roadName.setText("")
             self.startNode.setText("")
             self.endNode.setText("")

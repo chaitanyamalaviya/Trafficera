@@ -500,7 +500,7 @@
     <widget class="QLineEdit" name="laneID">
      <property name="geometry">
       <rect>
-       <x>130</x>
+       <x>150</x>
        <y>49</y>
        <width>201</width>
        <height>21</height>
@@ -510,14 +510,14 @@
     <widget class="QLabel" name="laneidlabel">
      <property name="geometry">
       <rect>
-       <x>50</x>
+       <x>20</x>
        <y>50</y>
-       <width>61</width>
+       <width>121</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Lane ID</string>
+      <string>Lane Connector ID</string>
      </property>
     </widget>
     <widget class="QLabel" name="fromSectionlabel">
@@ -632,7 +632,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>ADD NEW</string>
+      <string>Add New</string>
      </property>
     </widget>
    </widget>

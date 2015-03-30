@@ -44,7 +44,8 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.info = None
         self.isModified = False
         self.listSegments = None
-
+        self.turninggrouplist = None
+        self.turningpathlist = None
 
     def setInfo(self, info):
         self.info = info
@@ -62,7 +63,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             if self.info["turningGroup"] is not None:
                 self.TurningGroupTable.setRowCount(10)
                 self.TurningGroupTable.setColumnCount(4)
-                TableHeader<<"ID"<<"fromLink"<<"toLink"<<"Phases"<<"Rules"
+                TableHeader = "ID"<<"fromLink"<<"toLink"<<"Phases"<<"Rules"
                 self.TurningGroupTable.setHorizontalHeaderLabels(TableHeader)
                 #self.TurningGroupTable.verticalHeader()->setVisible(false)
                 self.TurningGroupTable.setSelectionBehavior(SelectRows)
@@ -71,9 +72,6 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
                     ridx = self.info["turningGroup"].index(group)
                     for cidx in range(0,4) :
                         self.TurningGroupTable.setItem(ridx,cidx,group[cidx])
-
-                when you select turning group, corresponding turning paths should be listed in the turning path table. I think turningpath should also have turning
-                group id
 
             # if self.info["roadSegmentsAt"] is not None:
             #     roadSegmentsAtStr = "\n".join(self.info["roadSegmentsAt"])
@@ -85,9 +83,10 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             #         connectorStr.append(tempStr)
             #     self.mulConnectorEdit.setPlainText("\n".join(connectorStr))
         else:
+            self.addnewid()
             self.actionButton.setText("ADD")
 
-        QtCore.QObject.connect(self.generateid, QtCore.SIGNAL('clicked(bool)'), self.addnewid)
+
         QtCore.QObject.connect(self.segmentIDcomboBox, QtCore.SIGNAL('currentIndexChanged(const QString&)'),self.addSegment)
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
@@ -107,15 +106,15 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.errorMessage.setText("Turning Group ID is invalid. It must be a number.")
             return
 
-        turninggrouplist.extend([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText()])
+        self.turninggrouplist.extend([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText()])
 
 
         ridx = self.info["turningGroup"].length() + 1
 
         for cidx in range(0,4) :
-            self.TurningGroupTable.setItem(ridx,cidx,turninggrouplist[cidx])
+            self.TurningGroupTable.setItem(ridx,cidx,self.turninggrouplist[cidx])
 
-        self.info["turningGroup"].append(turninggrouplist)
+        self.info["turningGroup"].append(self.turninggrouplist)
 
     def addTurningPath(self):
 
@@ -124,13 +123,13 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.errorMessage.setText("Turning Path ID is invalid. It must be a number.")
             return
         groupID = self.turningGroupID.text()
-        turningpathlist.extend([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText()])
+        self.turningpathlist.extend([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText()])
         ridx = self.info["turningPath"].length() + 1
         self.TurningGroupTable.insertRow()
         for cidx in range(0,4) :
-            self.TurningGroupTable.setItem(ridx,cidx,turningpathlist[cidx])
+            self.TurningGroupTable.setItem(ridx,cidx,self.turningpathlist[cidx])
 
-        self.info["turningPath"].append(turningpathlist)
+        self.info["turningPath"].append(self.turningpathlist)
 
 
     def displayturninggroup(self):
@@ -204,6 +203,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             nodeList.append(int(mulNode.find('nodeID').text))
 
         self.nodeId.setText(str(max(nodeList)+1))
+
         return
 
 
