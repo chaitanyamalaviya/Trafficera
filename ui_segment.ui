@@ -53,7 +53,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
@@ -130,7 +130,7 @@
         <x>6</x>
         <y>6</y>
         <width>53</width>
-        <height>21</height>
+        <height>31</height>
        </rect>
       </property>
       <property name="font">
@@ -143,24 +143,18 @@
        <string>LinkId*</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="linkIdComboBox">
+     <widget class="QComboBox" name="linkidcomboBox">
       <property name="geometry">
        <rect>
-        <x>64</x>
-        <y>6</y>
-        <width>381</width>
-        <height>27</height>
+        <x>70</x>
+        <y>10</y>
+        <width>371</width>
+        <height>21</height>
        </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>12</pointsize>
-       </font>
       </property>
      </widget>
     </widget>
-    <widget class="QPushButton" name="actionButton_2">
+    <widget class="QPushButton" name="actionButton">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -203,7 +197,7 @@
      <property name="title">
       <string/>
      </property>
-     <widget class="QLabel" name="label_11">
+     <widget class="QLabel" name="categorylabel">
       <property name="geometry">
        <rect>
         <x>250</x>
@@ -222,7 +216,7 @@
        <string>Category*</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_5">
+     <widget class="QComboBox" name="category">
       <property name="geometry">
        <rect>
         <x>320</x>
@@ -238,7 +232,7 @@
        </font>
       </property>
      </widget>
-     <widget class="QLineEdit" name="maxSpeed_2">
+     <widget class="QLineEdit" name="sequenceno">
       <property name="geometry">
        <rect>
         <x>120</x>
@@ -254,7 +248,7 @@
        </font>
       </property>
      </widget>
-     <widget class="QLineEdit" name="length">
+     <widget class="QLineEdit" name="capacity">
       <property name="geometry">
        <rect>
         <x>320</x>
@@ -286,7 +280,7 @@
        </font>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox_8">
+     <widget class="QComboBox" name="roadType">
       <property name="geometry">
        <rect>
         <x>118</x>
@@ -341,7 +335,7 @@
        <string>MaxSpeed*</string>
       </property>
      </widget>
-     <widget class="QLabel" name="startNodeLabel">
+     <widget class="QLabel" name="sequencenoLabel">
       <property name="geometry">
        <rect>
         <x>7</x>
@@ -379,7 +373,7 @@
        <string>Capacity*</string>
       </property>
      </widget>
-     <widget class="QLabel" name="widthLabel">
+     <widget class="QLabel" name="roadTypeLabel">
       <property name="geometry">
        <rect>
         <x>7</x>
@@ -468,6 +462,22 @@
        </font>
       </property>
      </widget>
+     <widget class="QComboBox" name="linkIdComboBox">
+      <property name="geometry">
+       <rect>
+        <x>-380</x>
+        <y>150</y>
+        <width>381</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_4">
@@ -487,7 +497,7 @@
       <string>Lane Connectors</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="laneID">
      <property name="geometry">
       <rect>
        <x>130</x>
@@ -497,7 +507,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="laneidlabel">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -510,7 +520,7 @@
       <string>Lane ID</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="fromSectionlabel">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -523,7 +533,7 @@
       <string>fromSection</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="fromSectioncomboBox">
      <property name="geometry">
       <rect>
        <x>130</x>
@@ -533,7 +543,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="toSectionlabel">
      <property name="geometry">
       <rect>
        <x>270</x>
@@ -546,7 +556,7 @@
       <string>toSection</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_2">
+    <widget class="QComboBox" name="toSectioncomboBox">
      <property name="geometry">
       <rect>
        <x>340</x>
@@ -556,7 +566,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="label_5">
+    <widget class="QLabel" name="fromLanelabel">
      <property name="geometry">
       <rect>
        <x>50</x>
@@ -569,7 +579,7 @@
       <string>fromLane</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_6">
+    <widget class="QLabel" name="toLanelabel">
      <property name="geometry">
       <rect>
        <x>270</x>
@@ -582,7 +592,7 @@
       <string>toLane</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_3">
+    <widget class="QComboBox" name="toLanecomboBox">
      <property name="geometry">
       <rect>
        <x>340</x>
@@ -592,7 +602,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_4">
+    <widget class="QComboBox" name="fromLanecomboBox">
      <property name="geometry">
       <rect>
        <x>130</x>
@@ -602,7 +612,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QTableView" name="tableView">
+    <widget class="QTableView" name="laneConnectorTable">
      <property name="geometry">
       <rect>
        <x>30</x>
