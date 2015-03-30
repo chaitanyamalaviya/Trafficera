@@ -5,9 +5,9 @@
                                  A QGIS plugin
  iSim converter
                              -------------------
-        begin                : 2014-02-03
-        copyright            : (C) 2014 by nhudinhtuan
-        email                : nhudinhtuan@gmail.com
+        begin                : 2015-03-25
+        copyright            : (C) 2015 by chaitanyamalaviya
+        email                : chaitanyamalaviya@gmail.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -56,6 +56,25 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.nodeId.setText(str(self.info["id"]))
             original_id = self.info["id"]
             self.aimsunId.setText(str(self.info["aimsunId"]))
+            self.nodeType.setText(self.info["nodeType"])
+            self.trafficLightID.setText(self.info["trafficLightID"])
+
+            if self.info["turningGroup"] is not None:
+                self.TurningGroupTable.setRowCount(10)
+                self.TurningGroupTable.setColumnCount(4)
+                TableHeader<<"ID"<<"fromLink"<<"toLink"<<"Phases"<<"Rules"
+                self.TurningGroupTable.setHorizontalHeaderLabels(TableHeader)
+                #self.TurningGroupTable.verticalHeader()->setVisible(false)
+                self.TurningGroupTable.setSelectionBehavior(SelectRows)
+                self.TurningGroupTable.setSelectionMode(SingleSelection)
+                for group in self.info["turningGroup"]:
+                    ridx = self.info["turningGroup"].index(group)
+                    for cidx in range(0,4) :
+                        self.TurningGroupTable.setItem(ridx,cidx,group[cidx])
+
+                when you select turning group, corresponding turning paths should be listed in the turning path table. I think turningpath should also have turning
+                group id
+
             # if self.info["roadSegmentsAt"] is not None:
             #     roadSegmentsAtStr = "\n".join(self.info["roadSegmentsAt"])
             #     self.roadSegmentEdit.setPlainText(roadSegmentsAtStr)
@@ -72,13 +91,85 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         QtCore.QObject.connect(self.segmentIDcomboBox, QtCore.SIGNAL('currentIndexChanged(const QString&)'),self.addSegment)
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
+        QtCore.QObject.connect(self.newturningGroup, QtCore.SIGNAL('clicked(bool)'), self.addturningGroup)
+        QtCore.QObject.connect(self.newTurningPath, QtCore.SIGNAL('clicked(bool)'), self.addTurningPath)
+        QtCore.QObject.connect(self.TurningGroupTable, QtCore.SIGNAL('itemSelectionChanged()'), self.displayturninggroup)
+        QtCore.QObject.connect(self.TurningPathTable, QtCore.SIGNAL('itemSelectionChanged()'), self.displayturningpath)
+
     def addSegment(self):
         roadSegmentsAtStr = str(self.segmentIDcomboBox.currentText())
         self.roadSegmentEdit.append(roadSegmentsAtStr)
 
+    def addTurningGroup(self):
+
+        turningGroupID = self.turningGroupID.text()
+        if turningGroupID.isdigit() is False:
+            self.errorMessage.setText("Turning Group ID is invalid. It must be a number.")
+            return
+
+        turninggrouplist.extend([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText()])
+
+
+        ridx = self.info["turningGroup"].length() + 1
+
+        for cidx in range(0,4) :
+            self.TurningGroupTable.setItem(ridx,cidx,turninggrouplist[cidx])
+
+        self.info["turningGroup"].append(turninggrouplist)
+
+    def addTurningPath(self):
+
+        turningPathID = self.TurningPath.text()
+        if turningPathID.isdigit() is False:
+            self.errorMessage.setText("Turning Path ID is invalid. It must be a number.")
+            return
+        groupID = self.turningGroupID.text()
+        turningpathlist.extend([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText()])
+        ridx = self.info["turningPath"].length() + 1
+        self.TurningGroupTable.insertRow()
+        for cidx in range(0,4) :
+            self.TurningGroupTable.setItem(ridx,cidx,turningpathlist[cidx])
+
+        self.info["turningPath"].append(turningpathlist)
+
+
+    def displayturninggroup(self):
+        ridx = self.TurningGroupTable.currentRow()
+        self.turningGroupID.setText(self.info["turningGroup"][ridx][0])
+        self.fromLink.setText(self.info["turningGroup"][ridx][1])
+        self.toLink.setText(self.info["turningGroup"][ridx][2])
+        self.Phases.setText(self.info["turningGroup"][ridx][3])
+        self.Rules.setText(self.info["turningGroup"][ridx][4])
+
+        # display corresponding turning paths in turning path table
+
+        if self.info["turningPath"] is not None:
+            self.TurningPathTable.setRowCount(self.info["turningPath"].length())
+            self.TurningPathTable.setColumnCount(3)
+            TableHeader<<"Turning Path ID"<<"fromLane"<<"toLane"
+            self.TurningPathTable.setHorizontalHeaderLabels(TableHeader)
+            #self.TurningPathTable.verticalHeader()->setVisible(false)
+            self.TurningPathTable.setSelectionBehavior(SelectRows)
+            self.TurningPathTable.setSelectionMode(SingleSelection)
+            for path in self.info["turningPath"]:
+                ridx = self.info["turningPath"].index(path)
+                if self.turningGroupID.currentText() == path[0]
+                for cidx in range(0,4) :
+                    self.TurningPathTable.setItem(ridx,cidx,path[cidx])
+
+
+
+    def displayturningpath(self):
+        ridx = self.TurningPathTable.currentRow()
+        self.turningPathID.setText(self.info["turningPath"][ridx][1])       #groupid is index 0
+        self.fromLane.setText(self.info["turningPath"][ridx][2])
+        self.toLane.setText(self.info["turningPath"][ridx][3])
+
+
+
+
 
     def setSegmentlist(self):
-
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')
@@ -86,6 +177,17 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         for seg in root.iter('Segment'):
             self.segmentIDcomboBox.addItem(seg.find('segmentID').text)
 
+
+
+    def setLinklist(self):
+
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory, nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+        for link in root.iter('Link'):
+            self.fromLink.addItem(link.find('linkID').text)
+            self.toLink.addItem(link.find('linkID').text)
 
 
     def addnewid(self):
@@ -113,6 +215,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
                 result.append(segmentStr)
         return result
 
+'''
     def parseMultiConnectors(self, text):
         ''' Format
         RoadSegment
@@ -133,11 +236,13 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
                 currentConnectors = []
             elif len(parts) == 2:
                 if currentSegment is None:
-                    return None # invalid format
+                    return None                                                 # invalid format
                 currentConnectors.append([int(parts[0]),int(parts[1])])
         if currentSegment is not None and len(currentConnectors) > 0:
             result.append([currentSegment, currentConnectors])
         return result
+
+'''
 
     def update(self):
         global original_id
@@ -182,6 +287,16 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.errorMessage.setText("aimsunId is invalid. It must be a number.")
             return
         self.info["aimsunId"] = int(aimsunId)
+
+        self.info["nodeType"]= self.nodeType.currentText()
+
+        trafficLightID = self.trafficLightID.text()
+        if trafficLightID.isdigit() is False:
+            self.errorMessage.setText("Traffic Light ID is invalid. It must be a number.")
+            return
+        self.info["trafficLightID"] = int(trafficLightID)
+
+
 
         self.info["roadSegments"] = []
         roadSegments = self.roadSegmentEdit.toPlainText()
