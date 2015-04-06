@@ -44,13 +44,13 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.info = None
         self.isModified = False
         self.listSegments = None
-        self.turninggrouplist = None
-        self.turningpathlist = None
+        self.turninggrouplist = []
+        self.turningpathlist = []
 
     def setInfo(self, info):
         self.info = info
         global original_id
-        self.setSegmentlist()
+        self.setLinklist()
         if self.info is not None:               # updating existing element
             self.isModified = True
             self.actionButton.setText("SAVE")
@@ -63,7 +63,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             if self.info["turningGroup"] is not None:
                 self.TurningGroupTable.setRowCount(10)
                 self.TurningGroupTable.setColumnCount(4)
-                TableHeader = "ID"<<"fromLink"<<"toLink"<<"Phases"<<"Rules"
+                TableHeader = ['ID','fromLink','toLink','Phases','Rules']
                 self.TurningGroupTable.setHorizontalHeaderLabels(TableHeader)
                 #self.TurningGroupTable.verticalHeader()->setVisible(false)
                 self.TurningGroupTable.setSelectionBehavior(SelectRows)
@@ -87,47 +87,48 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.actionButton.setText("ADD")
 
 
-        QtCore.QObject.connect(self.segmentIDcomboBox, QtCore.SIGNAL('currentIndexChanged(const QString&)'),self.addSegment)
-        QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
-        QtCore.QObject.connect(self.newturningGroup, QtCore.SIGNAL('clicked(bool)'), self.addturningGroup)
+
+        QtCore.QObject.connect(self.newturningGroup, QtCore.SIGNAL('clicked(bool)'), self.addTurningGroup)
         QtCore.QObject.connect(self.newTurningPath, QtCore.SIGNAL('clicked(bool)'), self.addTurningPath)
         QtCore.QObject.connect(self.TurningGroupTable, QtCore.SIGNAL('itemSelectionChanged()'), self.displayturninggroup)
         QtCore.QObject.connect(self.TurningPathTable, QtCore.SIGNAL('itemSelectionChanged()'), self.displayturningpath)
 
-    def addSegment(self):
-        roadSegmentsAtStr = str(self.segmentIDcomboBox.currentText())
-        self.roadSegmentEdit.append(roadSegmentsAtStr)
+        QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
     def addTurningGroup(self):
-
+        self.info = {}
+        self.info["turningGroup"] = []
         turningGroupID = self.turningGroupID.text()
         if turningGroupID.isdigit() is False:
             self.errorMessage.setText("Turning Group ID is invalid. It must be a number.")
             return
 
-        self.turninggrouplist.extend([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText()])
+        self.turninggrouplist.append([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText()])
 
 
-        ridx = self.info["turningGroup"].length() + 1
+        ridx = len(self.info["turningGroup"]) + 1
 
         for cidx in range(0,4) :
-            self.TurningGroupTable.setItem(ridx,cidx,self.turninggrouplist[cidx])
+            self.TurningGroupTable.setItem(ridx,cidx,QTableWidgetItem(self.turninggrouplist[ridx-1][cidx]))
 
         self.info["turningGroup"].append(self.turninggrouplist)
 
     def addTurningPath(self):
-
+        self.info = {}
+        self.info["turningPath"] = []
         turningPathID = self.TurningPath.text()
         if turningPathID.isdigit() is False:
             self.errorMessage.setText("Turning Path ID is invalid. It must be a number.")
             return
         groupID = self.turningGroupID.text()
-        self.turningpathlist.extend([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText()])
+        self.turningpathlist.append([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText()])
         ridx = self.info["turningPath"].length() + 1
-        self.TurningGroupTable.insertRow()
+        self.TurningPathTable.insertRow()
+
+
         for cidx in range(0,4) :
-            self.TurningGroupTable.setItem(ridx,cidx,self.turningpathlist[cidx])
+            self.TurningPathTable.setItem(ridx,cidx,QTableWidgetItem(self.turningpathlist[ridx-1][cidx]))
 
         self.info["turningPath"].append(self.turningpathlist)
 
@@ -145,16 +146,16 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         if self.info["turningPath"] is not None:
             self.TurningPathTable.setRowCount(self.info["turningPath"].length())
             self.TurningPathTable.setColumnCount(3)
-            TableHeader<<"Turning Path ID"<<"fromLane"<<"toLane"
+            TableHeader = ['Turning Path ID', 'fromLane', 'toLane']
             self.TurningPathTable.setHorizontalHeaderLabels(TableHeader)
             #self.TurningPathTable.verticalHeader()->setVisible(false)
             self.TurningPathTable.setSelectionBehavior(SelectRows)
             self.TurningPathTable.setSelectionMode(SingleSelection)
             for path in self.info["turningPath"]:
                 ridx = self.info["turningPath"].index(path)
-                if self.turningGroupID.currentText() == path[0]
-                for cidx in range(0,4) :
-                    self.TurningPathTable.setItem(ridx,cidx,path[cidx])
+                if self.turningGroupID.currentText() == path[0]:
+                    for cidx in range(0,4) :
+                        self.TurningPathTable.setItem(ridx,cidx,path[cidx])
 
 
 
@@ -164,17 +165,6 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.fromLane.setText(self.info["turningPath"][ridx][2])
         self.toLane.setText(self.info["turningPath"][ridx][3])
 
-
-
-
-
-    def setSegmentlist(self):
-        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
-        (myDirectory, nameFile) = os.path.split(layerfi)
-        tree = ElementTree.parse(myDirectory + '/data.xml')
-        root = tree.getroot()
-        for seg in root.iter('Segment'):
-            self.segmentIDcomboBox.addItem(seg.find('segmentID').text)
 
 
 
@@ -207,42 +197,19 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         return
 
 
-    def parseRoadSegments(self, text):
-        result = []
-        segments = text.split("\n")
-        for segmentStr in segments:
-            if segmentStr != "":
-                result.append(segmentStr)
-        return result
+    # def genturningConflicts(self):
+    #
+    #
+    #     get all intersections of turning paths
+    #     check if phase is same
+    #     if yes:
+    #         add to turning conflict table
+    #     else:
+    #         nothing
+    # 
+    #     turning conflict table attributes : id, first turning, second turning, firstcd, secondcd
 
-'''
-    def parseMultiConnectors(self, text):
-        ''' Format
-        RoadSegment
-        laneFrom,laneTo
-        laneFrom,laneTo
-        '''
-        result = []
-        lines = text.split("\n")
-        currentSegment = None
-        currentConnectors = []
-        for line in lines:
-            parts = line.split(",")
 
-            if len(parts) == 1:
-                if currentSegment is not None and len(currentConnectors) > 0:
-                    result.append([currentSegment, currentConnectors])
-                currentSegment = int(parts[0])
-                currentConnectors = []
-            elif len(parts) == 2:
-                if currentSegment is None:
-                    return None                                                 # invalid format
-                currentConnectors.append([int(parts[0]),int(parts[1])])
-        if currentSegment is not None and len(currentConnectors) > 0:
-            result.append([currentSegment, currentConnectors])
-        return result
-
-'''
 
     def update(self):
         global original_id
@@ -296,18 +263,8 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             return
         self.info["trafficLightID"] = int(trafficLightID)
 
-
-
-        self.info["roadSegments"] = []
-        roadSegments = self.roadSegmentEdit.toPlainText()
-        if roadSegments:
-            self.info["roadSegments"] = self.parseRoadSegments(roadSegments)
-            for seg in self.info["roadSegments"] :
-                if seg not in seglist :
-                    self.errorMessage.setText("Segment id does not exist. Please enter existing segment id.")
-                    return
-
-
+        self.info["turningGroup"] = None
+        self.info["turningPath"] = None
 
         # self.info["multiConnectors"] = []
         # mulConnectors = self.mulConnectorEdit.toPlainText()
@@ -319,32 +276,32 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
 
 
-        for con in root.iter('Connector'):
-            lf = int(con.find('laneFrom').text)
-            lt = int(con.find('laneTo').text)
-            lanepairlist.append([lf,lt])
-
-        for lane in root.iter('Lane'):
-            lanelist.append(lane.find('laneID').text)
+        # for con in root.iter('Connector'):
+        #     lf = int(con.find('laneFrom').text)
+        #     lt = int(con.find('laneTo').text)
+        #     lanepairlist.append([lf,lt])
+        #
+        # for lane in root.iter('Lane'):
+        #     lanelist.append(lane.find('laneID').text)
 
         # for multiconnector in self.info["multiConnectors"]:
  #       self.errorMessage.setText(laneFromlist)
   #      return
 # and self.info["multiConnectors"][0][1][0][1] in laneTolist)
 
-        for multiconnector in self.info["multiConnectors"]:
-            if multiconnector[1][0] in lanepairlist and nodeId != original_id:
-                self.errorMessage.setText("A turning already exists between these lanes ")
-                return
-            if str(multiconnector[0]) not in seglist :
-                self.errorMessage.setText("The segmentid in multiconnectors does not exist.")
-                return
-            if str(multiconnector[1][0][0]) not in lanelist or str(multiconnector[1][0][1]) not in lanelist :
-                self.errorMessage.setText("The laneid does not exist.")
-                return
-            if multiconnector[1][0][0] == multiconnector[1][0][1] :
-                self.errorMessage.setText("Lanefrom id and Laneto id cannot be the same.")
-                return
+        # for multiconnector in self.info["multiConnectors"]:
+        #     if multiconnector[1][0] in lanepairlist and nodeId != original_id:
+        #         self.errorMessage.setText("A turning already exists between these lanes ")
+        #         return
+        #     if str(multiconnector[0]) not in seglist :
+        #         self.errorMessage.setText("The segmentid in multiconnectors does not exist.")
+        #         return
+        #     if str(multiconnector[1][0][0]) not in lanelist or str(multiconnector[1][0][1]) not in lanelist :
+        #         self.errorMessage.setText("The laneid does not exist.")
+        #         return
+        #     if multiconnector[1][0][0] == multiconnector[1][0][1] :
+        #         self.errorMessage.setText("Lanefrom id and Laneto id cannot be the same.")
+        #         return
 
         self.isModified = True
 

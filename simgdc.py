@@ -6,8 +6,8 @@
  SimMobility Geospatial Data Converter
                               -------------------
         begin                : 2014-02-03
-        copyright            : (C) 2014 by nhudinhtuan
-        email                : nhudinhtuan@gmail.com
+        copyright            : (C) 2014 by chaitanyamalaviya
+        email                : chaitanyamalaviya@gmail.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -28,7 +28,6 @@ from qgis.gui import QgsMessageBar, QgsMapToolEmitPoint, QgsMapToolPan
 import resources
 # Import the code for the dialog
 from converter_dialog import ConverterDialog
-from uninode_dialog import UniNodeDialog
 from multinode_dialog import MultiNodeDialog
 from segment_dialog import SegmentDialog
 from crossing_dialog import CrossingDialog
@@ -236,9 +235,7 @@ class SimGDC:
         # initialize handler
         handler = ActionHandler(sh_dir, self.canvas)
 
-        if typeId == TYPE.UNINODE:
-            self.featuredlg = UniNodeDialog()
-        elif typeId == TYPE.MULNODE:
+        if typeId == TYPE.MULNODE:
             self.featuredlg = MultiNodeDialog()
         elif typeId == TYPE.SEGMENT:
             linkLists = handler.getLinkList()
@@ -275,12 +272,7 @@ class SimGDC:
         self.featuredlg.exec_()
 
         if self.featuredlg is not None and self.featuredlg.isModified is True:
-            if typeId == TYPE.UNINODE:
-                nodeData = self.featuredlg.info
-                handler.addUninode(point, nodeData)
-                handler.save()
-                self.canvas.refresh()
-            elif typeId == TYPE.MULNODE:
+            if typeId == TYPE.MULNODE:
                 nodeData = self.featuredlg.info
                 handler.addMultiNode(point, nodeData)
                 handler.save()
@@ -341,13 +333,7 @@ class SimGDC:
             self.featuredlg = None
 
         handler = ActionHandler(sh_dir, self.canvas)
-        if typeId == TYPE.UNINODE:
-            eleData = handler.getUninode(selected_features[0])
-            if eleData is None:
-                QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "No data for that feature.")
-                return
-            self.featuredlg = UniNodeDialog()
-        elif typeId == TYPE.MULNODE:
+        if typeId == TYPE.MULNODE:
             eleData = handler.getMultiNode(selected_features[0])
             if eleData is None:
                 QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "No data for that feature.")
@@ -391,12 +377,7 @@ class SimGDC:
         self.featuredlg.exec_()
 
         if self.featuredlg is not None and self.featuredlg.isModified is True:
-            if typeId == TYPE.UNINODE:
-                newData = self.featuredlg.info
-                handler.updateUninode(selected_features[0], newData)
-                handler.save()
-                self.canvas.refresh()
-            elif typeId == TYPE.MULNODE:
+            if typeId == TYPE.MULNODE:
                 newData = self.featuredlg.info
                 handler.updateMultiNode(selected_features[0], newData)
                 handler.save()

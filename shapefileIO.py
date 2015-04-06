@@ -7,13 +7,13 @@ def enum(*sequential, **named):
     return type('Enum', (), enums)
 
 # Constants
-TYPE = enum('UNINODE', 'MULNODE', 'SEGMENT', 'LANE', 'CROSSING', 'BUSSTOP', 'LANEEDGE')
-TAGS = {TYPE.UNINODE: "uninode", TYPE.MULNODE: "mulnode", TYPE.SEGMENT: "segment", 
+TYPE = enum('MULNODE', 'SEGMENT', 'TURNINGPATH', 'LANE', 'CROSSING', 'BUSSTOP', 'LANEEDGE')
+TAGS = {TYPE.MULNODE: "mulnode", TYPE.SEGMENT: "segment", TYPE.TURNINGPATH: "turningPath",
         TYPE.LANE: "lane", TYPE.CROSSING: "crossing", TYPE.BUSSTOP: "busstop", TYPE.LANEEDGE: "laneedge"}
 SCHEMA = {}
-SCHEMA[TYPE.UNINODE] = [QGis.WKBPoint, [QgsField("id", QVariant.Int)]]
 SCHEMA[TYPE.MULNODE] = [QGis.WKBPoint, [QgsField("id", QVariant.Int)]] 
 SCHEMA[TYPE.SEGMENT] = [QGis.WKBLineString, [QgsField("link-id", QVariant.Int), QgsField("segmentID", QVariant.Int)]]
+SCHEMA[TYPE.TURNINGPATH] = [QGis.WKBLineString, [QgsField("turningPathID", QVariant.Int)]]
 SCHEMA[TYPE.LANE]    = [QGis.WKBLineString, [QgsField("segmentID", QVariant.Int), QgsField("laneID", QVariant.Int)]]
 SCHEMA[TYPE.CROSSING]= [QGis.WKBPolygon, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]
 SCHEMA[TYPE.BUSSTOP] = [QGis.WKBPoint, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]    
@@ -87,7 +87,7 @@ class ShapefileReader:
 
         features = self.layer[typeid].getFeatures()
         # load node
-        if  typeid == TYPE.UNINODE or typeid == TYPE.MULNODE:
+        if typeid == TYPE.MULNODE:
             for feature in features:
                 attr = feature.attributes()
                 self.data[typeid][attr[0]] = feature.geometry().asPoint()

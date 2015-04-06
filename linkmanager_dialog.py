@@ -54,9 +54,7 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
     def updateLinkName(self, textLinkId):
         if textLinkId == "add new link":
             self.actionButton.setText("ADD")
-            for link in self.listLinks:
-                linkidlist.append(listLinks.index(link))
-            self.id.setText(str(max(self.listLinks[][0])+1))
+            self.id.setText("")
             self.roadName.setText("")
             self.startNode.setText("")
             self.endNode.setText("")
@@ -66,7 +64,7 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
             self.roadName.setText(self.listLinks[linkId][1])
             self.startNode.setText(str(self.listLinks[linkId][2]))
             self.endNode.setText(str(self.listLinks[linkId][3]))
-            self.actionButton.setText("SAVE")            
+            self.actionButton.setText("SAVE")
 
     def update(self):
         self.errorMessage.setText("")
@@ -86,7 +84,7 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
         self.info["id"] = int(id)
         if self.info["id"] < 1 or self.info["id"] != oldLinkId:
             if self.info["id"] in self.listLinks:
-                self.errorMessage.setText("The id is already existed.")
+                self.errorMessage.setText("The id already exists.")
                 return
 
         roadName = self.roadName.text()

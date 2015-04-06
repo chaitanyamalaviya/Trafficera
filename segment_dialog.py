@@ -46,17 +46,18 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         self.laneconnectorlist = None
 
 
-    def setLinkList(self):
+    def setLinkList(self, links):
 
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
 
-        for Link in root.iter('Link'):
-            linkid = Link.find('linkID').text
-            self.listLinks.append(linkid)
+        # for Link in root.iter('Link'):
+        #     linkid = Link.find('linkID').text
+        #     self.listLinks.append(linkid)
 
+        self.listLinks = links
         self.linkidcomboBox.clear()
         for linkId in self.listLinks.iterkeys():
             self.linkidcomboBox.addItem(str(linkId))
@@ -82,7 +83,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
     def setInfo(self, info):
         self.info = info
         global original_id
-        setLinkList(self)
+
         if self.info is not None:
             linkId = int(self.info["linkId"])
             self.linkidcomboBox.setCurrentIndex(self.listLinks.keys().index(linkId))
@@ -100,9 +101,9 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             if self.info["connectors"] is not none:
                 self.TurningGroupTable.setRowCount(10)
                 self.TurningGroupTable.setColumnCount(4)
-                TableHeader = "ID"<<"fromSection"<<"toSection"<<"fromLane"<<"toLane"
+                TableHeader = ['ID','fromSection','toSection','fromLane','toLane']
                 self.TurningGroupTable.setHorizontalHeaderLabels(TableHeader)
-                #self.TurningGroupTable.verticalHeader()->setVisible(false)
+                #self.TurningGroupTable.verticalHeader().setVisible(false)
                 self.TurningGroupTable.setSelectionBehavior(SelectRows)
                 self.TurningGroupTable.setSelectionMode(SingleSelection)
                 for connector in self.info["connectors"]:
@@ -122,16 +123,18 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
 
     def addnewid(self):
-        nodeList = []
+        seglist = []
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
 
         for laneconnector in root.iter('Connector'):
-            connectorlist.append(int(laneconnector.find('ID').text))
+            if laneconnector is not None:
+                self.laneconnectorlist.append(int(laneconnector.find('ID').text))
 
-        self.laneID.setText(str(max(connectorlist)+1))
+        if self.laneconnectorlist is not None:
+            self.laneID.setText(str(max(self.laneconnectorlist)+1))
 
         for segment in root.iter('Segment'):
             seglist.append(int(segment.find('segmentID').text))
@@ -150,7 +153,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.errorMessage.setText("Connector ID is invalid. It must be a number.")
             return
 
-        self.laneconnectorlist.extend([laneconnectorid, self.fromSectioncomboBox.currentText(), self.toSectioncomboBox.currentText(), self.fromLanecomboBox.text(), self.toLanecomboBox.currentText()])
+        self.laneconnectorlist.append([laneconnectorid, self.fromSectioncomboBox.currentText(), self.toSectioncomboBox.currentText(), self.fromLanecomboBox.text(), self.toLanecomboBox.currentText()])
 
 
         ridx = self.info["connectors"].length() + 1

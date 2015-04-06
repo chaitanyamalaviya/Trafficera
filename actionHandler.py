@@ -39,145 +39,145 @@ class ActionHandler():
             self.layers[typeId] = QgsVectorLayer(full_path, "%s_isim"%typeId, "ogr")
         return self.layers[typeId]
 
-    def addUninode(self, point, nodeData):
-        '''ADD FEATURE TO LAYER'''
-        feat = QgsFeature()
-        feat.initAttributes (1)
-        feat.setAttribute(0, nodeData["id"])
-        feat.setGeometry(QgsGeometry.fromPoint(QgsPoint(point.x(),point.y())))
-        self.active_layer.dataProvider().addFeatures([feat])
+    # def addUninode(self, point, nodeData):
+    #     '''ADD FEATURE TO LAYER'''
+    #     feat = QgsFeature()
+    #     feat.initAttributes (1)
+    #     feat.setAttribute(0, nodeData["id"])
+    #     feat.setGeometry(QgsGeometry.fromPoint(QgsPoint(point.x(),point.y())))
+    #     self.active_layer.dataProvider().addFeatures([feat])
+    #
+    #     '''ADD TO data.xml '''
+    #     roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
+    #     nodes = roadNetwork.find('Nodes')
+    #     uniNodeParent = nodes.find('UniNodes')
+    #     node = ElementTree.SubElement(uniNodeParent, 'UniNode')
+    #     #add Id
+    #     ElementTree.SubElement(node, 'nodeID').text = str(nodeData["id"])
+    #     #add location
+    #     location = ElementTree.SubElement(node, 'location')
+    #     ElementTree.SubElement(location, 'xPos').text = "--"
+    #     ElementTree.SubElement(location, 'yPos').text = "--"
+    #     #add originalDB_ID
+    #     ElementTree.SubElement(node, 'originalDB_ID').text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
+    #     #add firstPair
+    #     if nodeData["firstPair"] is not 0:
+    #         firstPair = ElementTree.SubElement(node, 'firstPair')
+    #         ElementTree.SubElement(firstPair, 'first').text = str(nodeData["firstPair"][0])
+    #         ElementTree.SubElement(firstPair, 'second').text = str(nodeData["firstPair"][1])
+    #     if nodeData["secondPair"] is not 0:
+    #         secondPair = ElementTree.SubElement(node, 'secondPair')
+    #         ElementTree.SubElement(secondPair, 'first').text = str(nodeData["secondPair"][0])
+    #         ElementTree.SubElement(secondPair, 'second').text = str(nodeData["secondPair"][1])
+    #
+    #     connectorsEle = ElementTree.SubElement(node, 'Connectors')
+    #     if nodeData["connectors"] :
+    #         for connector in nodeData["connectors"]:
+    #             connectorEle = ElementTree.SubElement(connectorsEle, 'Connector')
+    #             ElementTree.SubElement(connectorEle, 'laneFrom').text = str(connector[0])
+    #             ElementTree.SubElement(connectorEle, 'laneTo').text = str(connector[1])
 
-        '''ADD TO data.xml '''
-        roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
-        nodes = roadNetwork.find('Nodes')
-        uniNodeParent = nodes.find('UniNodes')
-        node = ElementTree.SubElement(uniNodeParent, 'UniNode')
-        #add Id
-        ElementTree.SubElement(node, 'nodeID').text = str(nodeData["id"])
-        #add location
-        location = ElementTree.SubElement(node, 'location')
-        ElementTree.SubElement(location, 'xPos').text = "--"
-        ElementTree.SubElement(location, 'yPos').text = "--"
-        #add originalDB_ID
-        ElementTree.SubElement(node, 'originalDB_ID').text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
-        #add firstPair
-        if nodeData["firstPair"] is not 0:
-            firstPair = ElementTree.SubElement(node, 'firstPair')
-            ElementTree.SubElement(firstPair, 'first').text = str(nodeData["firstPair"][0])
-            ElementTree.SubElement(firstPair, 'second').text = str(nodeData["firstPair"][1])
-        if nodeData["secondPair"] is not 0:
-            secondPair = ElementTree.SubElement(node, 'secondPair')
-            ElementTree.SubElement(secondPair, 'first').text = str(nodeData["secondPair"][0])
-            ElementTree.SubElement(secondPair, 'second').text = str(nodeData["secondPair"][1])
+    # def updateUninode(self, feature, nodeData):
+    #     #update feature if necessary
+    #     attrs = feature.attributes()
+    #     id = int(attrs[0])
+    #     if id != nodeData["id"]:
+    #         attrs = {0 : nodeData["id"]}
+    #         self.active_layer.dataProvider().changeAttributeValues({int(feature.id()) : attrs })
+    #     #get info
+    #     roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
+    #     nodes = roadNetwork.find('Nodes')
+    #     uniNodeParent = nodes.find('UniNodes')
+    #     uniNodes = uniNodeParent.findall('UniNode')
+    #     selectedNode = None
+    #     if uniNodes is not None:
+    #         for uniNode in uniNodes:
+    #             nodeId = int(uniNode.find("nodeID").text)
+    #             if nodeId == id:
+    #                 selectedNode = uniNode
+    #                 break
+    #     if selectedNode is None:
+    #         QgsMessageLog.logMessage("updateUninode not find node id %s"%id, 'SimGDC')
+    #         return
+    #     #update id
+    #     selectedNode.find("nodeID").text = str(nodeData["id"])
+    #     #update aimsunId
+    #     selectedNode.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
+    #     #firstPair
+    #     firstPair = selectedNode.find("firstPair")
+    #     if firstPair is None and nodeData["firstPair"] is not 0:
+    #         newFirstPair = ElementTree.SubElement(selectedNode, 'firstPair')
+    #         ElementTree.SubElement(newFirstPair, 'first').text = str(nodeData["firstPair"][0])
+    #         ElementTree.SubElement(newFirstPair, 'second').text = str(nodeData["firstPair"][1])
+    #     if firstPair is not None:
+    #         if nodeData["firstPair"] is not 0:
+    #             firstPair.find("first").text = str(nodeData["firstPair"][0])
+    #             firstPair.find("second").text = str(nodeData["firstPair"][1])
+    #         else:
+    #             selectedNode.remove(firstPair)
+    #     #secondPair
+    #     secondPair = selectedNode.find("secondPair")
+    #     if secondPair is None and nodeData["secondPair"] is not None:
+    #         if nodeData["secondPair"] is not 0:
+    #             newSecondPair = ElementTree.SubElement(selectedNode, 'secondPair')
+    #             ElementTree.SubElement(newSecondPair, 'first').text = str(nodeData["secondPair"][0])
+    #             ElementTree.SubElement(newSecondPair, 'second').text = str(nodeData["secondPair"][1])
+    #     if secondPair is not None:
+    #         if nodeData["secondPair"] is not None and nodeData["secondPair"] is not 0:
+    #             secondPair.find("first").text = str(nodeData["secondPair"][0])
+    #             secondPair.find("second").text = str(nodeData["secondPair"][1])
+    #         else:
+    #             selectedNode.remove(secondPair)
+    #     #connectors
+    #     connectors = selectedNode.find("Connectors")
+    #     if connectors is not None:
+    #         selectedNode.remove(connectors)
+    #     connectorsEle = ElementTree.SubElement(selectedNode, 'Connectors')
+    #     if nodeData["connectors"] :
+    #         for connector in nodeData["connectors"]:
+    #             connectorEle = ElementTree.SubElement(connectorsEle, 'Connector')
+    #             ElementTree.SubElement(connectorEle, 'laneFrom').text = str(connector[0])
+    #             ElementTree.SubElement(connectorEle, 'laneTo').text = str(connector[1])
 
-        connectorsEle = ElementTree.SubElement(node, 'Connectors')
-        if nodeData["connectors"] :
-            for connector in nodeData["connectors"]:
-                connectorEle = ElementTree.SubElement(connectorsEle, 'Connector')
-                ElementTree.SubElement(connectorEle, 'laneFrom').text = str(connector[0])
-                ElementTree.SubElement(connectorEle, 'laneTo').text = str(connector[1])
-
-    def updateUninode(self, feature, nodeData):
-        #update feature if necessary
-        attrs = feature.attributes()
-        id = int(attrs[0])
-        if id != nodeData["id"]:
-            attrs = {0 : nodeData["id"]}
-            self.active_layer.dataProvider().changeAttributeValues({int(feature.id()) : attrs })
-        #get info
-        roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
-        nodes = roadNetwork.find('Nodes')
-        uniNodeParent = nodes.find('UniNodes')
-        uniNodes = uniNodeParent.findall('UniNode')
-        selectedNode = None
-        if uniNodes is not None:
-            for uniNode in uniNodes:
-                nodeId = int(uniNode.find("nodeID").text)
-                if nodeId == id:
-                    selectedNode = uniNode
-                    break
-        if selectedNode is None:
-            QgsMessageLog.logMessage("updateUninode not find node id %s"%id, 'SimGDC')
-            return
-        #update id
-        selectedNode.find("nodeID").text = str(nodeData["id"])
-        #update aimsunId
-        selectedNode.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
-        #firstPair
-        firstPair = selectedNode.find("firstPair")
-        if firstPair is None and nodeData["firstPair"] is not 0:
-            newFirstPair = ElementTree.SubElement(selectedNode, 'firstPair')
-            ElementTree.SubElement(newFirstPair, 'first').text = str(nodeData["firstPair"][0])
-            ElementTree.SubElement(newFirstPair, 'second').text = str(nodeData["firstPair"][1])
-        if firstPair is not None:
-            if nodeData["firstPair"] is not 0:
-                firstPair.find("first").text = str(nodeData["firstPair"][0])
-                firstPair.find("second").text = str(nodeData["firstPair"][1])
-            else:
-                selectedNode.remove(firstPair)
-        #secondPair
-        secondPair = selectedNode.find("secondPair")
-        if secondPair is None and nodeData["secondPair"] is not None:
-            if nodeData["secondPair"] is not 0:
-                newSecondPair = ElementTree.SubElement(selectedNode, 'secondPair')
-                ElementTree.SubElement(newSecondPair, 'first').text = str(nodeData["secondPair"][0])
-                ElementTree.SubElement(newSecondPair, 'second').text = str(nodeData["secondPair"][1])
-        if secondPair is not None:
-            if nodeData["secondPair"] is not None and nodeData["secondPair"] is not 0:
-                secondPair.find("first").text = str(nodeData["secondPair"][0])
-                secondPair.find("second").text = str(nodeData["secondPair"][1])
-            else:
-                selectedNode.remove(secondPair)
-        #connectors
-        connectors = selectedNode.find("Connectors")
-        if connectors is not None:
-            selectedNode.remove(connectors)
-        connectorsEle = ElementTree.SubElement(selectedNode, 'Connectors')
-        if nodeData["connectors"] :
-            for connector in nodeData["connectors"]:
-                connectorEle = ElementTree.SubElement(connectorsEle, 'Connector')
-                ElementTree.SubElement(connectorEle, 'laneFrom').text = str(connector[0])
-                ElementTree.SubElement(connectorEle, 'laneTo').text = str(connector[1])
-
-
-    def getUninode(self, feature):
-        #get id from feature
-        attrs = feature.attributes()
-        id = int(attrs[0])
-        #get info
-        roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
-        nodes = roadNetwork.find('Nodes')
-        uniNodeParent = nodes.find('UniNodes')
-        uniNodes = uniNodeParent.findall('UniNode')
-        selectedNode = None
-        if uniNodes is not None:
-            for uniNode in uniNodes:
-                nodeId = int(uniNode.find("nodeID").text)
-                if nodeId == id:
-                    selectedNode = uniNode
-                    break
-        if selectedNode is not None:            # Modifying existing node
-            info = {}
-            info["id"] = selectedNode.find("nodeID").text
-            aimsunIdStr = selectedNode.find("originalDB_ID").text
-            aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
-            info["aimsunId"] = aimsunIds[0]
-            info["firstPair"] = None
-            firstPair = selectedNode.find("firstPair")
-            if firstPair is not None and firstPair is not 0:
-                info["firstPair"] = [int(firstPair.find("first").text), int(firstPair.find("second").text)]
-            info["secondPair"] = None
-            secondPair = selectedNode.find("secondPair")
-            if secondPair is not None:
-                info["secondPair"] = [int(secondPair.find("first").text), int(secondPair.find("second").text)]
-            info["connectors"] = None
-            connectors = selectedNode.find("Connectors")
-            if connectors is not None:
-                info["connectors"] = []
-                for connector in connectors.findall('Connector'):
-                    info["connectors"].append([int(connector.find("laneFrom").text), int(connector.find("laneTo").text)])
-            return info
-        return None
+    #
+    # def getUninode(self, feature):
+    #     #get id from feature
+    #     attrs = feature.attributes()
+    #     id = int(attrs[0])
+    #     #get info
+    #     roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
+    #     nodes = roadNetwork.find('Nodes')
+    #     uniNodeParent = nodes.find('UniNodes')
+    #     uniNodes = uniNodeParent.findall('UniNode')
+    #     selectedNode = None
+    #     if uniNodes is not None:
+    #         for uniNode in uniNodes:
+    #             nodeId = int(uniNode.find("nodeID").text)
+    #             if nodeId == id:
+    #                 selectedNode = uniNode
+    #                 break
+    #     if selectedNode is not None:            # Modifying existing node
+    #         info = {}
+    #         info["id"] = selectedNode.find("nodeID").text
+    #         aimsunIdStr = selectedNode.find("originalDB_ID").text
+    #         aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
+    #         info["aimsunId"] = aimsunIds[0]
+    #         info["firstPair"] = None
+    #         firstPair = selectedNode.find("firstPair")
+    #         if firstPair is not None and firstPair is not 0:
+    #             info["firstPair"] = [int(firstPair.find("first").text), int(firstPair.find("second").text)]
+    #         info["secondPair"] = None
+    #         secondPair = selectedNode.find("secondPair")
+    #         if secondPair is not None:
+    #             info["secondPair"] = [int(secondPair.find("first").text), int(secondPair.find("second").text)]
+    #         info["connectors"] = None
+    #         connectors = selectedNode.find("Connectors")
+    #         if connectors is not None:
+    #             info["connectors"] = []
+    #             for connector in connectors.findall('Connector'):
+    #                 info["connectors"].append([int(connector.find("laneFrom").text), int(connector.find("laneTo").text)])
+    #         return info
+    #     return None
 
 
     def addMultiNode(self, point, nodeData):
@@ -195,27 +195,55 @@ class ActionHandler():
         #add Id
         ElementTree.SubElement(multiNode, 'nodeID').text = str(nodeData["id"])
         #addType
-        ElementTree.SubElement(nodeType, 'nodeType').text = str(nodeData["type"])
+        ElementTree.SubElement(multiNode, 'nodeType').text = str(nodeData["nodeType"])
+        #addTrafficLightID
+        ElementTree.SubElement(multiNode, 'trafficLightID').text = str(nodeData["trafficLightID"])
+
+        #addTurningGroup
+        turningGroupParent = ElementTree.SubElement(multiNode, 'TurningGroups')
+
+        turningGroup = ElementTree.SubElement(turningGroupParent, 'TurningGroup')
+
+        if nodeData["turningGroup"] is not None:
+            for tG in nodeData["turningGroup"]:
+                ElementTree.SubElement(turningGroup, 'ID').text = str(tG[0])
+                ElementTree.SubElement(turningGroup, 'fromLink').text = str(tG[1])
+                ElementTree.SubElement(turningGroup, 'toLink').text = str(tG[2])
+                ElementTree.SubElement(turningGroup, 'Phases').text = str(tG[3])
+                ElementTree.SubElement(turningGroup, 'Rules').text = str(tG[4])
+                if nodeData["turningPath"] is not None:
+                    for tP in nodeData["turningPath"]:
+                        if tP[0] == tG[0]:
+                            turningPathParent = ElementTree.SubElement(turningGroup, 'TurningPaths')
+                            turningPath = ElementTree.SubElement(turningPathParent, 'TurningPath')
+                            ElementTree.SubElement(turningPath, 'groupID').text = str(tP[0])
+                            ElementTree.SubElement(turningPath, 'ID').text = str(tP[1])
+                            ElementTree.SubElement(turningPath, 'fromLane').text = str(tP[2])
+                            ElementTree.SubElement(turningPath, 'toLane').text = str(tP[3])
+
+
+
         #add location
         location = ElementTree.SubElement(multiNode, 'location')
         ElementTree.SubElement(location, 'xPos').text = str(feat.geometry().asPoint().x())
         ElementTree.SubElement(location, 'yPos').text = str(feat.geometry().asPoint().y())
+
         #add originalDB_ID
         ElementTree.SubElement(multiNode, 'originalDB_ID').text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
-        #add roadSegmentsAt
-        roadSegmentsAt = ElementTree.SubElement(multiNode, 'roadSegmentsAt')
-        for roadSegment in nodeData["roadSegments"]:
-            ElementTree.SubElement(roadSegmentsAt, 'segmentID').text = str(roadSegment)
-        #add connectors
-        connectorsEle = ElementTree.SubElement(multiNode, 'Connectors')
-        for multiConnector in nodeData["multiConnectors"]:
-            multiConnectorEle = ElementTree.SubElement(connectorsEle, 'MultiConnectors')
-            ElementTree.SubElement(multiConnectorEle, 'RoadSegment').text = str(multiConnector[0])
-            connectors = ElementTree.SubElement(multiConnectorEle, 'Connectors')
-            for innerConnector in multiConnector[1]:
-                connector = ElementTree.SubElement(connectors, 'Connector')
-                ElementTree.SubElement(connector, 'laneFrom').text = str(innerConnector[0])
-                ElementTree.SubElement(connector, 'laneTo').text = str(innerConnector[1])                
+        # #add roadSegmentsAt
+        # roadSegmentsAt = ElementTree.SubElement(multiNode, 'roadSegmentsAt')
+        # for roadSegment in nodeData["roadSegments"]:
+        #     ElementTree.SubElement(roadSegmentsAt, 'segmentID').text = str(roadSegment)
+        # #add connectors
+        # connectorsEle = ElementTree.SubElement(multiNode, 'Connectors')
+        # for multiConnector in nodeData["multiConnectors"]:
+        #     multiConnectorEle = ElementTree.SubElement(connectorsEle, 'MultiConnectors')
+        #     ElementTree.SubElement(multiConnectorEle, 'RoadSegment').text = str(multiConnector[0])
+        #     connectors = ElementTree.SubElement(multiConnectorEle, 'Connectors')
+        #     for innerConnector in multiConnector[1]:
+        #         connector = ElementTree.SubElement(connectors, 'Connector')
+        #         ElementTree.SubElement(connector, 'laneFrom').text = str(innerConnector[0])
+        #         ElementTree.SubElement(connector, 'laneTo').text = str(innerConnector[1])
 
 
     def updateMultiNode(self, feature, nodeData):
@@ -244,15 +272,39 @@ class ActionHandler():
         selectedNode.find("nodeID").text = str(nodeData["id"])
         #update type
         selectedNode.find("nodeType").text = str(nodeData["type"])
+
+        #addTrafficLightID
+        selectedNode.find("trafficLightID").text = str(nodeData["trafficLightID"])
+
+        #addTurningGroup
+        turningGroupParent = selectedNode.find("TurningGroups")
+
+        turningGroup = turningGroupParent.findall("TurningGroup")
+
+        for tG in nodeData["turningGroup"]:
+            TG = selectedNode.findall("TurningGroup")
+            TG.find("ID").text = str(tG[0])
+            TG.find("fromLink").text = str(tG[1])
+            TG.find("toLink").text = str(tG[2])
+            TG.find("Phases").text = str(tG[3])
+            TG.find('Rules').text = str(tG[4])
+            turningPaths = TG.findall("TurningPaths")
+            for tP in nodeData["TurningPaths"]:
+                TG.find("groupID").text = str(tP[0])
+                TG.find("ID").text = str(tP[1])
+                TG.find("fromLane").text = str(tP[2])
+                TG.find("toLane").text = str(tP[3])
+
         #update aimsunId
         selectedNode.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
-        #update roadSegmentsAt
-        roadSegmentsAt = selectedNode.find("roadSegmentsAt")
-        if roadSegmentsAt is not None:
-            selectedNode.remove(roadSegmentsAt)
-        roadSegmentsAt = ElementTree.SubElement(selectedNode, 'roadSegmentsAt')
-        for roadSegment in nodeData["roadSegments"]:
-            ElementTree.SubElement(roadSegmentsAt, 'segmentID').text = str(roadSegment)
+
+        # #update roadSegmentsAt
+        # roadSegmentsAt = selectedNode.find("roadSegmentsAt")
+        # if roadSegmentsAt is not None:
+        #     selectedNode.remove(roadSegmentsAt)
+        # roadSegmentsAt = ElementTree.SubElement(selectedNode, 'roadSegmentsAt')
+        # for roadSegment in nodeData["roadSegments"]:
+        #     ElementTree.SubElement(roadSegmentsAt, 'segmentID').text = str(roadSegment)
         #update connectors
         # connectorsEle = selectedNode.find("Connectors")
         # if connectorsEle is not None:
@@ -290,22 +342,38 @@ class ActionHandler():
             aimsunIdStr = selectedNode.find("originalDB_ID").text
             aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
             info["aimsunId"] = aimsunIds[0]
-            info["roadSegmentsAt"] = None
-            roadSegmentsAt = selectedNode.find("roadSegmentsAt")
-            if roadSegmentsAt is not None:
-                info["roadSegmentsAt"] = []
-                for segmentID in roadSegmentsAt.findall('segmentID'):
-                    info["roadSegmentsAt"].append(segmentID.text)
-            info["connectors"] = None
-            connectors = selectedNode.find("Connectors")
-            if connectors is not None:
-                info["connectors"] = []
-                for multiConnector in connectors.findall('MultiConnectors'):
-                    roadSegment = multiConnector.find("RoadSegment").text
-                    innerConnectors = []
-                    for innerConnector in multiConnector.find("Connectors"):
-                        innerConnectors.append("%s,%s"%(innerConnector.find("laneFrom").text,innerConnector.find("laneTo").text))
-                    info["connectors"].append([roadSegment, innerConnectors])
+            info["type"] = selectedNode.find("nodeType")
+            info["trafficLightID"] = selectedNode.find("trafficLightID")
+
+
+        turningGroups = selectedNode.find("TurningGroups")
+
+        turningGroup = turningGroups.findall("TurningGroup")
+
+        for tG in nodeData["turningGroup"]:
+            info["turningGroup"].append(tg)
+            turningPaths = turningGroup.findall("TurningPath")
+            for tP in turningPaths:
+                info["turningPaths"].append(tP)
+
+
+
+            # info["roadSegmentsAt"] = None
+            # roadSegmentsAt = selectedNode.find("roadSegmentsAt")
+            # if roadSegmentsAt is not None:
+            #     info["roadSegmentsAt"] = []
+            #     for segmentID in roadSegmentsAt.findall('segmentID'):
+            #         info["roadSegmentsAt"].append(segmentID.text)
+            # info["connectors"] = None
+            # connectors = selectedNode.find("Connectors")
+            # if connectors is not None:
+            #     info["connectors"] = []
+            #     for multiConnector in connectors.findall('MultiConnectors'):
+            #         roadSegment = multiConnector.find("RoadSegment").text
+            #         innerConnectors = []
+            #         for innerConnector in multiConnector.find("Connectors"):
+            #             innerConnectors.append("%s,%s"%(innerConnector.find("laneFrom").text,innerConnector.find("laneTo").text))
+            #         info["connectors"].append([roadSegment, innerConnectors])
             return info
         return None    
 
@@ -406,11 +474,20 @@ class ActionHandler():
             #add Info
             ElementTree.SubElement(segment, 'segmentID').text = str(data["id"])
             ElementTree.SubElement(segment, 'originalDB_ID').text = "\"aimsun-id\":\"%s\""%str(data["aimsunId"])
-            ElementTree.SubElement(segment, 'startingNode').text = str(data["startingNode"])           
-            ElementTree.SubElement(segment, 'endingNode').text = str(data["endingNode"])
+            ElementTree.SubElement(segment, 'sequenceno').text = str(data["sequenceno"])
+            ElementTree.SubElement(segment, 'capacity').text = str(data["capacity"])
             ElementTree.SubElement(segment, 'maxSpeed').text = str(data["maxSpeed"])
-            ElementTree.SubElement(segment, 'Length').text = str(data["length"])
-            ElementTree.SubElement(segment, 'Width').text = str(data["width"])
+            ElementTree.SubElement(segment, 'roadType').text = str(data["roadType"])
+            ElementTree.SubElement(segment, 'category').text = str(data["category"])
+            connectors = ElementTree.SubElement(segment, 'Connectors')
+            connector = ElementTree.SubElement(connectors, 'Connector')
+            for conn in data["connectors"]:
+                ElementTree.SubElement(connector, 'laneconnectorID').text = str(conn[0])
+                ElementTree.SubElement(connector, 'fromSection').text = str(conn[1])
+                ElementTree.SubElement(connector, 'toSection').text = str(conn[2])
+                ElementTree.SubElement(connector, 'fromLane').text = str(conn[3])
+                ElementTree.SubElement(connector, 'toLane').text = str(conn[4])
+
 
     def updateSegment(self, feature, data):
         #update feature if necessary
@@ -445,11 +522,21 @@ class ActionHandler():
         #update info
         selectedSegment.find("segmentID").text = str(data["id"])
         selectedSegment.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(data["aimsunId"])
-        selectedSegment.find("startingNode").text = str(data["startingNode"])
-        selectedSegment.find("endingNode").text = str(data["endingNode"])
+        selectedSegment.find("sequenceno").text = str(data["sequenceno"])
+        selectedSegment.find("capacity").text = str(data["capacity"])
         selectedSegment.find("maxSpeed").text = str(data["maxSpeed"])
-        selectedSegment.find("Length").text = str(data["length"])
-        selectedSegment.find("Width").text = str(data["width"])
+        selectedSegment.find("roadType").text = str(data["roadType"])
+        selectedSegment.find("category").text = str(data["category"])
+
+        connectorsroot = selectedSegment.find("Connectors").text
+        connectors = connectorsroot.findall("Connector")
+        for conn in connectors:
+            conn.find("laneconnectorID").text = str(conn[0])
+            conn.find("fromSection").text = str(conn[1])
+            conn.find("toSection").text = str(conn[2])
+            conn.find("fromLane").text = str(conn[3])
+            conn.find("toLane").text = str(conn[4])
+
         #move to new link if necessary
         if oldLinkId != data["linkId"]:
             oldLinkSegments.remove(selectedSegment)
@@ -484,11 +571,17 @@ class ActionHandler():
             aimsunIdStr = selectedSegment.find("originalDB_ID").text
             aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
             info["aimsunId"] = aimsunIds[0]
-            info["startingNode"] = selectedSegment.find("startingNode").text
-            info["endingNode"] = selectedSegment.find("endingNode").text
+            info["sequenceno"] = selectedSegment.find("sequenceno").text
+            info["capacity"] = selectedSegment.find("capacity").text
             info["maxSpeed"] = selectedSegment.find("maxSpeed").text
-            info["length"] = selectedSegment.find("Length").text
-            info["width"] = selectedSegment.find("Width").text
+            info["roadType"] = selectedSegment.find("roadType").text
+            info["category"] = selectedSegment.find("category").text
+            info["connectors"] = selectedSegment.find("connectors").text
+            connectorsroot = selectedSegment.find("Connectors").text
+            connectors = connectorsroot.findall("Connector")
+            for conn in connectors:
+                info["connectors"].append(conn)
+
             return [listLinks, info]
         return None
 
@@ -1057,23 +1150,23 @@ class ActionHandler():
         else:
             self.deleteSegmentComponents(features)
 
-    def deleteUniNode(self, features):
-        ids = {}
-        # delete from shapefile
-        for feature in features:
-            self.active_layer.dataProvider().deleteFeatures([feature.id()])
-            attrs = feature.attributes()
-            ids[int(attrs[0])] = True
-        # delete data dependency
-        roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
-        nodes = roadNetwork.find('Nodes')
-        uniNodeParent = nodes.find('UniNodes')
-        uniNodes = uniNodeParent.findall('UniNode')
-        if uniNodes is not None:
-            for uniNode in uniNodes:
-                nodeId = int(uniNode.find("nodeID").text)
-                if nodeId in ids:
-                    uniNodeParent.remove(uniNode)
+    # def deleteUniNode(self, features):
+    #     ids = {}
+    #     # delete from shapefile
+    #     for feature in features:
+    #         self.active_layer.dataProvider().deleteFeatures([feature.id()])
+    #         attrs = feature.attributes()
+    #         ids[int(attrs[0])] = True
+    #     # delete data dependency
+    #     roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
+    #     nodes = roadNetwork.find('Nodes')
+    #     uniNodeParent = nodes.find('UniNodes')
+    #     uniNodes = uniNodeParent.findall('UniNode')
+    #     if uniNodes is not None:
+    #         for uniNode in uniNodes:
+    #             nodeId = int(uniNode.find("nodeID").text)
+    #             if nodeId in ids:
+    #                 uniNodeParent.remove(uniNode)
 
     def deleteMulNode(self, features):
         ids = {}
@@ -1092,7 +1185,7 @@ class ActionHandler():
                 if nodeId in ids:
                     mulNodeParent.remove(mulNode)
 
-    def deleteSegmentComponents(self, features):
+    def deleteSegmentComponents(self, features):                            #for busstop, crossing, laneedge
         ids = {}
         # delete from shapefile
         for feature in features:
@@ -1174,6 +1267,7 @@ class ActionHandler():
                                 segmentId = int(segment.find("segmentID").text)
                                 if segmentId in ids:
                                     segmentParent.remove(segment)
+
 
     def save(self):
         self.document.write(self.data_path, encoding="utf-8", xml_declaration=True, default_namespace=None, method="xml")

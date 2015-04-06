@@ -5,9 +5,9 @@
                                  A QGIS plugin
  iSim converter
                              -------------------
-        begin                : 2014-02-03
-        copyright            : (C) 2014 by nhudinhtuan
-        email                : nhudinhtuan@gmail.com
+        begin                : 2015-03-30
+        copyright            : (C) 2015 by chaitanyamalaviya
+        email                : chaitanyamalaviya@gmail.com
  ***************************************************************************/
 
 /***************************************************************************
