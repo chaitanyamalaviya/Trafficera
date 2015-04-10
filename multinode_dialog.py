@@ -21,7 +21,6 @@
 """
 from PyQt4 import QtCore, QtGui
 from ui_multinode import Ui_MultiNode
-from qgis.core import *
 import os
 from xml.etree import ElementTree
 from qgis.core import *
@@ -44,13 +43,31 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.info = None
         self.isModified = False
         self.listSegments = None
-        self.turninggrouplist = []
-        self.turningpathlist = []
+        # self.turninggrouplist = []
+        # self.turningpathlist = []
 
     def setInfo(self, info):
         self.info = info
         global original_id
         self.setLinklist()
+        self.setLanelist()
+
+        self.TurningGroupTable.setRowCount(10)
+        self.TurningGroupTable.setColumnCount(5)
+        TableHeader = ['ID','fromLink','toLink','Phases','Rules']
+        self.TurningGroupTable.setHorizontalHeaderLabels(TableHeader)
+        self.TurningGroupTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.TurningGroupTable.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+
+
+        self.TurningPathTable.setRowCount(10)
+        self.TurningPathTable.setColumnCount(3)
+        TableHeader = ['Turning Path ID', 'fromLane', 'toLane']
+        self.TurningPathTable.setHorizontalHeaderLabels(TableHeader)
+        self.TurningPathTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.TurningPathTable.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+
+
         if self.info is not None:               # updating existing element
             self.isModified = True
             self.actionButton.setText("SAVE")
@@ -60,17 +77,10 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.nodeType.setText(self.info["nodeType"])
             self.trafficLightID.setText(self.info["trafficLightID"])
 
-            if self.info["turningGroup"] is not None:
-                self.TurningGroupTable.setRowCount(10)
-                self.TurningGroupTable.setColumnCount(4)
-                TableHeader = ['ID','fromLink','toLink','Phases','Rules']
-                self.TurningGroupTable.setHorizontalHeaderLabels(TableHeader)
-                #self.TurningGroupTable.verticalHeader()->setVisible(false)
-                self.TurningGroupTable.setSelectionBehavior(SelectRows)
-                self.TurningGroupTable.setSelectionMode(SingleSelection)
+            if self.info["turningGroup"]:
                 for group in self.info["turningGroup"]:
                     ridx = self.info["turningGroup"].index(group)
-                    for cidx in range(0,4) :
+                    for cidx in range(5):
                         self.TurningGroupTable.setItem(ridx,cidx,group[cidx])
 
             # if self.info["roadSegmentsAt"] is not None:
@@ -85,10 +95,9 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         else:
             self.addnewid()
             self.actionButton.setText("ADD")
-
-
-
-
+            self.info = {}
+            self.info["turningGroup"] = []
+            self.info["turningPath"] = []
         QtCore.QObject.connect(self.newturningGroup, QtCore.SIGNAL('clicked(bool)'), self.addTurningGroup)
         QtCore.QObject.connect(self.newTurningPath, QtCore.SIGNAL('clicked(bool)'), self.addTurningPath)
         QtCore.QObject.connect(self.TurningGroupTable, QtCore.SIGNAL('itemSelectionChanged()'), self.displayturninggroup)
@@ -97,73 +106,87 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
     def addTurningGroup(self):
-        self.info = {}
-        self.info["turningGroup"] = []
+        #self.info = {}
+
         turningGroupID = self.turningGroupID.text()
         if turningGroupID.isdigit() is False:
             self.errorMessage.setText("Turning Group ID is invalid. It must be a number.")
             return
 
-        self.turninggrouplist.append([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText()])
+        ridx = len(self.info["turningGroup"])
+        self.info["turningGroup"].append([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText()])
 
 
-        ridx = len(self.info["turningGroup"]) + 1
+        for cidx in range(5) :
+            for tg in self.info["turningGroup"]:
+                self.TurningGroupTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(tg[cidx]))
 
-        for cidx in range(0,4) :
-            self.TurningGroupTable.setItem(ridx,cidx,QTableWidgetItem(self.turninggrouplist[ridx-1][cidx]))
-
-        self.info["turningGroup"].append(self.turninggrouplist)
 
     def addTurningPath(self):
-        self.info = {}
-        self.info["turningPath"] = []
+        #self.info = {}
+
         turningPathID = self.TurningPath.text()
         if turningPathID.isdigit() is False:
             self.errorMessage.setText("Turning Path ID is invalid. It must be a number.")
             return
         groupID = self.turningGroupID.text()
-        self.turningpathlist.append([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText()])
-        ridx = self.info["turningPath"].length() + 1
-        self.TurningPathTable.insertRow()
+
+        ridx = len(self.info["turningPath"])
+        self.info["turningPath"].append([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText()])
 
 
-        for cidx in range(0,4) :
-            self.TurningPathTable.setItem(ridx,cidx,QTableWidgetItem(self.turningpathlist[ridx-1][cidx]))
+        for cidx in range(5) :
+            for tp in self.info["turningPath"]:
+                self.TurningPathTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(tp[cidx+1]))
 
-        self.info["turningPath"].append(self.turningpathlist)
+        # self.info["turningPath"].append(self.turningpathlist)
 
 
     def displayturninggroup(self):
-        ridx = self.TurningGroupTable.currentRow()
-        self.turningGroupID.setText(self.info["turningGroup"][ridx][0])
-        self.fromLink.setText(self.info["turningGroup"][ridx][1])
-        self.toLink.setText(self.info["turningGroup"][ridx][2])
-        self.Phases.setText(self.info["turningGroup"][ridx][3])
-        self.Rules.setText(self.info["turningGroup"][ridx][4])
+
+        #self.info = {}
+        self.info["turningPath"] = []
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory, nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+        # msgBox = QtGui.QMessageBox()
+        # msgBox.setText(''.join(self.info["turningGroup"][][ridx][0]))
+        # msgBox.exec_()
+        # return
+        # self.errorMessage.setText(''.join(self.info["turningGroup"][ridx][0]))
+        # return
+        self.turningGroupID.setText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),0).text())
+        self.fromLink.setEditText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),1).text())
+        self.toLink.setEditText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),2).text())
+        self.Phases.setText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),3).text())
+        self.Rules.setEditText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),4).text())
 
         # display corresponding turning paths in turning path table
 
-        if self.info["turningPath"] is not None:
-            self.TurningPathTable.setRowCount(self.info["turningPath"].length())
-            self.TurningPathTable.setColumnCount(3)
-            TableHeader = ['Turning Path ID', 'fromLane', 'toLane']
-            self.TurningPathTable.setHorizontalHeaderLabels(TableHeader)
-            #self.TurningPathTable.verticalHeader()->setVisible(false)
-            self.TurningPathTable.setSelectionBehavior(SelectRows)
-            self.TurningPathTable.setSelectionMode(SingleSelection)
-            for path in self.info["turningPath"]:
-                ridx = self.info["turningPath"].index(path)
-                if self.turningGroupID.currentText() == path[0]:
-                    for cidx in range(0,4) :
-                        self.TurningPathTable.setItem(ridx,cidx,path[cidx])
+            # for tG in root.iter('TurningGroup'):
+            #     if self.turningGroupID.currentText() == tG.find('ID').text:
+            #         i=0
+            #         for tp in tG.findall('TurningPaths'):
+            #             self.TurningPathTable.setItem(i,0,tp.find('ID'))
+            #             self.TurningPathTable.setItem(i,1,tp.find('fromLane'))
+            #             self.TurningPathTable.setItem(i,2,tp.find('toLane'))
+            #             i = i+1
+
+        for path in self.info["turningPath"]:
+            ridx = self.info["turningPath"].index(path)
+            if self.turningGroupID.currentText() == path[0]:
+                for cidx in range(3) :
+                    self.TurningPathTable.setItem(ridx,cidx,path[cidx+1])
+
 
 
 
     def displayturningpath(self):
         ridx = self.TurningPathTable.currentRow()
-        self.turningPathID.setText(self.info["turningPath"][ridx][1])       #groupid is index 0
-        self.fromLane.setText(self.info["turningPath"][ridx][2])
-        self.toLane.setText(self.info["turningPath"][ridx][3])
+        self.TurningPath.setText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),0).text())       #groupid is index 0
+        self.fromLane.setEditText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),1).text())
+        self.toLane.setEditText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),2).text())
 
 
 
@@ -179,15 +202,21 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.toLink.addItem(link.find('linkID').text)
 
 
+    def setLanelist(self):
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory, nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+        for lane in root.iter('Lane'):
+            self.fromLane.addItem(lane.find('laneID').text)
+            self.toLane.addItem(lane.find('laneID').text)
+
     def addnewid(self):
         nodeList = []
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
-
-        for uniNode in root.iter('UniNode'):
-            nodeList.append(int(uniNode.find('nodeID').text))
 
         for mulNode in root.iter('Intersection'):
             nodeList.append(int(mulNode.find('nodeID').text))
@@ -214,12 +243,8 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
     def update(self):
         global original_id
         self.errorMessage.setText("")
-        self.info = {}
         nodeList = []
-        lanelist = []
-        lanepairlist =[]
-        seglist = []
-
+        #self.info = {}
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')
@@ -227,12 +252,6 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
         for mulNode in root.iter('Intersection'):
             nodeList.append(mulNode.find('nodeID').text)
-
-        for uniNode in root.iter('UniNode'):
-            nodeList.append(uniNode.find('nodeID').text)
-
-        for seg in root.iter('Segment'):
-            seglist.append(seg.find('segmentID').text)
 
         nodeId = self.nodeId.text()
         if nodeId.isdigit() is False:
@@ -263,8 +282,10 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             return
         self.info["trafficLightID"] = int(trafficLightID)
 
-        self.info["turningGroup"] = None
-        self.info["turningPath"] = None
+        # if not self.info["turningGroup"]:
+        #     self.info["turningGroup"] = []
+        # if not self.info["turningPath"]:
+        #     self.info["turningPath"] = []
 
         # self.info["multiConnectors"] = []
         # mulConnectors = self.mulConnectorEdit.toPlainText()

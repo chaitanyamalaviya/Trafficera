@@ -43,7 +43,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         self.info = None
         self.listLinks = None
         self.isModified = False
-        self.laneconnectorlist = None
+        self.laneconnectorlist = []
 
 
     def setLinkList(self, links):

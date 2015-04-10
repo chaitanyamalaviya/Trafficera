@@ -3,6 +3,7 @@ from xml.etree import ElementTree
 from xml.dom import minidom
 from shapefileIO import TAGS, TYPE
 from qgis.core import *
+from PyQt4 import QtCore, QtGui
 
 def getSHTypeFromLayername(layer_name):
     parts = layer_name.split("_")
@@ -202,24 +203,23 @@ class ActionHandler():
         #addTurningGroup
         turningGroupParent = ElementTree.SubElement(multiNode, 'TurningGroups')
 
-        turningGroup = ElementTree.SubElement(turningGroupParent, 'TurningGroup')
-
-        if nodeData["turningGroup"] is not None:
-            for tG in nodeData["turningGroup"]:
-                ElementTree.SubElement(turningGroup, 'ID').text = str(tG[0])
-                ElementTree.SubElement(turningGroup, 'fromLink').text = str(tG[1])
-                ElementTree.SubElement(turningGroup, 'toLink').text = str(tG[2])
-                ElementTree.SubElement(turningGroup, 'Phases').text = str(tG[3])
-                ElementTree.SubElement(turningGroup, 'Rules').text = str(tG[4])
-                if nodeData["turningPath"] is not None:
-                    for tP in nodeData["turningPath"]:
-                        if tP[0] == tG[0]:
-                            turningPathParent = ElementTree.SubElement(turningGroup, 'TurningPaths')
-                            turningPath = ElementTree.SubElement(turningPathParent, 'TurningPath')
-                            ElementTree.SubElement(turningPath, 'groupID').text = str(tP[0])
-                            ElementTree.SubElement(turningPath, 'ID').text = str(tP[1])
-                            ElementTree.SubElement(turningPath, 'fromLane').text = str(tP[2])
-                            ElementTree.SubElement(turningPath, 'toLane').text = str(tP[3])
+        #if nodeData["turningGroup"]:
+        for tG in nodeData["turningGroup"]:
+            turningGroup = ElementTree.SubElement(turningGroupParent, 'TurningGroup')
+            ElementTree.SubElement(turningGroup, 'ID').text = str(tG[0])
+            ElementTree.SubElement(turningGroup, 'fromLink').text = str(tG[1])
+            ElementTree.SubElement(turningGroup, 'toLink').text = str(tG[2])
+            ElementTree.SubElement(turningGroup, 'Phases').text = str(tG[3])
+            ElementTree.SubElement(turningGroup, 'Rules').text = str(tG[4])
+            if nodeData["turningPath"]:
+                turningPathParent = ElementTree.SubElement(turningGroup, 'TurningPaths')
+                for tP in nodeData["turningPath"]:
+                    if tP[0] == tG[0]:
+                        turningPath = ElementTree.SubElement(turningPathParent, 'TurningPath')
+                        ElementTree.SubElement(turningPath, 'groupID').text = str(tP[0])
+                        ElementTree.SubElement(turningPath, 'ID').text = str(tP[1])
+                        ElementTree.SubElement(turningPath, 'fromLane').text = str(tP[2])
+                        ElementTree.SubElement(turningPath, 'toLane').text = str(tP[3])
 
 
 
@@ -281,15 +281,16 @@ class ActionHandler():
 
         turningGroup = turningGroupParent.findall("TurningGroup")
 
-        for tG in nodeData["turningGroup"]:
+        for tG in turningGroup:
             TG = selectedNode.findall("TurningGroup")
             TG.find("ID").text = str(tG[0])
             TG.find("fromLink").text = str(tG[1])
             TG.find("toLink").text = str(tG[2])
             TG.find("Phases").text = str(tG[3])
             TG.find('Rules').text = str(tG[4])
-            turningPaths = TG.findall("TurningPaths")
-            for tP in nodeData["TurningPaths"]:
+            turningPathParent = TG.findall("TurningPaths")
+            turningPaths = turningPathParent.findall("TurningPath")
+            for tP in turningPaths:
                 TG.find("groupID").text = str(tP[0])
                 TG.find("ID").text = str(tP[1])
                 TG.find("fromLane").text = str(tP[2])
@@ -350,11 +351,25 @@ class ActionHandler():
 
         turningGroup = turningGroups.findall("TurningGroup")
 
-        for tG in nodeData["turningGroup"]:
-            info["turningGroup"].append(tg)
-            turningPaths = turningGroup.findall("TurningPath")
-            for tP in turningPaths:
-                info["turningPaths"].append(tP)
+        info["turningGroup"] = []
+        i=0
+        if turningGroup:
+            for tG in turningGroup:
+                j=0
+                info["turningGroup"][i][0] = tG.find("ID").text
+                info["turningGroup"][i][1] = tG.find("fromLink").text
+                info["turningGroup"][i][2] = tG.find("toLink").text
+                info["turningGroup"][i][3] = tG.find("Phases").text
+                info["turningGroup"][i][4] = tG.find('Rules').text
+                turningPathParent = tG.findall("TurningPaths")
+                turningPaths = turningPathParent.findall("TurningPath")
+                for tP in turningPaths:
+                    info["turningPath"][j][0] = tP.find("groupID").text
+                    info["turningPath"][j][1] = tP.find("ID").text
+                    info["turningPath"][j][2] = tP.find("fromLane").text
+                    info["turningPath"][j][3] = tP.find("toLane").text
+                    j = j+1
+                i = i+1
 
 
 
