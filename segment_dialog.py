@@ -114,6 +114,8 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             #QtCore.QObject.connect(self.linkidcomboBox, QtCore.SIGNAL('currentIndexChanged(const QString&)'),self.updateLinkName)
         else:
             self.addnewid()
+            self.info = {}
+            self.info["connectors"]=[]
             self.actionButton.setText("ADD")
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL('clicked(bool)'), self.addlaneconnector)
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
@@ -132,7 +134,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
         for laneconnector in root.iter('Connector'):
             if laneconnector:
-                self.laneconnectorlist.append(int(laneconnector.find('ID').text))
+                self.laneconnectorlist.append(int(laneconnector.find('laneconnectorID').text))
 
         if self.laneconnectorlist:
             self.laneID.setText(str(max(self.laneconnectorlist)+1))
@@ -159,30 +161,27 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         ridx = len(self.info["connectors"])
         self.info["connectors"].append([laneconnectorid, self.fromSectioncomboBox.currentText(), self.toSectioncomboBox.currentText(), self.fromLanecomboBox.currentText(), self.toLanecomboBox.currentText()])
 
-        if self.info["connectors"]:
-            for conn in self.info["connectors"]:
-                ridx = self.info["connectors"].index(conn)
-                self.laneConnectorTable.insertRow(ridx)
-                for cidx in range(5):
-                    self.laneConnectorTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(conn[cidx]))
+        self.laneConnectorTable.insertRow(ridx)
+        for cidx in range(5):
+            self.laneConnectorTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(self.info["connectors"][ridx][cidx]))
 
 
     def displayconnector(self):
 
         ridx = self.laneConnectorTable.currentRow()
-        self.laneID.setText(self.info["connector"][ridx][0])
-        self.fromSectioncomboBox.setText(self.info["connector"][ridx][1])
-        self.toSectioncomboBox.setText(self.info["connector"][ridx][2])
-        self.fromLanecomboBox.setText(self.info["connector"][ridx][3])
-        self.toLanecomboBox.setText(self.info["connector"][ridx][4])
 
+        self.laneID.setText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),0).text())
+        self.fromSectioncomboBox.setCurrentIndex(self.fromSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),1).text()))
+        self.toSectioncomboBox.setCurrentIndex(self.toSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),2).text()))
+        self.fromLanecomboBox.setCurrentIndex(self.fromLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),3).text()))
+        self.toLanecomboBox.setCurrentIndex(self.toLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),4).text()))
 
 
 
     def update(self):
         global original_id
-        self.errorMessage.setText("")
-        self.info = {}
+        #self.errorMessage.setText("")
+
         seglist = []
 
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
@@ -237,10 +236,10 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         self.info["sequenceno"] = int(sequenceno)
 
         roadType = self.roadType.currentText()
-        self.info["roadType"] = int(roadType)
+        self.info["roadType"] = roadType
 
         category = self.category.currentText()
-        self.info["category"] = int(category)
+        self.info["category"] = category
 
         capacity = self.capacity.text()
         if capacity.isdigit() is False:

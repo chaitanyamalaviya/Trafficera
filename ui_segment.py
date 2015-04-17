@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_segment.ui'
 #
-# Created: Fri Apr 17 11:47:00 2015
+# Created: Fri Apr 17 16:23:05 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -196,13 +196,13 @@ class Ui_Segment(object):
         font.setPointSize(12)
         self.aimsunIdLabel_2.setFont(font)
         self.aimsunIdLabel_2.setObjectName(_fromUtf8("aimsunIdLabel_2"))
-        self.aimsunId_2 = QtGui.QLineEdit(self.attributeGroup_2)
-        self.aimsunId_2.setGeometry(QtCore.QRect(290, 0, 161, 23))
+        self.aimsunId = QtGui.QLineEdit(self.attributeGroup_2)
+        self.aimsunId.setGeometry(QtCore.QRect(290, 0, 161, 23))
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Times New Roman"))
         font.setPointSize(12)
-        self.aimsunId_2.setFont(font)
-        self.aimsunId_2.setObjectName(_fromUtf8("aimsunId_2"))
+        self.aimsunId.setFont(font)
+        self.aimsunId.setObjectName(_fromUtf8("aimsunId"))
         self.linkIdComboBox = QtGui.QComboBox(self.attributeGroup_2)
         self.linkIdComboBox.setGeometry(QtCore.QRect(-380, 150, 381, 27))
         font = QtGui.QFont()
@@ -257,7 +257,7 @@ class Ui_Segment(object):
         self.tabWidget_2.addTab(self.tab_4, _fromUtf8(""))
 
         self.retranslateUi(Segment)
-        self.tabWidget_2.setCurrentIndex(1)
+        self.tabWidget_2.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Segment)
 
     def retranslateUi(self, Segment):

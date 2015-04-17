@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_multinode.ui'
 #
-# Created: Thu Apr 09 10:12:41 2015
+# Created: Fri Apr 17 16:31:38 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -255,7 +255,7 @@ class Ui_MultiNode(object):
         self.toLanelabel.setBuddy(self.toLane)
 
         self.retranslateUi(MultiNode)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MultiNode)
 
     def retranslateUi(self, MultiNode):

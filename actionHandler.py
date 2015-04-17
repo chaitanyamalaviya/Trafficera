@@ -485,10 +485,11 @@ class ActionHandler():
         feat = QgsFeature()
         feat.initAttributes(2)
         distance = 1000
-        coordinates = [QgsPoint(point.x(),point.y()), QgsPoint(point.x(), point.y() + distance), QgsPoint(point.x() + 2*distance, point.y() + distance), QgsPoint(point.x() + 2*distance, point.y())]
+        #coordinates = [QgsPoint(point.x(),point.y()), QgsPoint(point.x(), point.y() + distance), QgsPoint(point.x() + 2*distance, point.y() + distance), QgsPoint(point.x() + 2*distance, point.y())]
+        coordinates = [QgsPoint(point.x(),point.y()), QgsPoint(point.x() + distance, point.y() + distance)]
         feat.setAttribute(0, data["linkId"])
         feat.setAttribute(1, data["id"])
-        feat.setGeometry(QgsGeometry.fromPolygon([coordinates]))
+        feat.setGeometry(QgsGeometry.fromPolyline(coordinates))
         self.active_layer.dataProvider().addFeatures([feat])
         '''ADD TO data.xml '''
         roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
