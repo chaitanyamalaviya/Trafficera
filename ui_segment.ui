@@ -612,7 +612,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QTableView" name="laneConnectorTable">
+    <widget class="QTableWidget" name="laneConnectorTable">
      <property name="geometry">
       <rect>
        <x>30</x>

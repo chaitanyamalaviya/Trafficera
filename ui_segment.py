@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_segment.ui'
 #
-# Created: Mon Mar 30 10:01:50 2015
+# Created: Fri Apr 17 11:47:00 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -217,10 +217,10 @@ class Ui_Segment(object):
         self.label.setGeometry(QtCore.QRect(20, 20, 111, 16))
         self.label.setObjectName(_fromUtf8("label"))
         self.laneID = QtGui.QLineEdit(self.tab_4)
-        self.laneID.setGeometry(QtCore.QRect(130, 49, 201, 21))
+        self.laneID.setGeometry(QtCore.QRect(150, 49, 201, 21))
         self.laneID.setObjectName(_fromUtf8("laneID"))
         self.laneidlabel = QtGui.QLabel(self.tab_4)
-        self.laneidlabel.setGeometry(QtCore.QRect(50, 50, 61, 20))
+        self.laneidlabel.setGeometry(QtCore.QRect(20, 50, 121, 20))
         self.laneidlabel.setObjectName(_fromUtf8("laneidlabel"))
         self.fromSectionlabel = QtGui.QLabel(self.tab_4)
         self.fromSectionlabel.setGeometry(QtCore.QRect(50, 90, 81, 20))
@@ -246,9 +246,11 @@ class Ui_Segment(object):
         self.fromLanecomboBox = QtGui.QComboBox(self.tab_4)
         self.fromLanecomboBox.setGeometry(QtCore.QRect(130, 120, 121, 22))
         self.fromLanecomboBox.setObjectName(_fromUtf8("fromLanecomboBox"))
-        self.laneConnectorTable = QtGui.QTableView(self.tab_4)
+        self.laneConnectorTable = QtGui.QTableWidget(self.tab_4)
         self.laneConnectorTable.setGeometry(QtCore.QRect(30, 170, 431, 111))
         self.laneConnectorTable.setObjectName(_fromUtf8("laneConnectorTable"))
+        self.laneConnectorTable.setColumnCount(0)
+        self.laneConnectorTable.setRowCount(0)
         self.pushButton = QtGui.QPushButton(self.tab_4)
         self.pushButton.setGeometry(QtCore.QRect(364, 50, 91, 23))
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
@@ -275,11 +277,11 @@ class Ui_Segment(object):
         self.aimsunIdLabel_2.setText(_translate("Segment", "Aimsun Id*", None))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_2), _translate("Segment", "Section", None))
         self.label.setText(_translate("Segment", "Lane Connectors", None))
-        self.laneidlabel.setText(_translate("Segment", "Lane ID", None))
+        self.laneidlabel.setText(_translate("Segment", "Lane Connector ID", None))
         self.fromSectionlabel.setText(_translate("Segment", "fromSection", None))
         self.toSectionlabel.setText(_translate("Segment", "toSection", None))
         self.fromLanelabel.setText(_translate("Segment", "fromLane", None))
         self.toLanelabel.setText(_translate("Segment", "toLane", None))
-        self.pushButton.setText(_translate("Segment", "ADD NEW", None))
+        self.pushButton.setText(_translate("Segment", "Add New", None))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_4), _translate("Segment", "Connectors", None))
 

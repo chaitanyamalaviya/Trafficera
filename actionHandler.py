@@ -271,7 +271,7 @@ class ActionHandler():
         #update id
         selectedNode.find("nodeID").text = str(nodeData["id"])
         #update type
-        selectedNode.find("nodeType").text = str(nodeData["type"])
+        selectedNode.find("nodeType").text = str(nodeData["nodeType"])
 
         #addTrafficLightID
         selectedNode.find("trafficLightID").text = str(nodeData["trafficLightID"])
@@ -279,22 +279,45 @@ class ActionHandler():
         #addTurningGroup
         turningGroupParent = selectedNode.find("TurningGroups")
 
-        turningGroup = turningGroupParent.findall("TurningGroup")
+        for tG in turningGroupParent.findall('TurningGroup'):
+            turningGroupParent.remove(tG)
+        for tG in selectedNode.findall('TurningGroup'):
+            msgBox = QtGui.QMessageBox()
+            msgBox.setText(tG.text)
+            msgBox.exec_()
+            return
+        # for tG in nodeData["turningGroup"]:
+        #     turningGroup = ElementTree.SubElement(turningGroup.text = str(tG[1])
+        #     ElementTree.SubElement(turningGroup, 'toLink').text = str(tG[2])
+        #     ElementTree.SubElement(turningGroup, 'Phases').text = str(tG[3])
+        #     ElementTree.SubElement(turningGroup, 'Rules').text = str(tG[4])
+        #     if nodeData["turningPath"]:
+        #         turningPathParent = ElementTree.SubElement(turningGroup, 'TurningPaths')
+        #         for tP in nodeData["turningPath"]:
+        #             if tP[0] == tG[0]:
+        #                 turningPath = ElementTree.SubElement(turningPathParent, 'TurningPath')
+        #                 ElementTree.SubElement(turningPath, 'groupID').text = str(tP[0])
+        #                 ElementTree.SubElement(turningPath, 'ID').text = str(tP[1])
+        #                 ElementTree.SubElement(turningPath, 'fromLane').text = str(tP[2])
+        #                 ElementTree.SubElement(turningPath, 'toLane').text = str(tP[3])
 
-        for tG in turningGroup:
-            TG = selectedNode.findall("TurningGroup")
-            TG.find("ID").text = str(tG[0])
-            TG.find("fromLink").text = str(tG[1])
-            TG.find("toLink").text = str(tG[2])
-            TG.find("Phases").text = str(tG[3])
-            TG.find('Rules').text = str(tG[4])
-            turningPathParent = TG.findall("TurningPaths")
-            turningPaths = turningPathParent.findall("TurningPath")
-            for tP in turningPaths:
-                TG.find("groupID").text = str(tP[0])
-                TG.find("ID").text = str(tP[1])
-                TG.find("fromLane").text = str(tP[2])
-                TG.find("toLane").text = str(tP[3])
+
+        # i=0
+        # for tG in nodeData["turningGroup"]:
+        #     j=0
+        #     tG.find("ID").text = str(nodeData["turningGroup"][i][0])
+        #     tG.find("fromLink").text = str(nodeData["turningGroup"][i][1])
+        #     tG.find("toLink").text = str(nodeData["turningGroup"][i][2])
+        #     tG.find("Phases").text = str(nodeData["turningGroup"][i][3])
+        #     tG.find('Rules').text = str(nodeData["turningGroup"][i][4])
+        #     for tP in nodeData["turningPath"]:
+        #         if str(nodeData["turningGroup"][i][0]) == str(nodeData["turningPath"][j][0]):
+        #             tP.find("groupID").text = str(nodeData["turningPath"][j][0])
+        #             tP.find("ID").text = str(nodeData["turningPath"][j][1])
+        #             tP.find("fromLane").text = str(nodeData["turningPath"][j][2])
+        #             tP.find("toLane").text = str(nodeData["turningPath"][j][3])
+        #         j+=1
+        #     i+=1
 
         #update aimsunId
         selectedNode.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
@@ -343,8 +366,8 @@ class ActionHandler():
             aimsunIdStr = selectedNode.find("originalDB_ID").text
             aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
             info["aimsunId"] = aimsunIds[0]
-            info["type"] = selectedNode.find("nodeType")
-            info["trafficLightID"] = selectedNode.find("trafficLightID")
+            info["nodeType"] = selectedNode.find("nodeType").text
+            info["trafficLightID"] = selectedNode.find("trafficLightID").text
 
 
         turningGroups = selectedNode.find("TurningGroups")
@@ -352,24 +375,21 @@ class ActionHandler():
         turningGroup = turningGroups.findall("TurningGroup")
 
         info["turningGroup"] = []
-        i=0
+        info["turningPath"] = []
+
         if turningGroup:
+        #     msgBox = QtGui.QMessageBox()
+        #     msgBox.setText(turningGroup[0].find("ID").text)
+        #     msgBox.exec_()
+        #     return
             for tG in turningGroup:
-                j=0
-                info["turningGroup"][i][0] = tG.find("ID").text
-                info["turningGroup"][i][1] = tG.find("fromLink").text
-                info["turningGroup"][i][2] = tG.find("toLink").text
-                info["turningGroup"][i][3] = tG.find("Phases").text
-                info["turningGroup"][i][4] = tG.find('Rules').text
-                turningPathParent = tG.findall("TurningPaths")
-                turningPaths = turningPathParent.findall("TurningPath")
-                for tP in turningPaths:
-                    info["turningPath"][j][0] = tP.find("groupID").text
-                    info["turningPath"][j][1] = tP.find("ID").text
-                    info["turningPath"][j][2] = tP.find("fromLane").text
-                    info["turningPath"][j][3] = tP.find("toLane").text
-                    j = j+1
-                i = i+1
+                info["turningGroup"].append([tG.find("ID").text,tG.find("fromLink").text,tG.find("toLink").text,tG.find("Phases").text,tG.find("Rules").text])
+                # turningPaths = turningGroups.findall("TurningPath")
+                # if turningPaths:
+                for tP in selectedNode.iter('TurningPath'):
+                    if tP.find("groupID").text == tG.find("ID").text:
+                        # info["turningPath"].append(tP)
+                        info["turningPath"].append([tP.find("groupID").text,tP.find("ID").text,tP.find("fromLane").text,tP.find("toLane").text])
 
 
 

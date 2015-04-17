@@ -84,6 +84,13 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         self.info = info
         global original_id
 
+        self.laneConnectorTable.setRowCount(0)
+        self.laneConnectorTable.setColumnCount(5)
+        TableHeader = ['ID','fromSection','toSection','fromLane','toLane']
+        self.laneConnectorTable.setHorizontalHeaderLabels(TableHeader)
+        self.laneConnectorTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.laneConnectorTable.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+
         if self.info is not None:
             linkId = int(self.info["linkId"])
             self.linkidcomboBox.setCurrentIndex(self.listLinks.keys().index(linkId))
@@ -95,21 +102,15 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.sequenceno.setText(str(self.info["sequenceno"]))
             self.capacity.setText(str(self.info["capacity"]))
             self.maxSpeed.setText(str(self.info["maxSpeed"]))
-            self.roadType.setEditText(str(self.self.info["roadType"]))
+            self.roadType.setEditText(str(self.info["roadType"]))
             self.category.setEditText(str(self.info["category"]))
 
-            if self.info["connectors"] is not none:
-                self.TurningGroupTable.setRowCount(10)
-                self.TurningGroupTable.setColumnCount(4)
-                TableHeader = ['ID','fromSection','toSection','fromLane','toLane']
-                self.TurningGroupTable.setHorizontalHeaderLabels(TableHeader)
-                #self.TurningGroupTable.verticalHeader().setVisible(false)
-                self.TurningGroupTable.setSelectionBehavior(SelectRows)
-                self.TurningGroupTable.setSelectionMode(SingleSelection)
+            if self.info["connectors"]:
                 for connector in self.info["connectors"]:
                     ridx = self.info["connectors"].index(connector)
-                    for cidx in range(0,4) :
-                        self.TurningGroupTable.setItem(ridx,cidx,connector[cidx])
+                    self.laneConnectorTable.insertRow(ridx)
+                    for cidx in range(5) :
+                        self.laneConnectorTable.setItem(ridx,cidx,connector[cidx])
             #QtCore.QObject.connect(self.linkidcomboBox, QtCore.SIGNAL('currentIndexChanged(const QString&)'),self.updateLinkName)
         else:
             self.addnewid()
@@ -130,11 +131,13 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         root = tree.getroot()
 
         for laneconnector in root.iter('Connector'):
-            if laneconnector is not None:
+            if laneconnector:
                 self.laneconnectorlist.append(int(laneconnector.find('ID').text))
 
-        if self.laneconnectorlist is not None:
+        if self.laneconnectorlist:
             self.laneID.setText(str(max(self.laneconnectorlist)+1))
+        else:
+            self.laneID.setText(str(1))
 
         for segment in root.iter('Segment'):
             seglist.append(int(segment.find('segmentID').text))
@@ -153,15 +156,15 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.errorMessage.setText("Connector ID is invalid. It must be a number.")
             return
 
-        self.laneconnectorlist.append([laneconnectorid, self.fromSectioncomboBox.currentText(), self.toSectioncomboBox.currentText(), self.fromLanecomboBox.text(), self.toLanecomboBox.currentText()])
+        ridx = len(self.info["connectors"])
+        self.info["connectors"].append([laneconnectorid, self.fromSectioncomboBox.currentText(), self.toSectioncomboBox.currentText(), self.fromLanecomboBox.currentText(), self.toLanecomboBox.currentText()])
 
-
-        ridx = self.info["connectors"].length() + 1
-
-        for cidx in range(0,4) :
-            self.laneConnectorTable.setItem(ridx,cidx,self.laneconnectorlist[cidx])
-
-        self.info["connectors"].append(self.laneconnectorlist)
+        if self.info["connectors"]:
+            for conn in self.info["connectors"]:
+                ridx = self.info["connectors"].index(conn)
+                self.laneConnectorTable.insertRow(ridx)
+                for cidx in range(5):
+                    self.laneConnectorTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(conn[cidx]))
 
 
     def displayconnector(self):

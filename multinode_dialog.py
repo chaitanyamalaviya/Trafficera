@@ -44,7 +44,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.isModified = False
         self.listSegments = None
         # self.turninggrouplist = []
-        # self.turningpathlist = []
+        #self.turningpathlist = []
 
     def setInfo(self, info):
         self.info = info
@@ -52,7 +52,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.setLinklist()
         self.setLanelist()
 
-        self.TurningGroupTable.setRowCount(10)
+        self.TurningGroupTable.setRowCount(0)
         self.TurningGroupTable.setColumnCount(5)
         TableHeader = ['ID','fromLink','toLink','Phases','Rules']
         self.TurningGroupTable.setHorizontalHeaderLabels(TableHeader)
@@ -60,7 +60,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.TurningGroupTable.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
 
 
-        self.TurningPathTable.setRowCount(10)
+        self.TurningPathTable.setRowCount(0)
         self.TurningPathTable.setColumnCount(3)
         TableHeader = ['Turning Path ID', 'fromLane', 'toLane']
         self.TurningPathTable.setHorizontalHeaderLabels(TableHeader)
@@ -74,14 +74,15 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.nodeId.setText(str(self.info["id"]))
             original_id = self.info["id"]
             self.aimsunId.setText(str(self.info["aimsunId"]))
-            self.nodeType.setText(self.info["nodeType"])
+            self.nodeType.setEditText(self.info["nodeType"])
             self.trafficLightID.setText(self.info["trafficLightID"])
 
             if self.info["turningGroup"]:
                 for group in self.info["turningGroup"]:
                     ridx = self.info["turningGroup"].index(group)
+                    self.TurningGroupTable.insertRow(ridx)
                     for cidx in range(5):
-                        self.TurningGroupTable.setItem(ridx,cidx,group[cidx])
+                        self.TurningGroupTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(group[cidx]))
 
             # if self.info["roadSegmentsAt"] is not None:
             #     roadSegmentsAtStr = "\n".join(self.info["roadSegmentsAt"])
@@ -116,10 +117,9 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         ridx = len(self.info["turningGroup"])
         self.info["turningGroup"].append([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText()])
 
-
+        self.TurningGroupTable.insertRow(ridx)
         for cidx in range(5) :
-            for tg in self.info["turningGroup"]:
-                self.TurningGroupTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(tg[cidx]))
+                self.TurningGroupTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(self.info["turningGroup"][ridx][cidx]))
 
 
     def addTurningPath(self):
@@ -131,13 +131,16 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             return
         groupID = self.turningGroupID.text()
 
-        ridx = len(self.info["turningPath"])
+        ridx = self.TurningPathTable.rowCount()
         self.info["turningPath"].append([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText()])
 
+        self.TurningPathTable.insertRow(ridx)
+        self.TurningPathTable.setItem(ridx,0,QtGui.QTableWidgetItem(turningPathID))
+        self.TurningPathTable.setItem(ridx,1,QtGui.QTableWidgetItem(self.fromLane.currentText()))
+        self.TurningPathTable.setItem(ridx,2,QtGui.QTableWidgetItem(self.toLane.currentText()))
 
-        for cidx in range(5) :
-            for tp in self.info["turningPath"]:
-                self.TurningPathTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(tp[cidx+1]))
+        # for cidx in range(3) :
+        #         self.TurningPathTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(self.info["turningPath"][ridx][cidx+1]))
 
         # self.info["turningPath"].append(self.turningpathlist)
 
@@ -145,22 +148,13 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
     def displayturninggroup(self):
 
         #self.info = {}
-        self.info["turningPath"] = []
-        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
-        (myDirectory, nameFile) = os.path.split(layerfi)
-        tree = ElementTree.parse(myDirectory + '/data.xml')
-        root = tree.getroot()
-        # msgBox = QtGui.QMessageBox()
-        # msgBox.setText(''.join(self.info["turningGroup"][][ridx][0]))
-        # msgBox.exec_()
-        # return
         # self.errorMessage.setText(''.join(self.info["turningGroup"][ridx][0]))
         # return
         self.turningGroupID.setText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),0).text())
-        self.fromLink.setEditText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),1).text())
-        self.toLink.setEditText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),2).text())
+        self.fromLink.setCurrentIndex(self.fromLink.findText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),1).text()))
+        self.toLink.setCurrentIndex(self.toLink.findText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),2).text()))
         self.Phases.setText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),3).text())
-        self.Rules.setEditText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),4).text())
+        self.Rules.setCurrentIndex(self.Rules.findText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),4).text()))
 
         # display corresponding turning paths in turning path table
 
@@ -172,21 +166,35 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             #             self.TurningPathTable.setItem(i,1,tp.find('fromLane'))
             #             self.TurningPathTable.setItem(i,2,tp.find('toLane'))
             #             i = i+1
+        self.TurningPathTable.clear()
+        TableHeader = ['Turning Path ID', 'fromLane', 'toLane']
+        self.TurningPathTable.setHorizontalHeaderLabels(TableHeader)
+        self.TurningPathTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.TurningPathTable.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+        self.TurningPathTable.setRowCount(0)
+        self.TurningPathTable.setColumnCount(3)
+
+        i = 0
 
         for path in self.info["turningPath"]:
-            ridx = self.info["turningPath"].index(path)
-            if self.turningGroupID.currentText() == path[0]:
+            # msgBox = QtGui.QMessageBox()
+            # msgBox.setText("Lopop")
+            # msgBox.exec_()
+            # return
+            if self.turningGroupID.text() == str(path[0]):
+                self.TurningPathTable.insertRow(i)
                 for cidx in range(3) :
-                    self.TurningPathTable.setItem(ridx,cidx,path[cidx+1])
-
+                    self.TurningPathTable.setItem(i,cidx,QtGui.QTableWidgetItem(path[cidx+1]))
+                i+=1
 
 
 
     def displayturningpath(self):
         ridx = self.TurningPathTable.currentRow()
         self.TurningPath.setText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),0).text())       #groupid is index 0
-        self.fromLane.setEditText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),1).text())
-        self.toLane.setEditText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),2).text())
+        #self.fromLane.setEditText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),1).text())
+        self.fromLane.setCurrentIndex(self.fromLane.findText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),1).text()))
+        self.toLane.setCurrentIndex(self.toLane.findText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),2).text()))
 
 
 
