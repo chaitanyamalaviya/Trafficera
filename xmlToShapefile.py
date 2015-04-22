@@ -102,7 +102,7 @@ class XmlToShapefile(QObject):
         for polypoint in polyline.findall('PolyPoint'):
             coordinates.append(self.parseLocation(polypoint.find('location')))
         if len(coordinates) == 0:
-            QgsMessageLog.logMessage("segment %s has no polygon info."%segmentId, 'SimGDC')
+            QgsMessageLog.logMessage("segment %s has no polyline info."%segmentId, 'SimGDC')
             return
         if len(coordinates) < 3:
             coordinates.append(QgsPoint(coordinates[0]))

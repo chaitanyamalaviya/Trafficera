@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>489</width>
-    <height>505</height>
+    <width>485</width>
+    <height>616</height>
    </rect>
   </property>
   <property name="font">
@@ -59,7 +59,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="iconSize">
       <size>
@@ -79,7 +79,7 @@
         <rect>
          <x>10</x>
          <y>140</y>
-         <width>111</width>
+         <width>101</width>
          <height>21</height>
         </rect>
        </property>
@@ -121,9 +121,9 @@
       <widget class="QComboBox" name="nodeType">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>120</x>
          <y>90</y>
-         <width>361</width>
+         <width>331</width>
          <height>21</height>
         </rect>
        </property>
@@ -162,9 +162,9 @@
       <widget class="QLineEdit" name="trafficLightID">
        <property name="geometry">
         <rect>
-         <x>130</x>
+         <x>120</x>
          <y>140</y>
-         <width>101</width>
+         <width>331</width>
          <height>21</height>
         </rect>
        </property>
@@ -228,32 +228,6 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QLabel" name="aimsunIdLabel">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Aimsun Id*</string>
-            </property>
-            <property name="buddy">
-             <cstring>aimsunId</cstring>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="aimsunId">
-            <property name="font">
-             <font>
-              <family>Times New Roman</family>
-              <pointsize>11</pointsize>
-             </font>
-            </property>
-           </widget>
-          </item>
          </layout>
         </item>
        </layout>
@@ -261,8 +235,8 @@
       <widget class="QSplitter" name="splitter">
        <property name="geometry">
         <rect>
-         <x>290</x>
-         <y>390</y>
+         <x>300</x>
+         <y>470</y>
          <width>121</width>
          <height>29</height>
         </rect>
@@ -309,6 +283,29 @@
         </property>
        </widget>
       </widget>
+      <widget class="QLabel" name="tags_node_label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>180</y>
+         <width>41</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Tags</string>
+       </property>
+      </widget>
+      <widget class="QTextEdit" name="tags_node">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>180</y>
+         <width>381</width>
+         <height>101</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
@@ -318,15 +315,17 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>10</y>
+         <y>20</y>
          <width>451</width>
-         <height>121</height>
+         <height>271</height>
         </rect>
        </property>
        <property name="font">
         <font>
          <family>Times New Roman</family>
          <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="title">
@@ -340,6 +339,14 @@
           <width>111</width>
           <height>17</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
         </property>
         <property name="text">
          <string>Turning Group ID</string>
@@ -367,6 +374,12 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>fromLink</string>
         </property>
@@ -393,6 +406,12 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>toLink</string>
         </property>
@@ -418,6 +437,12 @@
           <width>47</width>
           <height>21</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
         </property>
         <property name="text">
          <string>Phases</string>
@@ -468,6 +493,14 @@
           <height>21</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Rules</string>
         </property>
@@ -480,9 +513,15 @@
          <rect>
           <x>240</x>
           <y>30</y>
-          <width>75</width>
+          <width>91</width>
           <height>23</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
         </property>
         <property name="text">
          <string>Add new</string>
@@ -498,12 +537,89 @@
          </rect>
         </property>
        </widget>
+       <widget class="QLabel" name="visibility_distance_label">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>120</y>
+          <width>111</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Visibility Distance</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="visibility_distance">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>120</y>
+          <width>101</width>
+          <height>21</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="tags_turninggroup">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>120</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="tags_tg_label">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>120</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Tags</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>30</y>
+          <width>101</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Delete</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QTableWidget" name="TurningGroupTable">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>140</y>
+         <y>190</y>
          <width>431</width>
          <height>91</height>
         </rect>
@@ -513,15 +629,17 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>250</y>
+         <y>300</y>
          <width>451</width>
-         <height>101</height>
+         <height>271</height>
         </rect>
        </property>
        <property name="font">
         <font>
          <family>Times New Roman</family>
          <pointsize>11</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
         </font>
        </property>
        <property name="title">
@@ -541,6 +659,14 @@
           <width>111</width>
           <height>17</height>
          </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Times New Roman</family>
+          <pointsize>11</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
         </property>
         <property name="text">
          <string>Turning Path ID</string>
@@ -568,6 +694,12 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>fromLane</string>
         </property>
@@ -594,6 +726,12 @@
           <height>20</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>toLane</string>
         </property>
@@ -616,12 +754,85 @@
          <rect>
           <x>240</x>
           <y>30</y>
-          <width>75</width>
+          <width>91</width>
           <height>23</height>
          </rect>
         </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="text">
          <string>Add new</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="maxSpeed_label">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>90</y>
+          <width>81</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Max Speed</string>
+        </property>
+       </widget>
+       <widget class="QTextEdit" name="tags_turningpath">
+        <property name="geometry">
+         <rect>
+          <x>290</x>
+          <y>90</y>
+          <width>151</width>
+          <height>51</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="tagts_tp_label">
+        <property name="geometry">
+         <rect>
+          <x>240</x>
+          <y>90</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Tags</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>30</y>
+          <width>101</width>
+          <height>23</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>50</weight>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Delete</string>
         </property>
        </widget>
       </widget>
@@ -629,10 +840,55 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>350</y>
+         <y>450</y>
          <width>431</width>
-         <height>91</height>
+         <height>101</height>
         </rect>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="maxSpeed">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>390</y>
+         <width>141</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Conflicts</string>
+      </attribute>
+      <widget class="QTableWidget" name="TurningConflictTable">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>100</y>
+         <width>421</width>
+         <height>171</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="genconflictbutton">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>191</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Generate Turning Conflicts</string>
        </property>
       </widget>
      </widget>

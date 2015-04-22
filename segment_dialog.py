@@ -98,12 +98,10 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.actionButton.setText("SAVE")
             self.id.setText(str(self.info["id"]))
             original_id = self.info["id"]
-            self.aimsunId.setText(str(self.info["aimsunId"]))
+            # self.aimsunId.setText(str(self.info["aimsunId"]))
             self.sequenceno.setText(str(self.info["sequenceno"]))
             self.capacity.setText(str(self.info["capacity"]))
             self.maxSpeed.setText(str(self.info["maxSpeed"]))
-            self.roadType.setEditText(str(self.info["roadType"]))
-            self.category.setEditText(str(self.info["category"]))
 
             if self.info["connectors"]:
                 for connector in self.info["connectors"]:
@@ -213,11 +211,11 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
         self.info["id"] = int(id)
 
-        aimsunId = self.aimsunId.text()
-        if aimsunId.isdigit() is False:
-            self.errorMessage.setText("aimsunId is invalid. It must be a number.")
-            return
-        self.info["aimsunId"] = int(aimsunId)
+        # aimsunId = self.aimsunId.text()
+        # if aimsunId.isdigit() is False:
+        #     self.errorMessage.setText("aimsunId is invalid. It must be a number.")
+        #     return
+        # self.info["aimsunId"] = int(aimsunId)
 
         # startNode = self.startNode.text()
         # if startNode.isdigit() is False:
@@ -235,11 +233,9 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             return
         self.info["sequenceno"] = int(sequenceno)
 
-        roadType = self.roadType.currentText()
-        self.info["roadType"] = roadType
 
-        category = self.category.currentText()
-        self.info["category"] = category
+        tags = self.Tags.currentText()
+        self.info["tags"] = tags
 
         capacity = self.capacity.text()
         if capacity.isdigit() is False:

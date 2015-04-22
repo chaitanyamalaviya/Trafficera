@@ -229,7 +229,7 @@ class ActionHandler():
         ElementTree.SubElement(location, 'yPos').text = str(feat.geometry().asPoint().y())
 
         #add originalDB_ID
-        ElementTree.SubElement(multiNode, 'originalDB_ID').text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
+        # ElementTree.SubElement(multiNode, 'originalDB_ID').text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
         # #add roadSegmentsAt
         # roadSegmentsAt = ElementTree.SubElement(multiNode, 'roadSegmentsAt')
         # for roadSegment in nodeData["roadSegments"]:
@@ -320,7 +320,7 @@ class ActionHandler():
         #     i+=1
 
         #update aimsunId
-        selectedNode.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
+        # selectedNode.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
 
         # #update roadSegmentsAt
         # roadSegmentsAt = selectedNode.find("roadSegmentsAt")
@@ -363,9 +363,9 @@ class ActionHandler():
         if selectedNode is not None:
             info = {}
             info["id"] = selectedNode.find("nodeID").text
-            aimsunIdStr = selectedNode.find("originalDB_ID").text
-            aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
-            info["aimsunId"] = aimsunIds[0]
+            # aimsunIdStr = selectedNode.find("originalDB_ID").text
+            # aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
+            # info["aimsunId"] = aimsunIds[0]
             info["nodeType"] = selectedNode.find("nodeType").text
             info["trafficLightID"] = selectedNode.find("trafficLightID").text
 
@@ -509,12 +509,10 @@ class ActionHandler():
             segment = ElementTree.SubElement(segments, 'Segment')
             #add Info
             ElementTree.SubElement(segment, 'segmentID').text = str(data["id"])
-            ElementTree.SubElement(segment, 'originalDB_ID').text = "\"aimsun-id\":\"%s\""%str(data["aimsunId"])
             ElementTree.SubElement(segment, 'sequenceno').text = str(data["sequenceno"])
             ElementTree.SubElement(segment, 'capacity').text = str(data["capacity"])
             ElementTree.SubElement(segment, 'maxSpeed').text = str(data["maxSpeed"])
-            ElementTree.SubElement(segment, 'roadType').text = str(data["roadType"])
-            ElementTree.SubElement(segment, 'category').text = str(data["category"])
+            ElementTree.SubElement(segment, 'Tags').text = str(data["tags"])
             connectors = ElementTree.SubElement(segment, 'Connectors')
             connector = ElementTree.SubElement(connectors, 'Connector')
             for conn in data["connectors"]:
@@ -524,6 +522,9 @@ class ActionHandler():
                 ElementTree.SubElement(connector, 'fromLane').text = str(conn[3])
                 ElementTree.SubElement(connector, 'toLane').text = str(conn[4])
 
+        ElementTree.SubElement(segment, 'x').text = str(feat.geometry().asPolyline().point.x())
+        ElementTree.SubElement(segment, 'y').text = str(feat.geometry().asPolyline().point.y())
+        ElementTree.SubElement(segment, 'z').text = str(feat.geometry().asPolyline().point.z())
 
     def updateSegment(self, feature, data):
         #update feature if necessary
@@ -557,12 +558,10 @@ class ActionHandler():
             return
         #update info
         selectedSegment.find("segmentID").text = str(data["id"])
-        selectedSegment.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(data["aimsunId"])
         selectedSegment.find("sequenceno").text = str(data["sequenceno"])
         selectedSegment.find("capacity").text = str(data["capacity"])
         selectedSegment.find("maxSpeed").text = str(data["maxSpeed"])
-        selectedSegment.find("roadType").text = str(data["roadType"])
-        selectedSegment.find("category").text = str(data["category"])
+        selectedSegment.find("Tags").text = str(data["tags"])
 
         connectorsroot = selectedSegment.find("Connectors").text
         connectors = connectorsroot.findall("Connector")
@@ -604,14 +603,15 @@ class ActionHandler():
             info = {}
             info["linkId"] = selectedLinkId
             info["id"] = selectedSegment.find("segmentID").text
-            aimsunIdStr = selectedSegment.find("originalDB_ID").text
-            aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
-            info["aimsunId"] = aimsunIds[0]
+            # aimsunIdStr = selectedSegment.find("originalDB_ID").text
+            # aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
+            # info["aimsunId"] = aimsunIds[0]
             info["sequenceno"] = selectedSegment.find("sequenceno").text
             info["capacity"] = selectedSegment.find("capacity").text
             info["maxSpeed"] = selectedSegment.find("maxSpeed").text
-            info["roadType"] = selectedSegment.find("roadType").text
-            info["category"] = selectedSegment.find("category").text
+            info["tags"] = selectedSegment.find("Tags").text
+            # info["roadType"] = selectedSegment.find("roadType").text
+            # info["category"] = selectedSegment.find("category").text
             info["connectors"] = selectedSegment.find("connectors").text
             connectorsroot = selectedSegment.find("Connectors").text
             connectors = connectorsroot.findall("Connector")
