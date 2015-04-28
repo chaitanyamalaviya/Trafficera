@@ -13,7 +13,7 @@ TAGS = {TYPE.MULNODE: "mulnode", TYPE.SEGMENT: "segment", TYPE.TURNINGPATH: "tur
 SCHEMA = {}
 SCHEMA[TYPE.MULNODE] = [QGis.WKBPoint, [QgsField("id", QVariant.Int)]] 
 SCHEMA[TYPE.SEGMENT] = [QGis.WKBLineString, [QgsField("link-id", QVariant.Int), QgsField("segmentID", QVariant.Int)]]
-SCHEMA[TYPE.TURNINGPATH] = [QGis.WKBLineString, [QgsField("turningPathID", QVariant.Int)]]
+SCHEMA[TYPE.TURNINGPATH] = [QGis.WKBLineString, [QgsField("turningPathID", QVariant.Int)], [QgsField("groupID", QVariant.Int)]]
 SCHEMA[TYPE.LANE]    = [QGis.WKBLineString, [QgsField("segmentID", QVariant.Int), QgsField("laneID", QVariant.Int)]]
 SCHEMA[TYPE.CROSSING]= [QGis.WKBPolygon, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]
 SCHEMA[TYPE.BUSSTOP] = [QGis.WKBPoint, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]    
@@ -45,7 +45,7 @@ class ShapefileWriter:
     def addPolygon(self, typeid, coordinates, attr):      
         if SCHEMA[typeid][0] == QGis.WKBPolygon:
             fet = QgsFeature()
-            fet.setGeometry(QgsGeometry.fromPolygon([coordinates]))
+            fet.setGeometry(QgsGeometry.fromPolyline([coordinates]))
             fet.setAttributes(attr)
             self.layer[typeid].addFeature(fet)          
 

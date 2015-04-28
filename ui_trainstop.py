@@ -1,0 +1,150 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'ui_trainstop.ui'
+#
+# Created: Mon Apr 27 13:44:00 2015
+#      by: PyQt4 UI code generator 4.10
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
+class Ui_TrainStop(object):
+    def setupUi(self, TrainStop):
+        TrainStop.setObjectName(_fromUtf8("TrainStop"))
+        TrainStop.resize(511, 300)
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        TrainStop.setFont(font)
+        self.pushButton = QtGui.QPushButton(TrainStop)
+        self.pushButton.setGeometry(QtCore.QRect(280, 250, 75, 23))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.pushButton.setFont(font)
+        self.pushButton.setObjectName(_fromUtf8("pushButton"))
+        self.SegmentGroupBox = QtGui.QGroupBox(TrainStop)
+        self.SegmentGroupBox.setGeometry(QtCore.QRect(10, 30, 491, 51))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        font.setBold(True)
+        font.setWeight(75)
+        self.SegmentGroupBox.setFont(font)
+        self.SegmentGroupBox.setObjectName(_fromUtf8("SegmentGroupBox"))
+        self.label = QtGui.QLabel(self.SegmentGroupBox)
+        self.label.setGeometry(QtCore.QRect(20, 20, 91, 21))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label.setFont(font)
+        self.label.setObjectName(_fromUtf8("label"))
+        self.comboBox = QtGui.QComboBox(self.SegmentGroupBox)
+        self.comboBox.setGeometry(QtCore.QRect(120, 20, 361, 22))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.comboBox.setFont(font)
+        self.comboBox.setObjectName(_fromUtf8("comboBox"))
+        self.label_2 = QtGui.QLabel(TrainStop)
+        self.label_2.setGeometry(QtCore.QRect(40, 100, 31, 20))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.label_2.setFont(font)
+        self.label_2.setObjectName(_fromUtf8("label_2"))
+        self.lineEdit = QtGui.QLineEdit(TrainStop)
+        self.lineEdit.setGeometry(QtCore.QRect(80, 100, 161, 20))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.lineEdit.setFont(font)
+        self.lineEdit.setObjectName(_fromUtf8("lineEdit"))
+        self.label_3 = QtGui.QLabel(TrainStop)
+        self.label_3.setGeometry(QtCore.QRect(40, 140, 101, 16))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.label_3.setFont(font)
+        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.label_4 = QtGui.QLabel(TrainStop)
+        self.label_4.setGeometry(QtCore.QRect(260, 140, 91, 16))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.label_4.setFont(font)
+        self.label_4.setObjectName(_fromUtf8("label_4"))
+        self.label_5 = QtGui.QLabel(TrainStop)
+        self.label_5.setGeometry(QtCore.QRect(40, 170, 41, 41))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.label_5.setFont(font)
+        self.label_5.setObjectName(_fromUtf8("label_5"))
+        self.label_6 = QtGui.QLabel(TrainStop)
+        self.label_6.setGeometry(QtCore.QRect(260, 170, 61, 41))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.label_6.setFont(font)
+        self.label_6.setObjectName(_fromUtf8("label_6"))
+        self.lineEdit_2 = QtGui.QLineEdit(TrainStop)
+        self.lineEdit_2.setGeometry(QtCore.QRect(142, 140, 101, 20))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.lineEdit_2.setFont(font)
+        self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
+        self.lineEdit_3 = QtGui.QLineEdit(TrainStop)
+        self.lineEdit_3.setGeometry(QtCore.QRect(360, 140, 131, 20))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.lineEdit_3.setFont(font)
+        self.lineEdit_3.setObjectName(_fromUtf8("lineEdit_3"))
+        self.textEdit = QtGui.QTextEdit(TrainStop)
+        self.textEdit.setGeometry(QtCore.QRect(310, 180, 181, 51))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.textEdit.setFont(font)
+        self.textEdit.setObjectName(_fromUtf8("textEdit"))
+        self.lineEdit_4 = QtGui.QLineEdit(TrainStop)
+        self.lineEdit_4.setGeometry(QtCore.QRect(90, 180, 151, 20))
+        font = QtGui.QFont()
+        font.setFamily(_fromUtf8("Times New Roman"))
+        font.setPointSize(11)
+        self.lineEdit_4.setFont(font)
+        self.lineEdit_4.setObjectName(_fromUtf8("lineEdit_4"))
+
+        self.retranslateUi(TrainStop)
+        QtCore.QMetaObject.connectSlotsByName(TrainStop)
+
+    def retranslateUi(self, TrainStop):
+        TrainStop.setWindowTitle(_translate("TrainStop", "Dialog", None))
+        self.pushButton.setText(_translate("TrainStop", "ADD", None))
+        self.SegmentGroupBox.setTitle(_translate("TrainStop", "Segment", None))
+        self.label.setText(_translate("TrainStop", "SegmentID", None))
+        self.label_2.setText(_translate("TrainStop", "Id*", None))
+        self.label_3.setText(_translate("TrainStop", "Platform Name", None))
+        self.label_4.setText(_translate("TrainStop", "Station Name", None))
+        self.label_5.setText(_translate("TrainStop", "Type", None))
+        self.label_6.setText(_translate("TrainStop", "Tags", None))
+

@@ -68,13 +68,13 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         self.fromLanecomboBox.clear()
         self.toLanecomboBox.clear()
 
-        for segment in root.iter('Segment'):
-            segmentID = segment.find('segmentID').text
+        for segment in root.iter('segment'):
+            segmentID = segment.find('id').text
             self.fromSectioncomboBox.addItem(str(segmentID))
             self.toSectioncomboBox.addItem(str(segmentID))
 
-        for lane in root.iter('Lane'):
-            laneID = lane.find('laneID').text
+        for lane in root.iter('lane'):
+            laneID = lane.find('id').text
             self.fromLanecomboBox.addItem(str(laneID))
             self.toLanecomboBox.addItem(str(laneID))
 
@@ -99,9 +99,10 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.id.setText(str(self.info["id"]))
             original_id = self.info["id"]
             # self.aimsunId.setText(str(self.info["aimsunId"]))
-            self.sequenceno.setText(str(self.info["sequenceno"]))
+            self.sequenceno.setText(str(self.info["sequence_num"]))
             self.capacity.setText(str(self.info["capacity"]))
-            self.maxSpeed.setText(str(self.info["maxSpeed"]))
+            self.maxSpeed.setText(str(self.info["max_speed"]))
+            self.Tags.setText(str(self.info["tags"]))
 
             if self.info["connectors"]:
                 for connector in self.info["connectors"]:
@@ -118,9 +119,22 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL('clicked(bool)'), self.addlaneconnector)
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
         QtCore.QObject.connect(self.laneConnectorTable, QtCore.SIGNAL('itemSelectionChanged()'), self.displayconnector)
+        QtCore.QObject.connect(self.delButton, QtCore.SIGNAL('clicked(bool)'),self.deleteconnector)
 
     # def updateLinkName(self, textLinkId):
     #     self.linkName.setText(self.listLinks[int(textLinkId)])
+
+    def deleteconnector(self):
+        ridx = self.laneConnectorTable.currentRow()
+        self.info["connectors"].pop(ridx)
+        self.laneConnectorTable.removeRow(ridx)
+
+        self.laneID.clear()
+        self.fromSectioncomboBox.setCurrentIndex(0)
+        self.toSectioncomboBox.setCurrentIndex(0)
+        self.fromLanecomboBox.setCurrentIndex(0)
+        self.toLanecomboBox.setCurrentIndex(0)
+
 
 
     def addnewid(self):
@@ -130,17 +144,17 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
 
-        for laneconnector in root.iter('Connector'):
+        for laneconnector in root.iter('connector'):
             if laneconnector:
-                self.laneconnectorlist.append(int(laneconnector.find('laneconnectorID').text))
+                self.laneconnectorlist.append(int(laneconnector.find('id').text))
 
         if self.laneconnectorlist:
             self.laneID.setText(str(max(self.laneconnectorlist)+1))
         else:
             self.laneID.setText(str(1))
 
-        for segment in root.iter('Segment'):
-            seglist.append(int(segment.find('segmentID').text))
+        for segment in root.iter('segment'):
+            seglist.append(int(segment.find('id').text))
 
         self.id.setText(str(max(seglist)+1))
 
@@ -187,8 +201,8 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
 
-        for Segment in root.iter('Segment'):
-            segmentid = Segment.find('segmentID').text
+        for Segment in root.iter('segment'):
+            segmentid = Segment.find('id').text
             seglist.append(segmentid)
 
 
@@ -227,14 +241,14 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         #     self.errorMessage.setText("endNode is invalid. It must be a number.")
         #     return
 
-        sequenceno = self.sequenceno.text()
+        sequence_num = self.sequenceno.text()
         if sequenceno.isdigit() is False:
             self.errorMessage.setText("Sequence No is invalid. It must be a number.")
             return
-        self.info["sequenceno"] = int(sequenceno)
+        self.info["sequence_num"] = int(sequence_num)
 
 
-        tags = self.Tags.currentText()
+        tags = self.Tags.text()
         self.info["tags"] = tags
 
         capacity = self.capacity.text()
@@ -276,7 +290,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         if maxSpeed.isdigit() is False:
             self.errorMessage.setText("maxSpeed is invalid. It must be a number.")
             return
-        self.info["maxSpeed"] = int(maxSpeed)
+        self.info["max_speed"] = int(maxSpeed)
 
 
 

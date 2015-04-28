@@ -22,61 +22,49 @@ class ShapefileToXml(QObject):
         x = float(data.x())
         y = float(data.y())
 
-        xPos = element.find("xPos")
+        xPos = element.find("x")
         if xPos is None:
-            xPos = ElementTree.SubElement(element, 'xPos')
+            xPos = ElementTree.SubElement(element, 'x')
         xPos.text = str(eval(self.formula[0]))
-        yPos = element.find("yPos")
+        yPos = element.find("y")
         if yPos is None:
-            yPos = ElementTree.SubElement(element, 'yPos')
+            yPos = ElementTree.SubElement(element, 'y')
         yPos.text = str(eval(self.formula[1]))
 
     def addXMLLocation(self, parent, data):
         x = float(data.x())
         y = float(data.y())
         
-        location = ElementTree.SubElement(parent, 'location')
-        ElementTree.SubElement(location, 'xPos').text = str(eval(self.formula[0]))
-        ElementTree.SubElement(location, 'yPos').text = str(eval(self.formula[1]))
+        location = ElementTree.SubElement(parent, 'point')
+        ElementTree.SubElement(location, 'x').text = str(eval(self.formula[0]))
+        ElementTree.SubElement(location, 'y').text = str(eval(self.formula[1]))
 
-    def updateUninodes(self, uninodes):
-        nodeData = self.reader.getNodes(SHTYPE.UNINODE)
-        for uninode in uninodes:
-            nodeId = int(uninode.find("nodeID").text)
-            if nodeId in nodeData:
-                location = uninode.find("location")
-                if location is None:
-                    self.addXMLLocation(uninode, nodeData[nodeId])
-                else:
-                    self.updateLocation(location, nodeData[nodeId])
-            else:
-                self.warnNonExist("UniNode", nodeId)
 
     def updateMulnodes(self, mulnodes):
         nodeCoordinates = self.reader.getNodes(SHTYPE.MULNODE)
         for mulnode in mulnodes:
-            nodeId = int(mulnode.find("nodeID").text)
+            nodeId = int(mulnode.find("id").text)
             if nodeId in nodeCoordinates:
-                location = mulnode.find("location")
+                location = mulnode.find("point")
                 if location is None:
                     self.addXMLLocation(mulnode, nodeCoordinates[nodeId])
                 else:
                     self.updateLocation(location, nodeCoordinates[nodeId])
             else:
-                self.warnNonExist("multiNode", nodeId)
+                self.warnNonExist("node", nodeId)
 
     def updateLane(self, segmentId, lane):
         laneCoordinates = self.reader.getSegmentComponents(SHTYPE.LANE, int(segmentId))
-        laneID = int(lane.find("laneID").text)
-        polyline = lane.find("PolyLine")
+        laneID = int(lane.find("id").text)
+        polyline = lane.find("polyline")
         if laneID in laneCoordinates:
             if polyline is None:
-                polyline = ElementTree.SubElement(lane, 'PolyLine')
-            for polyPoint in polyline.findall('PolyPoint'):
+                polyline = ElementTree.SubElement(lane, 'polyline')
+            for polyPoint in polyline.findall('point'):
                 polyline.remove(polyPoint)
             index = 0
             for point in laneCoordinates[laneID]:
-                polyPoint = ElementTree.SubElement(polyline, 'PolyPoint')
+                polyPoint = ElementTree.SubElement(polyline, 'point')
                 ElementTree.SubElement(polyPoint, 'pointID').text = str(index)
                 self.addXMLLocation(polyPoint, point)
                 index = index + 1
@@ -134,26 +122,26 @@ class ShapefileToXml(QObject):
 
     def updateSegment(self, linkId, segment):
         segmentCoordinates = self.reader.getSegmentsByLinkId(int(linkId))
-        segmentID = int(segment.find("segmentID").text)
+        segmentID = int(segment.find("id").text)
         polyline = segment.find("polyline")
         if polyline is None:
             polyline = ElementTree.SubElement(segment, 'polyline')
         #update segment
         if segmentID in segmentCoordinates:
-            for polyPoint in polyline.findall('PolyPoint'):
+            for polyPoint in polyline.findall('point'):
                 polyline.remove(polyPoint)
             segmentCoordinate = segmentCoordinates[segmentID][0]
             for index in range(0, len(segmentCoordinate)-1):
                 point = segmentCoordinate[index]
-                polyPoint = ElementTree.SubElement(polyline, 'PolyPoint')
+                polyPoint = ElementTree.SubElement(polyline, 'point')
                 ElementTree.SubElement(polyPoint, 'pointID').text = str(index)
                 self.addXMLLocation(polyPoint, point)
         else:
             self.warnNonExist("segment", segmentID)
         #update lanes
-        lanes = segment.find("Lanes")
+        lanes = segment.find("lanes")
         if lanes is not None:
-            for lane in lanes.findall('Lane'):
+            for lane in lanes.findall('lane'):
                 self.updateLane(segmentID, lane)
         #update laneEdge
         laneEdges = segment.find("laneEdgePolylines_cached")
@@ -178,29 +166,23 @@ class ShapefileToXml(QObject):
         xmlFile.close()
 
     def run(self):
-        roadNetwork = self.document.find('GeoSpatial/RoadNetwork')
+        roadNetwork = self.document.find('geospatial/road_network')
         #update nodes
-        nodes = roadNetwork.find('Nodes')
+        nodes = roadNetwork.find('nodes')
+
         if nodes is not None:
-            uninodes = nodes.find('UniNodes')
-            if uninodes is not None:
-                self.updateUninodes(uninodes.findall('UniNode'))
-        self.prog_sig.emit(25)
-        if nodes is not None:
-            multinodes = nodes.find('Intersections')
-            if multinodes is not None:
-                self.updateMulnodes(multinodes.findall('Intersection'))
+            self.updateMulnodes(nodes.findall('node'))
         self.prog_sig.emit(50)
         #update segment
-        linksParent = roadNetwork.find('Links')
+        linksParent = roadNetwork.find('links')
         if linksParent is not None:
-            links = linksParent.findall('Link')
+            links = linksParent.findall('link')
             count = len(links)
             progPercent = 50
             for link in links:
-                segments = link.find('Segments')
-                linkId = link.find('linkID').text
-                for segment in segments.findall('Segment'):
+                segments = link.find('segments')
+                linkId = link.find('id').text
+                for segment in segments.findall('segment'):
                     self.updateSegment(linkId, segment)
                 progPercent = progPercent + 25.0/count
                 self.prog_sig.emit(progPercent)

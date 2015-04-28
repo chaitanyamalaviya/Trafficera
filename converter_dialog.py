@@ -112,14 +112,14 @@ class ConverterDialog(QtGui.QDialog, Ui_Converter):
         sh_dir = self.shxml_sh_path.text()
         if xml_path == "" or sh_dir == "":
             self.shxml_status.setVisible(True)
-            self.shxml_status.setText("<font color='red'>Please shape files directory and xml output!<font>")
+            self.shxml_status.setText("<font color='red'>Please enter shape files directory and xml output!<font>")
             return
 
         formula_x = self.shxml_formula_x.text()
         formula_y = self.shxml_formula_y.text()
         if formula_x == "" or formula_y == "":
             self.shxml_status.setVisible(True)
-            self.shxml_status.setText("<font color='red'>Please enter the coordinate conversion formular!<font>")
+            self.shxml_status.setText("<font color='red'>Please enter the coordinate conversion formulae!<font>")
             return
 
         self.shxml_status.setVisible(False)
