@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_segment.ui'
 #
-# Created: Mon Apr 27 13:43:02 2015
+# Created: Wed Apr 29 15:27:03 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -239,7 +239,7 @@ class Ui_Segment(object):
         self.maxSpeedLabel.setText(_translate("Segment", "MaxSpeed*", None))
         self.sequencenoLabel.setText(_translate("Segment", "SequenceNo*", None))
         self.capacityLabel.setText(_translate("Segment", "Capacity*", None))
-        self.idLabel.setText(_translate("Segment", "New Link Id*", None))
+        self.idLabel.setText(_translate("Segment", "Segment Id*", None))
         self.taglabel.setText(_translate("Segment", "Tags", None))
         self.actionButton.setText(_translate("Segment", "ADD", None))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_2), _translate("Segment", "Section", None))

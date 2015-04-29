@@ -99,7 +99,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.id.setText(str(self.info["id"]))
             original_id = self.info["id"]
             # self.aimsunId.setText(str(self.info["aimsunId"]))
-            self.sequenceno.setText(str(self.info["sequence_num"]))
+            self.sequenceno.setText(str(self.info["sequence_no"]))
             self.capacity.setText(str(self.info["capacity"]))
             self.maxSpeed.setText(str(self.info["max_speed"]))
             self.Tags.setText(str(self.info["tags"]))
@@ -128,12 +128,19 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         ridx = self.laneConnectorTable.currentRow()
         self.info["connectors"].pop(ridx)
         self.laneConnectorTable.removeRow(ridx)
+        if ridx == len(self.info["connectors"]):
+            self.laneID.clear()
+            self.fromSectioncomboBox.setCurrentIndex(0)
+            self.toSectioncomboBox.setCurrentIndex(0)
+            self.fromLanecomboBox.setCurrentIndex(0)
+            self.toLanecomboBox.setCurrentIndex(0)
+        else:
+            self.laneID.setText(self.laneConnectorTable.item(ridx,0).text())
+            self.fromSectioncomboBox.setCurrentIndex(self.fromSectioncomboBox.findText(self.laneConnectorTable.item(ridx,1).text()))
+            self.toSectioncomboBox.setCurrentIndex(self.toSectioncomboBox.findText(self.laneConnectorTable.item(ridx,2).text()))
+            self.fromLanecomboBox.setCurrentIndex(self.fromLanecomboBox.findText(self.laneConnectorTable.item(ridx,3).text()))
+            self.toLanecomboBox.setCurrentIndex(self.toLanecomboBox.findText(self.laneConnectorTable.item(ridx,4).text()))
 
-        self.laneID.clear()
-        self.fromSectioncomboBox.setCurrentIndex(0)
-        self.toSectioncomboBox.setCurrentIndex(0)
-        self.fromLanecomboBox.setCurrentIndex(0)
-        self.toLanecomboBox.setCurrentIndex(0)
 
 
 
@@ -181,12 +188,12 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
     def displayconnector(self):
 
         ridx = self.laneConnectorTable.currentRow()
-
-        self.laneID.setText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),0).text())
-        self.fromSectioncomboBox.setCurrentIndex(self.fromSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),1).text()))
-        self.toSectioncomboBox.setCurrentIndex(self.toSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),2).text()))
-        self.fromLanecomboBox.setCurrentIndex(self.fromLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),3).text()))
-        self.toLanecomboBox.setCurrentIndex(self.toLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),4).text()))
+        if ridx>=0:
+            self.laneID.setText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),0).text())
+            self.fromSectioncomboBox.setCurrentIndex(self.fromSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),1).text()))
+            self.toSectioncomboBox.setCurrentIndex(self.toSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),2).text()))
+            self.fromLanecomboBox.setCurrentIndex(self.fromLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),3).text()))
+            self.toLanecomboBox.setCurrentIndex(self.toLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),4).text()))
 
 
 
@@ -241,11 +248,11 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         #     self.errorMessage.setText("endNode is invalid. It must be a number.")
         #     return
 
-        sequence_num = self.sequenceno.text()
-        if sequenceno.isdigit() is False:
+        sequence_no = self.sequenceno.text()
+        if sequence_no.isdigit() is False:
             self.errorMessage.setText("Sequence No is invalid. It must be a number.")
             return
-        self.info["sequence_num"] = int(sequence_num)
+        self.info["sequence_no"] = int(sequence_no)
 
 
         tags = self.Tags.text()

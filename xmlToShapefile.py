@@ -53,9 +53,14 @@ class XmlToShapefile(QObject):
         polyLine = lane.find("polyline")
         if polyLine is None:
             QgsMessageLog.logMessage("No polyline in lane %s"%str(laneId), 'SimGDC')
-            return  
-        for polypoint in polyLine.findall('point'):
-            coordinates.append(self.parseLocation(polypoint))
+            return
+        points = polyLine.find("points")
+        for point in points.findall("point"):
+            coordinates.append(self.parseLocation(point))
+        if len(coordinates) == 0:
+            QgsMessageLog.logMessage("Lane %s has no polyline info."%laneId, 'SimGDC')
+            return
+
         self.writer.addPolyline(SHTYPE.LANE, coordinates, attr)
 
     def parseLaneEdge(self, segmentId, laneEdge):
@@ -107,10 +112,17 @@ class XmlToShapefile(QObject):
 
         self.writer.addPolyline(SHTYPE.TURNINGPATH,coordinates, attr)
 
-    def parseBusstop(self, segmentId, busstop):
-        point = self.parseLocation(busstop)
-        attr = [segmentId, busstop.find("id").text]
-        self.writer.addPoint(SHTYPE.BUSSTOP, point, attr) 
+    def parseBusstop(self, busstop):
+        point = busstop.find("point")
+        coordinates = self.parseLocation(point)
+        attr = [busstop.find("segment_id").text, busstop.find("id").text]
+        self.writer.addPoint(SHTYPE.BUSSTOP, coordinates, attr)
+
+    def parseTrainstop(self, trainstop):
+        point = trainstop.find("point")
+        coordinates = self.parseLocation(point)
+        attr = ["".join(trainstop.findall("segment_id")), trainstop.find("id").text]
+        self.writer.addPoint(SHTYPE.TRAINSTOP, coordinates, attr)
 
     def parseSegment(self, linkId, segment):
         segmentId = segment.find("id").text
@@ -139,14 +151,7 @@ class XmlToShapefile(QObject):
         # if laneEdges is not None:
         #     for laneEdge in laneEdges.findall('laneEdgePolyline_cached'):
         #         self.parseLaneEdge(segmentId, laneEdge)
-        # #parse obstacles
-        # obstacles = segment.find("Obstacles")
-        # if obstacles is not None:
-        #     for obstacle in obstacles.iter():
-        #         if obstacle.tag == "crossing":
-        #             self.parseCrossing(segmentId, obstacle)
-        #         elif obstacle.tag == "busstop":
-        #             self.parseBusstop(segmentId, obstacle)
+
         self.writer.addPolyline(SHTYPE.SEGMENT, coordinates, attr)
 
     def run(self):
@@ -168,6 +173,14 @@ class XmlToShapefile(QObject):
 
         for turningpath in roadNetwork.iter('turning_path'):
             self.parseTurningPath(turningpath)
+
+        #parse obstacles
+        pt_stops = roadNetwork.find("pt_stops")
+        if pt_stops is not None:
+            for bus_stop in pt_stops.iter('bus_stop'):
+                self.parseBusstop(bus_stop)
+            for train_stop in pt_stops.iter('train_stop'):
+                self.parseTrainstop(train_stop)
 
         #parse segment
         links = []

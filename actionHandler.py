@@ -261,7 +261,7 @@ class ActionHandler():
 
     def getLinkList(self):
         listLinks = {}
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         links = linkParent.findall('link')
         selectedSegment= None
@@ -274,7 +274,7 @@ class ActionHandler():
 
     def getLinkListDetail(self):
         listLinks = {}
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         links = linkParent.findall('link')
         selectedSegment= None
@@ -290,7 +290,7 @@ class ActionHandler():
     def manageLink(self, data):
         if data["oldId"] < 1:
             #add new
-            roadNetwork = self.document.find('geospatial/road_network')
+            roadNetwork = self.document.find('road_network')
             linkParent = roadNetwork.find('links')
             if linkParent is None:
                 linkParent = ElementTree.SubElement(roadNetwork, 'links')
@@ -301,7 +301,7 @@ class ActionHandler():
             ElementTree.SubElement(link, 'to_node').text = str(data["endingNode"])
             ElementTree.SubElement(link, 'segments')
         else:
-            roadNetwork = self.document.find('geospatial/road_network')
+            roadNetwork = self.document.find('road_network')
             linkParent = roadNetwork.find('links')
             links = linkParent.findall('link')
             selectedLink = None
@@ -330,7 +330,7 @@ class ActionHandler():
         '''ADD FEATURE TO LAYER'''
         feat = QgsFeature()
         feat.initAttributes(2)
-        distance = 1000
+        distance = 10
         #coordinates = [QgsPoint(point.x(),point.y()), QgsPoint(point.x(), point.y() + distance), QgsPoint(point.x() + 2*distance, point.y() + distance), QgsPoint(point.x() + 2*distance, point.y())]
         coordinates = [QgsPoint(point.x(),point.y()), QgsPoint(point.x() + distance, point.y() + distance)]
         feat.setAttribute(0, data["linkId"])
@@ -338,7 +338,7 @@ class ActionHandler():
         feat.setGeometry(QgsGeometry.fromPolyline(coordinates))
         self.active_layer.dataProvider().addFeatures([feat])
         '''ADD TO data.xml '''
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         links = linkParent.findall('link')
         selectedLink = None
@@ -355,13 +355,13 @@ class ActionHandler():
             segment = ElementTree.SubElement(segments, 'segment')
             #add Info
             ElementTree.SubElement(segment, 'id').text = str(data["id"])
-            ElementTree.SubElement(segment, 'sequence_num').text = str(data["sequence_num"])
+            ElementTree.SubElement(segment, 'sequence_no').text = str(data["sequence_no"])
             ElementTree.SubElement(segment, 'capacity').text = str(data["capacity"])
             ElementTree.SubElement(segment, 'max_speed').text = str(data["max_speed"])
             ElementTree.SubElement(segment, 'tags').text = str(data["tags"])
             connectors = ElementTree.SubElement(selectedLink, 'connectors')
-            connector = ElementTree.SubElement(connectors, 'connector')
             for conn in data["connectors"]:
+                connector = ElementTree.SubElement(connectors, 'connector')
                 ElementTree.SubElement(connector, 'id').text = str(conn[0])
                 ElementTree.SubElement(connector, 'from_section').text = str(conn[1])
                 ElementTree.SubElement(connector, 'to_section').text = str(conn[2])
@@ -371,13 +371,11 @@ class ActionHandler():
         polyline = ElementTree.SubElement(segment, 'polyline')
         points = ElementTree.SubElement(polyline, 'points')
 
-        coordinates = str(feat.geometry().asPolyline().asPoint.x())             #need to find a way to get the points
-
-        for pt in coordinates:
-            point = ElementTree.SubElement(points, 'point')
-            ElementTree.SubElement(point, 'x').text = pt[0]
-            ElementTree.SubElement(point, 'y').text = pt[1]
-            ElementTree.SubElement(point, 'z').text = pt[2]
+        for i in range(2):
+            clkpoint = ElementTree.SubElement(points, 'point')
+            ElementTree.SubElement(clkpoint, 'x').text = str(point.x() + distance*i)
+            ElementTree.SubElement(clkpoint, 'y').text = str(point.y() + distance*i)
+            ElementTree.SubElement(clkpoint, 'z').text = str(0)
 
     def updateSegment(self, feature, data):
         #update feature if necessary
@@ -388,7 +386,7 @@ class ActionHandler():
             attrs = {0 : data["linkId"], 1: data["id"]}
             self.active_layer.dataProvider().changeAttributeValues({int(feature.id()) : attrs })
         #get info
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         links = linkParent.findall('link')
         selectedLink = None
@@ -418,14 +416,14 @@ class ActionHandler():
             return
         #update info
         selectedSegment.find("id").text = str(data["id"])
-        selectedSegment.find("sequence_num").text = str(data["sequence_num"])
+        selectedSegment.find("sequence_no").text = str(data["sequence_no"])
         selectedSegment.find("capacity").text = str(data["capacity"])
         selectedSegment.find("max_speed").text = str(data["max_speed"])
         selectedSegment.find("tags").text = str(data["tags"])
 
         connectorsroot = selectedLink.find("connectors").text
         connectors = connectorsroot.findall("connector")
-        for conn in connectors:
+        for conn in data["connectors"]:
             conn.find("id").text = str(conn[0])
             conn.find("from_section").text = str(conn[1])
             conn.find("to_section").text = str(conn[2])
@@ -444,16 +442,11 @@ class ActionHandler():
         selectedSegmentId = int(attrs[1])
         #get info
         listLinks = {}
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         links = linkParent.findall('link')
         selectedLink = None
-        if links is not None:
-            for link in links:
-                linkId = int(link.find("id").text)
-                if linkId == data["linkId"]:
-                    selectedLink = link
-                    break
+
         selectedSegment= None
         if links is not None:
             for link in links:
@@ -461,6 +454,7 @@ class ActionHandler():
                 linkName = link.find("road_name").text
                 listLinks[linkId] = linkName
                 if linkId == selectedLinkId:
+                    selectedLink = link
                     segments = link.find("segments").findall("segment")
                     for segment in segments:
                         segmentId = int(segment.find("id").text)
@@ -473,17 +467,21 @@ class ActionHandler():
             # aimsunIdStr = selectedSegment.find("originalDB_ID").text
             # aimsunIds = re.findall(r'[0-9]+', aimsunIdStr)
             # info["aimsunId"] = aimsunIds[0]
-            info["sequence_num"] = selectedSegment.find("sequence_num").text
+            info["sequence_no"] = selectedSegment.find("sequence_no").text
             info["capacity"] = selectedSegment.find("capacity").text
             info["max_speed"] = selectedSegment.find("max_speed").text
-            info["tags"] = selectedSegment.find("tags").text
+            if selectedSegment.find("tags"):
+                info["tags"] = selectedSegment.find("tags").text
+            else:
+                info["tags"] = None
             # info["roadType"] = selectedSegment.find("roadType").text
             # info["category"] = selectedSegment.find("category").text
-            info["connectors"] =selectedLink.find("connectors").text
-            connectorsroot = selectedLink.find("connectors").text
-            connectors = connectorsroot.findall("connector")
-            for conn in connectors:
-                info["connectors"].append(conn)
+            info["connectors"] = []
+            for link in linkParent.iter('link'):
+                if selectedLinkId==link.find('id'):
+                    for conn in link.iter('connector'):
+                        if conn.find("from_section").text == str(selectedSegmentId):
+                            info["connectors"].append([conn.find("id").text,conn.find("from_section").text,conn.find("to_section").text,conn.find("from_lane").text,conn.find("to_lane").text])
 
             return [listLinks, info]
         return None
@@ -500,7 +498,7 @@ class ActionHandler():
         self.active_layer.dataProvider().addFeatures([feat])
         '''ADD TO data.xml '''
         #get info
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         segments = linkParent.findall('link/segments/segment')
         selectedSegmentId = int(data["segmentId"])

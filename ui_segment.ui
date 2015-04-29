@@ -261,7 +261,7 @@
        </font>
       </property>
       <property name="text">
-       <string>New Link Id*</string>
+       <string>Segment Id*</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="id">

@@ -7,16 +7,17 @@ def enum(*sequential, **named):
     return type('Enum', (), enums)
 
 # Constants
-TYPE = enum('MULNODE', 'SEGMENT', 'TURNINGPATH', 'LANE', 'CROSSING', 'BUSSTOP', 'LANEEDGE')
+TYPE = enum('MULNODE', 'SEGMENT', 'TURNINGPATH', 'LANE', 'CROSSING', 'BUSSTOP','TRAINSTOP', 'LANEEDGE')
 TAGS = {TYPE.MULNODE: "mulnode", TYPE.SEGMENT: "segment", TYPE.TURNINGPATH: "turningPath",
-        TYPE.LANE: "lane", TYPE.CROSSING: "crossing", TYPE.BUSSTOP: "busstop", TYPE.LANEEDGE: "laneedge"}
+        TYPE.LANE: "lane", TYPE.CROSSING: "crossing", TYPE.BUSSTOP: "busstop", TYPE.TRAINSTOP: "trainstop", TYPE.LANEEDGE: "laneedge"}
 SCHEMA = {}
 SCHEMA[TYPE.MULNODE] = [QGis.WKBPoint, [QgsField("id", QVariant.Int)]] 
 SCHEMA[TYPE.SEGMENT] = [QGis.WKBLineString, [QgsField("link-id", QVariant.Int), QgsField("segmentID", QVariant.Int)]]
 SCHEMA[TYPE.TURNINGPATH] = [QGis.WKBLineString, [QgsField("turningPathID", QVariant.Int)], [QgsField("groupID", QVariant.Int)]]
 SCHEMA[TYPE.LANE]    = [QGis.WKBLineString, [QgsField("segmentID", QVariant.Int), QgsField("laneID", QVariant.Int)]]
 SCHEMA[TYPE.CROSSING]= [QGis.WKBPolygon, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]
-SCHEMA[TYPE.BUSSTOP] = [QGis.WKBPoint, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]    
+SCHEMA[TYPE.BUSSTOP] = [QGis.WKBPoint, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]
+SCHEMA[TYPE.TRAINSTOP] = [QGis.WKBPoint, [QgsField("segments", QVariant.Int), QgsField("id", QVariant.Int)]]
 SCHEMA[TYPE.LANEEDGE]= [QGis.WKBLineString, [QgsField("segmentID", QVariant.Int), QgsField("number", QVariant.Int)]] 
 
 class ShapefileWriter:
@@ -99,7 +100,7 @@ class ShapefileReader:
 
                 if typeid == TYPE.CROSSING:
                     self.data[typeid][attr[0]][attr[1]] = feature.geometry().asPolygon()
-                elif typeid == TYPE.BUSSTOP:
+                elif typeid == TYPE.BUSSTOP or typeid == TYPE.TRAINSTOP:
                     self.data[typeid][attr[0]][attr[1]] = feature.geometry().asPoint()
                 else:
                     self.data[typeid][attr[0]][attr[1]] = feature.geometry().asPolyline()
