@@ -37,68 +37,13 @@
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
-  <widget class="QLabel" name="roadTypeLabel">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>210</y>
-     <width>81</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Times New Roman</family>
-     <pointsize>11</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Road Type*</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="roadType">
-   <property name="geometry">
-    <rect>
-     <x>90</x>
-     <y>220</y>
-     <width>321</width>
-     <height>27</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Times New Roman</family>
-     <pointsize>11</pointsize>
-    </font>
-   </property>
-   <item>
-    <property name="text">
-     <string>Default</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Freeway</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Ramp</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Urban Road</string>
-    </property>
-   </item>
-  </widget>
   <widget class="QGroupBox" name="attributeGroup">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>143</y>
+     <y>153</y>
      <width>411</width>
-     <height>311</height>
+     <height>301</height>
     </rect>
    </property>
    <property name="font">
@@ -185,7 +130,7 @@
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="tagslabel">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -204,7 +149,7 @@
      <string>Tags</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTextEdit" name="tagsLink">
     <property name="geometry">
      <rect>
       <x>80</x>
@@ -303,9 +248,9 @@
    <widget class="QLabel" name="idLabel">
     <property name="geometry">
      <rect>
-      <x>17</x>
-      <y>-3</y>
-      <width>51</width>
+      <x>0</x>
+      <y>0</y>
+      <width>81</width>
       <height>41</height>
      </rect>
     </property>
@@ -316,7 +261,7 @@
      </font>
     </property>
     <property name="text">
-     <string>LinkId*</string>
+     <string>New LinkId*</string>
     </property>
    </widget>
    <widget class="QLabel" name="roadNameLabel">
@@ -353,6 +298,61 @@
       <pointsize>11</pointsize>
      </font>
     </property>
+   </widget>
+   <widget class="QLabel" name="roadTypeLabel">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>70</y>
+      <width>81</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Road Type*</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="roadType">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>80</y>
+      <width>321</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <item>
+     <property name="text">
+      <string>Default</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Freeway</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Ramp</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Urban Road</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QLabel" name="titleLabel">

@@ -58,18 +58,20 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
             self.roadName.setText("")
             self.startNode.setText("")
             self.endNode.setText("")
+            self.tagsLink.setPlainText("")
         else:
             linkId = int(textLinkId)
             self.id.setText(textLinkId)
             self.roadName.setText(self.listLinks[linkId][1])
             self.startNode.setText(str(self.listLinks[linkId][2]))
             self.endNode.setText(str(self.listLinks[linkId][3]))
+            self.tagsLink.setPlainText(str(self.listLinks[linkId][4]))
             self.actionButton.setText("SAVE")
 
     def update(self):
         self.errorMessage.setText("")
         self.info = {}
-
+        msgBox = QtGui.QMessageBox()
         oldLinkId = 0
         #get linkid
         linkIdStr = self.linkIdComboBox.currentText()
@@ -79,31 +81,47 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
 
         id = self.id.text()
         if id.isdigit() is False or int(id) < 1:
-            self.errorMessage.setText("id is invalid. It must be a positive number.")
+            msgBox.setText("id is invalid. It must be a positive number.")
+            msgBox.exec_()
             return
+
         self.info["id"] = int(id)
         if self.info["id"] < 1 or self.info["id"] != oldLinkId:
             if self.info["id"] in self.listLinks:
-                self.errorMessage.setText("The id already exists.")
+                msgBox.setText("The linkID already exists. Please enter a new linkID")
+                msgBox.exec_()
                 return
 
         roadName = self.roadName.text()
         if roadName == "":
-            self.errorMessage.setText("roadName can not be empty.")
+            msgBox.setText("roadName can not be empty.")
+            msgBox.exec_()
             return
+
         self.info["roadName"] = roadName
 
         startNode = self.startNode.text()
         if startNode.isdigit() is False:
-            self.errorMessage.setText("startNode is invalid. It must be a number.")
+            msgBox.setText("startNode is invalid. It must be a number.")
+            msgBox.exec_()
             return
+
         self.info["startingNode"] = int(startNode)       
 
         endNode = self.endNode.text()
         if endNode.isdigit() is False:
-            self.errorMessage.setText("endNode is invalid. It must be a number.")
+            msgBox.setText("endNode is invalid. It must be a number.")
+            msgBox.exec_()
             return
+
         self.info["endingNode"] = int(endNode)
+
+
+        self.info["roadType"] = self.roadType.currentText()
+
+        self.info["category"] = self.category.currentText()
+
+        self.info["tags"] = self.tagsLink.toPlainText()
 
         self.isModified = True
         self.accept()

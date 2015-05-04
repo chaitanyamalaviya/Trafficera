@@ -363,8 +363,8 @@ class ActionHandler():
             for conn in data["connectors"]:
                 connector = ElementTree.SubElement(connectors, 'connector')
                 ElementTree.SubElement(connector, 'id').text = str(conn[0])
-                ElementTree.SubElement(connector, 'from_section').text = str(conn[1])
-                ElementTree.SubElement(connector, 'to_section').text = str(conn[2])
+                ElementTree.SubElement(connector, 'from_segment').text = str(conn[1])
+                ElementTree.SubElement(connector, 'to_segment').text = str(conn[2])
                 ElementTree.SubElement(connector, 'from_lane').text = str(conn[3])
                 ElementTree.SubElement(connector, 'to_lane').text = str(conn[4])
 
@@ -425,8 +425,8 @@ class ActionHandler():
         connectors = connectorsroot.findall("connector")
         for conn in data["connectors"]:
             conn.find("id").text = str(conn[0])
-            conn.find("from_section").text = str(conn[1])
-            conn.find("to_section").text = str(conn[2])
+            conn.find("from_segment").text = str(conn[1])
+            conn.find("to_segment").text = str(conn[2])
             conn.find("from_lane").text = str(conn[3])
             conn.find("to_lane").text = str(conn[4])
 
@@ -477,11 +477,11 @@ class ActionHandler():
             # info["roadType"] = selectedSegment.find("roadType").text
             # info["category"] = selectedSegment.find("category").text
             info["connectors"] = []
-            for link in linkParent.iter('link'):
-                if selectedLinkId==link.find('id'):
+            for link in roadNetwork.iter('link'):
+                if str(selectedLinkId)==link.find('id').text:
                     for conn in link.iter('connector'):
-                        if conn.find("from_section").text == str(selectedSegmentId):
-                            info["connectors"].append([conn.find("id").text,conn.find("from_section").text,conn.find("to_section").text,conn.find("from_lane").text,conn.find("to_lane").text])
+                        if conn.find("from_segment").text == str(selectedSegmentId):
+                            info["connectors"].append([conn.find("id").text,conn.find("from_segment").text,conn.find("to_segment").text,conn.find("from_lane").text,conn.find("to_lane").text])
 
             return [listLinks, info]
         return None

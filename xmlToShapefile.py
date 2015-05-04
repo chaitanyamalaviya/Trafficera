@@ -24,16 +24,6 @@ class XmlToShapefile(QObject):
         # data.find("y").text = "--"
         return pos
 
-    # def parseUninode(self, uninode):
-    #     nodeId = uninode.find("nodeID").text
-    #     location = uninode.find("location")
-    #     if location is None:
-    #         QgsMessageLog.logMessage("No location in uninode %s"%str(nodeId), 'SimGDC')
-    #         return
-    #     point = self.parseLocation(location)
-    #     attr = [nodeId]
-    #     self.writer.addPoint(SHTYPE.UNINODE, point, attr)
-
     def parseMulnode(self, mulnode):
         nodeId = mulnode.find("id").text
         point = mulnode.find("point")
@@ -112,6 +102,26 @@ class XmlToShapefile(QObject):
 
         self.writer.addPolyline(SHTYPE.TURNINGPATH,coordinates, attr)
 
+    def parseLink(self, link):
+
+        id = link.find("id").text
+        road_name = link.find("road_name").text
+        attr = [id,road_name]
+        coordinates = []
+        polyline = link.find("polyline")
+        if polyline is None:
+            QgsMessageLog.logMessage("Link %s has no polyline info."%id, 'SimGDC')
+            return
+        points = polyline.find("points")
+        for point in points.findall("point"):
+            coordinates.append(self.parseLocation(point))
+        if len(coordinates) == 0:
+            QgsMessageLog.logMessage("Link %s has no polyline info."%id, 'SimGDC')
+            return
+
+        self.writer.addPolyline(SHTYPE.LINK,coordinates, attr)
+
+
     def parseBusstop(self, busstop):
         point = busstop.find("point")
         coordinates = self.parseLocation(point)
@@ -182,13 +192,14 @@ class XmlToShapefile(QObject):
             for train_stop in pt_stops.iter('train_stop'):
                 self.parseTrainstop(train_stop)
 
-        #parse segment
+        #parse link,segment
         links = []
         linkParent = roadNetwork.find('links')
         if linkParent is not None:
             links = linkParent.findall('link')
         count = len(links)
         for link in links:
+            self.parseLink(link)
             linkId = link.find('id').text
             segmentParent = link.find('segments')
             if segmentParent is not None:

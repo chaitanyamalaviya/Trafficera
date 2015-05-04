@@ -7,13 +7,14 @@ def enum(*sequential, **named):
     return type('Enum', (), enums)
 
 # Constants
-TYPE = enum('MULNODE', 'SEGMENT', 'TURNINGPATH', 'LANE', 'CROSSING', 'BUSSTOP','TRAINSTOP', 'LANEEDGE')
-TAGS = {TYPE.MULNODE: "mulnode", TYPE.SEGMENT: "segment", TYPE.TURNINGPATH: "turningPath",
+TYPE = enum('MULNODE', 'SEGMENT', 'TURNINGPATH','LINK','LANE', 'CROSSING', 'BUSSTOP','TRAINSTOP', 'LANEEDGE')
+TAGS = {TYPE.MULNODE: "mulnode", TYPE.SEGMENT: "segment", TYPE.TURNINGPATH: "turningPath", TYPE.LINK: "link",
         TYPE.LANE: "lane", TYPE.CROSSING: "crossing", TYPE.BUSSTOP: "busstop", TYPE.TRAINSTOP: "trainstop", TYPE.LANEEDGE: "laneedge"}
 SCHEMA = {}
 SCHEMA[TYPE.MULNODE] = [QGis.WKBPoint, [QgsField("id", QVariant.Int)]] 
 SCHEMA[TYPE.SEGMENT] = [QGis.WKBLineString, [QgsField("link-id", QVariant.Int), QgsField("segmentID", QVariant.Int)]]
 SCHEMA[TYPE.TURNINGPATH] = [QGis.WKBLineString, [QgsField("turningPathID", QVariant.Int)], [QgsField("groupID", QVariant.Int)]]
+SCHEMA[TYPE.LINK] = [QGis.WKBLineString, [QgsField("linkID", QVariant.Int)], [QgsField("road_name", QVariant.Int)]]
 SCHEMA[TYPE.LANE]    = [QGis.WKBLineString, [QgsField("segmentID", QVariant.Int), QgsField("laneID", QVariant.Int)]]
 SCHEMA[TYPE.CROSSING]= [QGis.WKBPolygon, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]
 SCHEMA[TYPE.BUSSTOP] = [QGis.WKBPoint, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]

@@ -59,7 +59,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <property name="iconSize">
       <size>
@@ -595,7 +595,7 @@
          <string>Tags</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="delButton">
+       <widget class="QPushButton" name="delturninggroupButton">
         <property name="geometry">
          <rect>
           <x>340</x>
@@ -816,7 +816,7 @@
          <string>Tags</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="delturningpathButton">
         <property name="geometry">
          <rect>
           <x>340</x>

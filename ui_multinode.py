@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_multinode.ui'
 #
-# Created: Wed Apr 22 11:50:55 2015
+# Created: Thu Apr 30 14:59:10 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -241,13 +241,13 @@ class Ui_MultiNode(object):
         font.setWeight(50)
         self.tags_tg_label.setFont(font)
         self.tags_tg_label.setObjectName(_fromUtf8("tags_tg_label"))
-        self.pushButton_2 = QtGui.QPushButton(self.turningGroup)
-        self.pushButton_2.setGeometry(QtCore.QRect(340, 30, 101, 23))
+        self.delturninggroupButton = QtGui.QPushButton(self.turningGroup)
+        self.delturninggroupButton.setGeometry(QtCore.QRect(340, 30, 101, 23))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.pushButton_2.setFont(font)
-        self.pushButton_2.setObjectName(_fromUtf8("pushButton_2"))
+        self.delturninggroupButton.setFont(font)
+        self.delturninggroupButton.setObjectName(_fromUtf8("delturninggroupButton"))
         self.TurningGroupTable = QtGui.QTableWidget(self.tab_3)
         self.TurningGroupTable.setGeometry(QtCore.QRect(10, 190, 431, 91))
         self.TurningGroupTable.setObjectName(_fromUtf8("TurningGroupTable"))
@@ -320,13 +320,13 @@ class Ui_MultiNode(object):
         font.setWeight(50)
         self.tagts_tp_label.setFont(font)
         self.tagts_tp_label.setObjectName(_fromUtf8("tagts_tp_label"))
-        self.pushButton_3 = QtGui.QPushButton(self.turningPath)
-        self.pushButton_3.setGeometry(QtCore.QRect(340, 30, 101, 23))
+        self.delturningpathButton = QtGui.QPushButton(self.turningPath)
+        self.delturningpathButton.setGeometry(QtCore.QRect(340, 30, 101, 23))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
-        self.pushButton_3.setFont(font)
-        self.pushButton_3.setObjectName(_fromUtf8("pushButton_3"))
+        self.delturningpathButton.setFont(font)
+        self.delturningpathButton.setObjectName(_fromUtf8("delturningpathButton"))
         self.TurningPathTable = QtGui.QTableWidget(self.tab_3)
         self.TurningPathTable.setGeometry(QtCore.QRect(10, 450, 431, 101))
         self.TurningPathTable.setObjectName(_fromUtf8("TurningPathTable"))
@@ -394,7 +394,7 @@ class Ui_MultiNode(object):
         self.newturningGroup.setText(_translate("MultiNode", "Add new", None))
         self.visibility_distance_label.setText(_translate("MultiNode", "Visibility Distance", None))
         self.tags_tg_label.setText(_translate("MultiNode", "Tags", None))
-        self.pushButton_2.setText(_translate("MultiNode", "Delete", None))
+        self.delturninggroupButton.setText(_translate("MultiNode", "Delete", None))
         self.turningPath.setTitle(_translate("MultiNode", "Turning Path", None))
         self.TurningPathIDlabel.setText(_translate("MultiNode", "Turning Path ID", None))
         self.fromLanelabel.setText(_translate("MultiNode", "fromLane", None))
@@ -402,7 +402,7 @@ class Ui_MultiNode(object):
         self.newTurningPath.setText(_translate("MultiNode", "Add new", None))
         self.maxSpeed_label.setText(_translate("MultiNode", "Max Speed", None))
         self.tagts_tp_label.setText(_translate("MultiNode", "Tags", None))
-        self.pushButton_3.setText(_translate("MultiNode", "Delete", None))
+        self.delturningpathButton.setText(_translate("MultiNode", "Delete", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MultiNode", "Turnings", None))
         self.genconflictbutton.setText(_translate("MultiNode", "Generate Turning Conflicts", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MultiNode", "Conflicts", None))

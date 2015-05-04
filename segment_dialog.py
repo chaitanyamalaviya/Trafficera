@@ -86,7 +86,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
         self.laneConnectorTable.setRowCount(0)
         self.laneConnectorTable.setColumnCount(5)
-        TableHeader = ['ID','fromSection','toSection','fromLane','toLane']
+        TableHeader = ['ID','fromSegment','toSegment','fromLane','toLane']
         self.laneConnectorTable.setHorizontalHeaderLabels(TableHeader)
         self.laneConnectorTable.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.laneConnectorTable.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
@@ -103,13 +103,18 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             self.capacity.setText(str(self.info["capacity"]))
             self.maxSpeed.setText(str(self.info["max_speed"]))
             self.Tags.setText(str(self.info["tags"]))
+            # msgBox = QtGui.QMessageBox()
+            # msgBox.setText(str(self.info["connectors"]))
+            # msgBox.exec_()
+            # return
 
             if self.info["connectors"]:
+
                 for connector in self.info["connectors"]:
                     ridx = self.info["connectors"].index(connector)
                     self.laneConnectorTable.insertRow(ridx)
-                    for cidx in range(5) :
-                        self.laneConnectorTable.setItem(ridx,cidx,connector[cidx])
+                    for cidx in range(5):
+                        self.laneConnectorTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(connector[cidx]))
             #QtCore.QObject.connect(self.linkidcomboBox, QtCore.SIGNAL('currentIndexChanged(const QString&)'),self.updateLinkName)
         else:
             self.addnewid()
@@ -172,10 +177,28 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
     def addlaneconnector(self):
 
+        msgBox = QtGui.QMessageBox()
+
         laneconnectorid = self.laneID.text()
         if laneconnectorid.isdigit() is False:
-            self.errorMessage.setText("Connector ID is invalid. It must be a number.")
+            msgBox.setText("Connector ID is invalid. It must be a number.")
+            msgBox.exec_()
             return
+            # self.errorMessage.setText("Connector ID is invalid. It must be a number.")
+            # return
+        for conn in self.info["connectors"]:
+            if conn[0]==laneconnectorid:
+                msgBox.setText("Connector ID already exists. Please enter another ID.")
+                msgBox.exec_()
+                return
+                # self.errorMessage.setText("Connector ID already exists. Please enter another ID.")
+                # return
+            if conn[3]==self.fromLanecomboBox.currentText() and conn[4]==self.toLanecomboBox.currentText():
+                msgBox.setText("Connector with same fromLane and toLane already exists. Please enter different fromLane or toLane.")
+                msgBox.exec_()
+                return
+                # self.errorMessage.setText("Connector with same fromLane and toLane already exists. Please enter different fromLane or toLane.")
+                # return
 
         ridx = len(self.info["connectors"])
         self.info["connectors"].append([laneconnectorid, self.fromSectioncomboBox.currentText(), self.toSectioncomboBox.currentText(), self.fromLanecomboBox.currentText(), self.toLanecomboBox.currentText()])
@@ -188,19 +211,19 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
     def displayconnector(self):
 
         ridx = self.laneConnectorTable.currentRow()
-        if ridx>=0:
-            self.laneID.setText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),0).text())
-            self.fromSectioncomboBox.setCurrentIndex(self.fromSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),1).text()))
-            self.toSectioncomboBox.setCurrentIndex(self.toSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),2).text()))
-            self.fromLanecomboBox.setCurrentIndex(self.fromLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),3).text()))
-            self.toLanecomboBox.setCurrentIndex(self.toLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),4).text()))
+
+        self.laneID.setText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),0).text())
+        self.fromSectioncomboBox.setCurrentIndex(self.fromSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),1).text()))
+        self.toSectioncomboBox.setCurrentIndex(self.toSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),2).text()))
+        self.fromLanecomboBox.setCurrentIndex(self.fromLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),3).text()))
+        self.toLanecomboBox.setCurrentIndex(self.toLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),4).text()))
 
 
 
     def update(self):
         global original_id
         #self.errorMessage.setText("")
-
+        msgBox = QtGui.QMessageBox()
         seglist = []
 
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
@@ -219,15 +242,19 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
         id = self.id.text()
         if id.isdigit() is False:
-            self.errorMessage.setText("id is invalid. It must be a number.")
+            msgBox.setText("id is invalid. It must be a number.")
+            msgBox.exec_()
             return
 
-        if len(id) > 10 :                                                                                   # unsigned long in data structure
-            self.errorMessage.setText("SegmentId is beyond range. Enter a shorter SegmentID.")
-            return
+
+        if len(id) > 10:
+            msgBox.setText("SegmentId is beyond range. Enter a shorter SegmentID.")
+            msgBox.exec_()
+            return                                                                         # unsigned long in data structure
 
         if id in seglist and id != original_id:
-            self.errorMessage.setText("Segment ID exists. Please enter another ID.")
+            msgBox.setText("Segment ID exists. Please enter another ID.")
+            msgBox.exec_()
             return
 
         self.info["id"] = int(id)
@@ -266,13 +293,13 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
 
 
-        # if id != original_id:
-        #     for Segment in root.iter('Segment'):
-        #         startingNode = Segment.find('startingNode').text
-        #         endingNode = Segment.find('endingNode').text
-        #         if startingNode == startNode and endingNode == endNode:
-        #             self.errorMessage.setText("Segment with identical starting node/ending node pair exists. \nPlease enter different node IDs.")
-        #             return
+        if id!= original_id:
+            for segment in root.iter('segment'):
+                startingNode = segment.find('startingNode').text
+                endingNode = segment.find('endingNode').text
+                if startingNode == startNode and endingNode == endNode:
+                    self.errorMessage.setText("Segment with identical starting node/ending node pair exists. \nPlease enter different node IDs.")
+                    return
         #
         # nodeList = []
         #

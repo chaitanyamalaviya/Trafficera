@@ -76,7 +76,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             # self.aimsunId.setText(str(self.info["aimsunId"]))
             self.nodeType.setEditText(self.info["nodeType"])
             self.trafficLightID.setText(self.info["trafficLightID"])
-            self.tags_node.setText(self.info["tags"])
+            self.tags_node.setPlainText(self.info["tags"])
 
             if self.info["turningGroup"]:
                 for group in self.info["turningGroup"]:
@@ -107,20 +107,25 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         QtCore.QObject.connect(self.TurningGroupTable, QtCore.SIGNAL('itemSelectionChanged()'), self.displayturninggroup)
         QtCore.QObject.connect(self.TurningPathTable, QtCore.SIGNAL('itemSelectionChanged()'), self.displayturningpath)
 
-        QtCore.QObject.connect(self.genconflictbutton, QtCore.SIGNAL('clicked(bool'), self.genturningConflicts)
+        # QtCore.QObject.connect(self.genconflictbutton, QtCore.SIGNAL('clicked(bool'), self.genturningConflicts)
 
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
     def addTurningGroup(self):
         #self.info = {}
-
+        msgBox = QtGui.QMessageBox()
         turningGroupID = self.turningGroupID.text()
         if turningGroupID.isdigit() is False:
-            self.errorMessage.setText("Turning Group ID is invalid. It must be a number.")
+            msgBox.setText("Turning Group ID is invalid. It must be a number.")
+            msgBox.exec_()
             return
-
+        for turningGroup in self.info["turningGroup"]:
+            if turningGroup[0]==turningGroupID:
+                msgBox.setText("Turning Group ID exists. Please enter a different ID.")
+                msgBox.exec_()
+                return
         ridx = len(self.info["turningGroup"])
-        self.info["turningGroup"].append([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText(),self.visibility_distance.text(),self.tags_turninggroup.text()])
+        self.info["turningGroup"].append([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText(),self.visibility_distance.text(),self.tags_turninggroup.toPlainText()])
 
         self.TurningGroupTable.insertRow(ridx)
         for cidx in range(7) :
@@ -129,22 +134,26 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
     def addTurningPath(self):
         #self.info = {}
+        msgBox = QtGui.QMessageBox()
 
         turningPathID = self.TurningPath.text()
         if turningPathID.isdigit() is False:
-            self.errorMessage.setText("Turning Path ID is invalid. It must be a number.")
+            msgBox.setText("Turning Path ID is invalid. It must be a number.")
+            msgBox.exec_()
             return
+            # self.errorMessage.setText("Turning Path ID is invalid. It must be a number.")
+            # return
         groupID = self.turningGroupID.text()
 
         ridx = self.TurningPathTable.rowCount()
-        self.info["turningPath"].append([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText(),self.maxSpeed.text(),self.tags_turningpath.text()])
+        self.info["turningPath"].append([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText(),self.maxSpeed.text(),self.tags_turningpath.toPlainText()])
 
         self.TurningPathTable.insertRow(ridx)
         self.TurningPathTable.setItem(ridx,0,QtGui.QTableWidgetItem(turningPathID))
         self.TurningPathTable.setItem(ridx,1,QtGui.QTableWidgetItem(self.fromLane.currentText()))
         self.TurningPathTable.setItem(ridx,2,QtGui.QTableWidgetItem(self.toLane.currentText()))
         self.TurningPathTable.setItem(ridx,3,QtGui.QTableWidgetItem(self.visibility_distance.currentText()))
-        self.TurningPathTable.setItem(ridx,4,QtGui.QTableWidgetItem(self.tags_turningpath.currentText()))
+        self.TurningPathTable.setItem(ridx,4,QtGui.QTableWidgetItem(self.tags_turningpath.toPlainText()))
 
         # for cidx in range(3) :
         #         self.TurningPathTable.setItem(ridx,cidx,QtGui.QTableWidgetItem(self.info["turningPath"][ridx][cidx+1]))
@@ -163,7 +172,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.Phases.setText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),3).text())
         self.Rules.setCurrentIndex(self.Rules.findText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),4).text()))
         self.visibility_distance.setText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),5).text())
-        self.tags_turninggroup.setText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),6).text())
+        self.tags_turninggroup.setPlainText(self.TurningGroupTable.item(self.TurningGroupTable.currentRow(),6).text())
         # display corresponding turning paths in turning path table
 
             # for tG in root.iter('TurningGroup'):
@@ -204,7 +213,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.fromLane.setCurrentIndex(self.fromLane.findText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),1).text()))
         self.toLane.setCurrentIndex(self.toLane.findText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),2).text()))
         self.maxSpeed.setText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),3).text())
-        self.tags_turningpath.setText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),4).text())
+        self.tags_turningpath.setPlainText(self.TurningPathTable.item(self.TurningPathTable.currentRow(),4).text())
 
 
 
@@ -244,12 +253,13 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
     def deleteTurningGroup(self):
         ridx = self.TurningGroupTable.currentRow()
+        self.TurningGroupTable.clear(ridx)
         self.info["turningGroup"].pop(ridx)
         for tP in self.info["turningPath"]:
-            if (tP[0] == self.info["turningGroup"][ridx][0]):
+            if tP[0] == self.info["turningGroup"][ridx][0]:
                 self.info["turningPath"].pop(ridx)
-                self.TurningPathTable.clear(ridx)
-        self.TurningGroupTable.clear(ridx)
+
+
         self.TurningPathTable.clear()
 
 
@@ -276,6 +286,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
     def update(self):
         global original_id
         self.errorMessage.setText("")
+        msgBox = QtGui.QMessageBox()
         nodeList = []
         #self.info = {}
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
@@ -288,15 +299,19 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
         nodeId = self.nodeId.text()
         if nodeId.isdigit() is False:
-            self.errorMessage.setText("NodeId is invalid. It must be a number.")
+            msgBox.setText("NodeId is invalid. It must be a number.")
+            msgBox.exec_()
             return
 
+
         if len(nodeId) > 5 :
-            self.errorMessage.setText("NodeId is beyond range. Enter a shorter NodeID.")
+            msgBox.setText("NodeId is beyond range. Enter a shorter NodeID.")
+            msgBox.exec_()
             return
 
         if nodeId in nodeList and nodeId != original_id :
-            self.errorMessage.setText("Node ID exists. Please enter another ID.")
+            msgBox.setText("Node ID exists. Please enter another ID.")
+            msgBox.exec_()
             return
 
         self.info["id"] = int(nodeId)
@@ -311,8 +326,10 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
         trafficLightID = self.trafficLightID.text()
         if trafficLightID.isdigit() is False:
-            self.errorMessage.setText("Traffic Light ID is invalid. It must be a number.")
+            msgBox.setText("Traffic Light ID is invalid. It must be a number.")
+            msgBox.exec_()
             return
+
         self.info["trafficLightID"] = int(trafficLightID)
 
         self.info["tags"] = self.tags_node.text()
