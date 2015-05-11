@@ -118,6 +118,7 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             #QtCore.QObject.connect(self.linkidcomboBox, QtCore.SIGNAL('currentIndexChanged(const QString&)'),self.updateLinkName)
         else:
             self.addnewid()
+            original_id = 0
             self.info = {}
             self.info["connectors"]=[]
             self.actionButton.setText("ADD")
@@ -293,13 +294,13 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
 
 
 
-        if id!= original_id:
-            for segment in root.iter('segment'):
-                startingNode = segment.find('startingNode').text
-                endingNode = segment.find('endingNode').text
-                if startingNode == startNode and endingNode == endNode:
-                    self.errorMessage.setText("Segment with identical starting node/ending node pair exists. \nPlease enter different node IDs.")
-                    return
+        # if id != original_id:
+        #     for segment in root.iter('segment'):
+        #         startingNode = segment.find('startingNode').text
+        #         endingNode = segment.find('endingNode').text
+        #         if startingNode == startNode and endingNode == endNode:
+        #             self.errorMessage.setText("Segment with identical starting node/ending node pair exists. \nPlease enter different node IDs.")
+        #             return
         #
         # nodeList = []
         #

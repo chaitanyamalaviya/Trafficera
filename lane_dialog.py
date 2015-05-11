@@ -47,6 +47,7 @@ class LaneDialog(QtGui.QDialog, Ui_Lane):
             self.segmentId.setText(str(self.info["segmentId"]))
             self.id.setText(str(self.info["id"]))
             self.width.setText(str(self.info["width"]))
+            self.tags.setText(str(self.info["tags"]))
 
             if self.info["can_go_straight"] == "true":
                 self.can_go_straight.setCheckState(QtCore.Qt.Checked)
@@ -166,6 +167,8 @@ class LaneDialog(QtGui.QDialog, Ui_Lane):
             self.info["is_u_turn_allowed"] = "false" 
 
         self.info["segmentId"] = int(self.segmentId.text())
+
+        self.info["tags"] = self.tags.text()
 
         self.isModified = True
         self.accept()

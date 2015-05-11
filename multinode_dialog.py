@@ -143,10 +143,10 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             return
             # self.errorMessage.setText("Turning Path ID is invalid. It must be a number.")
             # return
-        groupID = self.turningGroupID.text()
+        group_id = self.turningGroupID.text()
 
         ridx = self.TurningPathTable.rowCount()
-        self.info["turningPath"].append([groupID, turningPathID, self.fromLane.currentText(), self.toLane.currentText(),self.maxSpeed.text(),self.tags_turningpath.toPlainText()])
+        self.info["turningPath"].append([group_id, turningPathID, self.fromLane.currentText(), self.toLane.currentText(),self.maxSpeed.text(),self.tags_turningpath.toPlainText()])
 
         self.TurningPathTable.insertRow(ridx)
         self.TurningPathTable.setItem(ridx,0,QtGui.QTableWidgetItem(turningPathID))

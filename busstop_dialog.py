@@ -95,7 +95,7 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
 
-        for BusStop in root.iter('BusStop'):
+        for BusStop in root.iter('bus_stop'):
             busstopid = BusStop.find('id').text
             busstopList.append(busstopid)
 
@@ -112,11 +112,11 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
             return
         self.info["offset"] = int(offset)
 
-        busCapacity = self.busCapacity.text()
-        if busCapacity.isdigit() is False:
-            self.errorMessage.setText("BusCapacity is invalid. It must be a number.")
+        length = self.busCapacity.text()
+        if length.isdigit() is False:
+            self.errorMessage.setText("Length is invalid. It must be a number.")
             return
-        self.info["busCapacity"] = int(busCapacity)  
+        self.info["length"] = int(length)
 
         busstopno = self.busstopNo.text()
         if busstopno.isdigit() is False:

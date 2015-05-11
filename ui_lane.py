@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui_lane.ui'
 #
-# Created: Thu May  8 12:56:05 2014
-#      by: PyQt4 UI code generator 4.10.3
+# Created: Mon May 11 10:23:02 2015
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -27,7 +27,7 @@ class Ui_Lane(object):
     def setupUi(self, Lane):
         Lane.setObjectName(_fromUtf8("Lane"))
         Lane.setEnabled(True)
-        Lane.resize(507, 436)
+        Lane.resize(507, 529)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Tahoma"))
         font.setPointSize(13)
@@ -38,11 +38,11 @@ class Ui_Lane(object):
         Lane.setToolTip(_fromUtf8(""))
         Lane.setStatusTip(_fromUtf8(""))
         Lane.setSizeGripEnabled(False)
-        self.gridLayout_3 = QtGui.QGridLayout(Lane)
-        self.gridLayout_3.setObjectName(_fromUtf8("gridLayout_3"))
-        self.verticalLayout = QtGui.QVBoxLayout()
-        self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
+        self.tags = QtGui.QTextEdit(Lane)
+        self.tags.setGeometry(QtCore.QRect(70, 410, 161, 71))
+        self.tags.setObjectName(_fromUtf8("tags"))
         self.titleLabel = QtGui.QLabel(Lane)
+        self.titleLabel.setGeometry(QtCore.QRect(230, 10, 45, 21))
         font = QtGui.QFont()
         font.setPointSize(13)
         font.setBold(True)
@@ -50,8 +50,8 @@ class Ui_Lane(object):
         self.titleLabel.setFont(font)
         self.titleLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.titleLabel.setObjectName(_fromUtf8("titleLabel"))
-        self.verticalLayout.addWidget(self.titleLabel)
         self.SegmentGroupBox = QtGui.QGroupBox(Lane)
+        self.SegmentGroupBox.setGeometry(QtCore.QRect(10, 37, 461, 54))
         self.SegmentGroupBox.setObjectName(_fromUtf8("SegmentGroupBox"))
         self.gridLayout = QtGui.QGridLayout(self.SegmentGroupBox)
         self.gridLayout.setMargin(5)
@@ -64,8 +64,8 @@ class Ui_Lane(object):
         self.segmentId.setText(_fromUtf8(""))
         self.segmentId.setObjectName(_fromUtf8("segmentId"))
         self.gridLayout.addWidget(self.segmentId, 0, 1, 1, 1)
-        self.verticalLayout.addWidget(self.SegmentGroupBox)
         self.attributeGroup = QtGui.QGroupBox(Lane)
+        self.attributeGroup.setGeometry(QtCore.QRect(10, 97, 463, 305))
         self.attributeGroup.setTitle(_fromUtf8(""))
         self.attributeGroup.setObjectName(_fromUtf8("attributeGroup"))
         self.gridLayout_2 = QtGui.QGridLayout(self.attributeGroup)
@@ -158,22 +158,21 @@ class Ui_Lane(object):
         self.is_u_turn_allowed.setObjectName(_fromUtf8("is_u_turn_allowed"))
         self.horizontalLayout_9.addWidget(self.is_u_turn_allowed)
         self.gridLayout_2.addLayout(self.horizontalLayout_9, 8, 0, 1, 1)
-        self.verticalLayout.addWidget(self.attributeGroup)
-        self.splitter = QtGui.QSplitter(Lane)
-        self.splitter.setOrientation(QtCore.Qt.Horizontal)
-        self.splitter.setObjectName(_fromUtf8("splitter"))
-        self.errorMessage = QtGui.QLabel(self.splitter)
+        self.errorMessage = QtGui.QLabel(Lane)
+        self.errorMessage.setGeometry(QtCore.QRect(10, 408, 16, 16))
         font = QtGui.QFont()
         font.setItalic(True)
         self.errorMessage.setFont(font)
         self.errorMessage.setStyleSheet(_fromUtf8("color: rgb(255, 20, 27)"))
         self.errorMessage.setText(_fromUtf8(""))
         self.errorMessage.setObjectName(_fromUtf8("errorMessage"))
-        self.actionButton = QtGui.QPushButton(self.splitter)
+        self.tagslabel = QtGui.QLabel(Lane)
+        self.tagslabel.setGeometry(QtCore.QRect(20, 400, 61, 41))
+        self.tagslabel.setObjectName(_fromUtf8("tagslabel"))
+        self.actionButton = QtGui.QPushButton(Lane)
+        self.actionButton.setGeometry(QtCore.QRect(310, 440, 100, 29))
         self.actionButton.setMaximumSize(QtCore.QSize(100, 100))
         self.actionButton.setObjectName(_fromUtf8("actionButton"))
-        self.verticalLayout.addWidget(self.splitter)
-        self.gridLayout_3.addLayout(self.verticalLayout, 0, 0, 1, 1)
 
         self.retranslateUi(Lane)
         QtCore.QMetaObject.connectSlotsByName(Lane)
@@ -200,5 +199,6 @@ class Ui_Lane(object):
         self.can_freely_park_here.setText(_translate("Lane", "can_freely_park_here", None))
         self.can_stop_here.setText(_translate("Lane", "can_stop_here", None))
         self.is_u_turn_allowed.setText(_translate("Lane", "is_u_turn_allowed", None))
+        self.tagslabel.setText(_translate("Lane", "Tags", None))
         self.actionButton.setText(_translate("Lane", "ADD", None))
 

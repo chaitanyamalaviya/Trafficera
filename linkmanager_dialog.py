@@ -43,7 +43,7 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
     def setLinkList(self, links):
         self.listLinks = links
         self.linkIdComboBox.clear()
-        self.linkIdComboBox.addItem("add new link")
+        self.linkIdComboBox.addItem("Add new link")
         for linkId in links.iterkeys():
             self.linkIdComboBox.addItem(str(linkId))
         self.linkIdComboBox.setCurrentIndex(0)
@@ -75,7 +75,7 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
         oldLinkId = 0
         #get linkid
         linkIdStr = self.linkIdComboBox.currentText()
-        if linkIdStr != "add new link":
+        if linkIdStr != "Add new link":
             oldLinkId = int(linkIdStr)
         self.info["oldId"] = oldLinkId   
 
@@ -117,7 +117,7 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
         self.info["endingNode"] = int(endNode)
 
 
-        self.info["roadType"] = self.roadType.currentText()
+        self.info["road_type"] = self.roadType.currentText()
 
         self.info["category"] = self.category.currentText()
 
