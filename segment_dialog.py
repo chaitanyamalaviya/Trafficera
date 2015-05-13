@@ -212,12 +212,12 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
     def displayconnector(self):
 
         ridx = self.laneConnectorTable.currentRow()
-
-        self.laneID.setText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),0).text())
-        self.fromSectioncomboBox.setCurrentIndex(self.fromSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),1).text()))
-        self.toSectioncomboBox.setCurrentIndex(self.toSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),2).text()))
-        self.fromLanecomboBox.setCurrentIndex(self.fromLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),3).text()))
-        self.toLanecomboBox.setCurrentIndex(self.toLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),4).text()))
+        if ridx>=0:
+            self.laneID.setText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),0).text())
+            self.fromSectioncomboBox.setCurrentIndex(self.fromSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),1).text()))
+            self.toSectioncomboBox.setCurrentIndex(self.toSectioncomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),2).text()))
+            self.fromLanecomboBox.setCurrentIndex(self.fromLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),3).text()))
+            self.toLanecomboBox.setCurrentIndex(self.toLanecomboBox.findText(self.laneConnectorTable.item(self.laneConnectorTable.currentRow(),4).text()))
 
 
 

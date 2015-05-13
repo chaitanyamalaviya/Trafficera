@@ -168,7 +168,7 @@ class LaneDialog(QtGui.QDialog, Ui_Lane):
 
         self.info["segmentId"] = int(self.segmentId.text())
 
-        self.info["tags"] = self.tags.text()
+        self.info["tags"] = self.tags.toPlainText()
 
         self.isModified = True
         self.accept()

@@ -1,4 +1,4 @@
-import os, re
+import os, re, math
 from xml.etree import ElementTree
 from xml.dom import minidom
 from shapefileIO import TAGS, TYPE
@@ -822,7 +822,7 @@ class ActionHandler():
         if selectedLane is None:
             QgsMessageLog.logMessage("updateLane can not find the lane id %s"%str(oldLaneId), 'SimGDC')
             return
-        selectedLane.find("laneID").text = str(data["id"])
+        selectedLane.find("id").text = str(data["id"])
         selectedLane.find("width").text = str(data["width"])
         selectedLane.find("can_go_straight").text = str(data["can_go_straight"])
         selectedLane.find("can_turn_left").text = str(data["can_turn_left"])
@@ -901,7 +901,8 @@ class ActionHandler():
             info["can_stop_here"] = info["can_stop_here"].strip().lower() 
             info["is_u_turn_allowed"] = selectedLane.find("is_u_turn_allowed").text
             info["is_u_turn_allowed"] = info["is_u_turn_allowed"].strip().lower()
-            info["tags"] = selectedLane.find("tags").text
+            if selectedLane.find("tags") is not None:
+                info["tags"] = selectedLane.find("tags").text
 
             return info
         return None
@@ -917,7 +918,7 @@ class ActionHandler():
         feat.setGeometry(QgsGeometry.fromPolyline(coordinates))
         self.active_layer.dataProvider().addFeatures([feat])
         #get info
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         segments = linkParent.findall('link/segments/segment')
         selectedSegmentId = int(data["segmentId"])
@@ -1001,12 +1002,13 @@ class ActionHandler():
         selectedSegmentId = int(attrs[1])
         selectedPolyline = feature.geometry().asPolyline()
         listPoints = selectedPolyline
-        gapXTop = (listPoints[1].x() - listPoints[0].x())/nLane
-        gapYTop = (listPoints[1].y() - listPoints[0].y())/nLane
+
+        # gapXTop = (listPoints[1].x() - listPoints[0].x())/nLane
+        # gapYTop = (listPoints[1].y() - listPoints[0].y())/nLane
         # gapXBottom = (listPoints[2].x() - listPoints[3].x())/nLane
         # gapYBottom = (listPoints[2].y() - listPoints[3].y())/nLane
-        width = 2
-        QgsMessageLog.logMessage("test (%s, %s)"%(str(listPoints[0].x()), str(listPoints[0].y())), 'SimGDC')
+        width = 0.1
+        # QgsMessageLog.logMessage("test (%s, %s)"%(str(listPoints[0].x()), str(listPoints[0].y())), 'SimGDC')
         #get info
         roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
@@ -1036,32 +1038,33 @@ class ActionHandler():
                     delete_lane_edge_feature_ids.append(feature.id())
             if len(delete_lane_edge_feature_ids) > 0:
                 laneEdgeLayer.dataProvider().deleteFeatures(delete_lane_edge_feature_ids)
-        i = nLane/2
-        j = nLane/2
+
+
         #add laneEdge
-        laneEdges = ElementTree.SubElement(selectedSegment, 'laneEdgePolylines_cached')
-        for num in range(0, nLane+1):
-            laneEdge = ElementTree.SubElement(laneEdges, 'laneEdgePolyline_cached')
-            ElementTree.SubElement(laneEdge, 'laneNumber').text = str(num)
-            #add laneEdge shape
-            feat = QgsFeature()
-            feat.initAttributes(2)
-            coordinates = None
-            if num == (nLane-1)/2 and nLane%2==1:
-                coordinates = [QgsPoint(listPoints[0]), QgsPoint(listPoints[1])]
-            elif num < (nLane-1)/2 :
-                coordinates = [QgsPoint(listPoints[0].x()-(width*i), listPoints[0].y()-(width*i)), QgsPoint(listPoints[1].x()-(width*i), listPoints[1].y()-(width*i))]
-                i = i-1
-            elif num > (nLane-1)/2 :
-                coordinates = [QgsPoint(listPoints[0].x()+(width*j), listPoints[0].y()+(width*j)), QgsPoint(listPoints[1].x()+(width*j), listPoints[1].y()+(width*j))]
-                j = j-1
-            feat.setAttribute(0, selectedSegmentId)
-            feat.setAttribute(1, num)
-            feat.setGeometry(QgsGeometry.fromPolyline(coordinates))
-            laneEdgeLayer.dataProvider().addFeatures([feat])
+        # laneEdges = ElementTree.SubElement(selectedSegment, 'laneEdgePolylines_cached')
+        # for num in range(0, nLane+1):
+        #     laneEdge = ElementTree.SubElement(laneEdges, 'laneEdgePolyline_cached')
+        #     ElementTree.SubElement(laneEdge, 'laneNumber').text = str(num)
+        #     #add laneEdge shape
+        #     feat = QgsFeature()
+        #     feat.initAttributes(2)
+        #     coordinates = None
+        #     if num == (nLane-1)/2 and nLane%2==1:
+        #         coordinates = [QgsPoint(listPoints[0]), QgsPoint(listPoints[1])]
+        #     elif num < (nLane-1)/2 :
+        #         coordinates = [QgsPoint(listPoints[0].x()-(width*i), listPoints[0].y()-(width*i)), QgsPoint(listPoints[1].x()-(width*i), listPoints[1].y()-(width*i))]
+        #         i = i-1
+        #     elif num > (nLane-1)/2 :
+        #         coordinates = [QgsPoint(listPoints[0].x()+(width*j), listPoints[0].y()+(width*j)), QgsPoint(listPoints[1].x()+(width*j), listPoints[1].y()+(width*j))]
+        #         j = j-1
+        #     feat.setAttribute(0, selectedSegmentId)
+        #     feat.setAttribute(1, num)
+        #     feat.setGeometry(QgsGeometry.fromPolyline(coordinates))
+        #     laneEdgeLayer.dataProvider().addFeatures([feat])
+
 
         #remove old lanes
-        lanes = selectedSegment.find("Lanes")
+        lanes = selectedSegment.find("lanes")
         laneLayer = self.getLayer(TYPE.LANE)
         if lanes is not None:
             selectedSegment.remove(lanes)
@@ -1074,15 +1077,19 @@ class ActionHandler():
             if len(delete_lane_feature_ids) > 0:
                 laneLayer.dataProvider().deleteFeatures(delete_lane_feature_ids)
         #add lanes
+        i = int(nLane/2)
+        j = int(nLane/2)
+        num_points = len(listPoints)-1
         lanes = ElementTree.SubElement(selectedSegment, 'lanes')
+
         for num in range(0, nLane):
             lane = ElementTree.SubElement(lanes, 'lane')
             laneId = "%s%s"%(str(selectedSegmentId), str(num))
             ElementTree.SubElement(lane, 'id').text = laneId
             ElementTree.SubElement(lane, 'width').text = "100"
-            ElementTree.SubElement(lane, 'can_go_straight').text = "false"                       
-            ElementTree.SubElement(lane, 'can_turn_left').text = "false" 
-            ElementTree.SubElement(lane, 'can_turn_right').text = "false" 
+            ElementTree.SubElement(lane, 'can_go_straight').text = "false"
+            ElementTree.SubElement(lane, 'can_turn_left').text = "false"
+            ElementTree.SubElement(lane, 'can_turn_right').text = "false"
             ElementTree.SubElement(lane, 'can_turn_on_red_signal').text = "false"
             ElementTree.SubElement(lane, 'can_change_lane_left').text = "false"
             ElementTree.SubElement(lane, 'can_change_lane_right').text = "false"
@@ -1094,12 +1101,41 @@ class ActionHandler():
             ElementTree.SubElement(lane, 'is_whole_day_bus_lane').text = "false"
             ElementTree.SubElement(lane, 'is_high_occupancy_vehicle_lane').text = "false"
             ElementTree.SubElement(lane, 'can_freely_park_here').text = "false"
-            ElementTree.SubElement(lane, 'can_stop_here').text = "false"      
+            ElementTree.SubElement(lane, 'can_stop_here').text = "false"
             ElementTree.SubElement(lane, 'is_u_turn_allowed').text = "false"
+            ElementTree.SubElement(lane, 'tags').text = ""
             #add shape
             feat = QgsFeature()
             feat.initAttributes(2)
-            coordinates = [QgsPoint(gapXTop/2 + listPoints[0].x() + gapXTop*num, gapYTop/2 + listPoints[0].y() + gapYTop*num), QgsPoint(gapXBottom/2 + listPoints[3].x() + gapXBottom*num, gapYBottom/2 + listPoints[3].y() + gapYBottom*num)]
+            coordinates = []
+
+            # coordinates = [QgsPoint(gapXTop/2 + listPoints[0].x() + gapXTop*num, gapYTop/2 + listPoints[0].y() + gapYTop*num), QgsPoint(gapXBottom/2 + listPoints[3].x() + gapXBottom*num, gapYBottom/2 + listPoints[3].y() + gapYBottom*num)]
+            for pt in range(num_points):
+                listPoints1 = []
+                del listPoints1[:]
+                listPoints1.append(listPoints[pt])
+                listPoints1.append(listPoints[pt+1])
+                slope = (listPoints1[1].y()-listPoints1[0].y())/(listPoints1[1].x()-listPoints1[0].x())
+                angle = math.atan(slope)
+                # angle2 = math.radians(90) + angle
+
+                if num == (nLane-1)/2 and nLane%2==1:
+                    coordinates.extend([QgsPoint(listPoints1[0]), QgsPoint(listPoints1[1])])
+                elif num == (nLane-1)/2 and nLane%2==0:
+                    coordinates.extend([QgsPoint(listPoints1[0].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[0].y()+(width*math.cos(angle)*i*pow(-1,pt))), QgsPoint(listPoints1[1].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[1].y()+(width*math.cos(angle)**pow(-1,pt)))])
+                elif num < (nLane-1)/2 :
+                    coordinates.extend([QgsPoint(listPoints1[0].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[0].y()+(width*math.cos(angle)*i*pow(-1,pt))), QgsPoint(listPoints1[1].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[1].y()+(width*math.cos(angle)*i*pow(-1,pt)))])
+                elif num > (nLane-1)/2 :
+                    coordinates.extend([QgsPoint(listPoints1[0].x()+(width*math.sin(angle)*j*pow(-1,pt)), listPoints1[0].y()-(width*math.cos(angle)*j*pow(-1,pt))), QgsPoint(listPoints1[1].x()+(width*math.sin(angle)*j*pow(-1,pt)), listPoints1[1].y()-(width*math.cos(angle)*j*pow(-1,pt)))])
+
+
+                # if num%2==1 and num < (nLane-1)/2:
+                #     coordinates.append(QgsPoint(listPoints1[0].x()-math.sqrt(2)*width*math.cos(),QgsPoint(listPoints1[1].x()-math.sqrt(2)*width*math.sin())))
+            if num < (nLane-1)/2 or (num == (nLane-1)/2 and nLane%2==0):
+                i = i-1
+            elif num > (nLane-1)/2:
+                j = j-1
+
             feat.setAttribute(0, selectedSegmentId)
             feat.setAttribute(1, int(laneId))
             feat.setGeometry(QgsGeometry.fromPolyline(coordinates))
