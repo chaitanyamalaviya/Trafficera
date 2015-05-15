@@ -260,10 +260,12 @@ class SimGDC:
                 self.featuredlg = CrossingDialog()
             elif typeId == TYPE.BUSSTOP:
                 self.featuredlg = BusstopDialog()
+                self.featuredlg.setSegmentList()
             elif typeId == TYPE.LANE:
                 self.featuredlg = LaneDialog()    
             elif typeId == TYPE.LANEEDGE:
                 self.featuredlg = LaneEdgeDialog()             
+
             self.featuredlg.setSegmentId(selectedSegmentId)
 
         #show the dialog

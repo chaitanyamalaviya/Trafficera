@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_multinode.ui'
 #
-# Created: Thu Apr 30 14:59:10 2015
+# Created: Fri May 15 15:57:55 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -277,7 +277,7 @@ class Ui_MultiNode(object):
         self.TurningPath.setGeometry(QtCore.QRect(130, 30, 101, 20))
         self.TurningPath.setObjectName(_fromUtf8("TurningPath"))
         self.fromLanelabel = QtGui.QLabel(self.turningPath)
-        self.fromLanelabel.setGeometry(QtCore.QRect(10, 60, 61, 20))
+        self.fromLanelabel.setGeometry(QtCore.QRect(10, 60, 71, 20))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
@@ -370,8 +370,8 @@ class Ui_MultiNode(object):
         QtCore.QMetaObject.connectSlotsByName(MultiNode)
 
     def retranslateUi(self, MultiNode):
-        self.TrafficLightIDlabel.setText(_translate("MultiNode", "Traffic Light ID", None))
-        self.NodeTypelabel.setText(_translate("MultiNode", "Node Type", None))
+        self.TrafficLightIDlabel.setText(_translate("MultiNode", "Traffic Light ID*", None))
+        self.NodeTypelabel.setText(_translate("MultiNode", "Node Type*", None))
         self.nodeType.setItemText(0, _translate("MultiNode", "Default Node", None))
         self.nodeType.setItemText(1, _translate("MultiNode", "Urban Intersection with Signal", None))
         self.nodeType.setItemText(2, _translate("MultiNode", "Urban Intersection without signal", None))
@@ -382,25 +382,25 @@ class Ui_MultiNode(object):
         self.tags_node_label.setText(_translate("MultiNode", "Tags", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MultiNode", "Node", None))
         self.turningGroup.setTitle(_translate("MultiNode", "Turning Group", None))
-        self.turningGroupIDlabel.setText(_translate("MultiNode", "Turning Group ID", None))
-        self.fromLinklabel.setText(_translate("MultiNode", "fromLink", None))
-        self.toLinklabel.setText(_translate("MultiNode", "toLink", None))
-        self.Phaseslabel.setText(_translate("MultiNode", "Phases", None))
+        self.turningGroupIDlabel.setText(_translate("MultiNode", "Turning Group ID*", None))
+        self.fromLinklabel.setText(_translate("MultiNode", "fromLink*", None))
+        self.toLinklabel.setText(_translate("MultiNode", "toLink*", None))
+        self.Phaseslabel.setText(_translate("MultiNode", "Phases*", None))
         self.Rules.setItemText(0, _translate("MultiNode", "1", None))
         self.Rules.setItemText(1, _translate("MultiNode", "2", None))
         self.Rules.setItemText(2, _translate("MultiNode", "3", None))
         self.Rules.setItemText(3, _translate("MultiNode", "4", None))
-        self.Ruleslabel.setText(_translate("MultiNode", "Rules", None))
+        self.Ruleslabel.setText(_translate("MultiNode", "Rules*", None))
         self.newturningGroup.setText(_translate("MultiNode", "Add new", None))
-        self.visibility_distance_label.setText(_translate("MultiNode", "Visibility Distance", None))
+        self.visibility_distance_label.setText(_translate("MultiNode", "Visibility Distance*", None))
         self.tags_tg_label.setText(_translate("MultiNode", "Tags", None))
         self.delturninggroupButton.setText(_translate("MultiNode", "Delete", None))
         self.turningPath.setTitle(_translate("MultiNode", "Turning Path", None))
-        self.TurningPathIDlabel.setText(_translate("MultiNode", "Turning Path ID", None))
-        self.fromLanelabel.setText(_translate("MultiNode", "fromLane", None))
-        self.toLanelabel.setText(_translate("MultiNode", "toLane", None))
+        self.TurningPathIDlabel.setText(_translate("MultiNode", "Turning Path ID*", None))
+        self.fromLanelabel.setText(_translate("MultiNode", "fromLane*", None))
+        self.toLanelabel.setText(_translate("MultiNode", "toLane*", None))
         self.newTurningPath.setText(_translate("MultiNode", "Add new", None))
-        self.maxSpeed_label.setText(_translate("MultiNode", "Max Speed", None))
+        self.maxSpeed_label.setText(_translate("MultiNode", "Max Speed*", None))
         self.tagts_tp_label.setText(_translate("MultiNode", "Tags", None))
         self.delturningpathButton.setText(_translate("MultiNode", "Delete", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MultiNode", "Turnings", None))

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_linkmanager.ui'
 #
-# Created: Thu Apr 30 17:33:32 2015
+# Created: Fri May 15 15:59:59 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -71,13 +71,13 @@ class Ui_LinkManager(object):
         self.category.addItem(_fromUtf8(""))
         self.category.addItem(_fromUtf8(""))
         self.category.addItem(_fromUtf8(""))
-        self.label = QtGui.QLabel(self.attributeGroup)
-        self.label.setGeometry(QtCore.QRect(10, 160, 51, 20))
+        self.tagslabel = QtGui.QLabel(self.attributeGroup)
+        self.tagslabel.setGeometry(QtCore.QRect(10, 160, 51, 20))
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Times New Roman"))
         font.setPointSize(11)
-        self.label.setFont(font)
-        self.label.setObjectName(_fromUtf8("label"))
+        self.tagslabel.setFont(font)
+        self.tagslabel.setObjectName(_fromUtf8("tagslabel"))
         self.tagsLink = QtGui.QTextEdit(self.attributeGroup)
         self.tagsLink.setGeometry(QtCore.QRect(80, 160, 321, 71))
         self.tagsLink.setObjectName(_fromUtf8("tagsLink"))
@@ -210,7 +210,7 @@ class Ui_LinkManager(object):
         self.category.setItemText(0, _translate("LinkManager", "1", None))
         self.category.setItemText(1, _translate("LinkManager", "2", None))
         self.category.setItemText(2, _translate("LinkManager", "3", None))
-        self.label.setText(_translate("LinkManager", "Tags", None))
+        self.tagslabel.setText(_translate("LinkManager", "Tags", None))
         self.startNodeLabel.setText(_translate("LinkManager", "StartNode*", None))
         self.endNodeLabel.setText(_translate("LinkManager", "EndNode*", None))
         self.idLabel.setText(_translate("LinkManager", "New LinkId*", None))

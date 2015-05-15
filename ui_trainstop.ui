@@ -58,7 +58,7 @@
    <property name="title">
     <string>Segment</string>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="segmentIDlabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -76,10 +76,10 @@
      </font>
     </property>
     <property name="text">
-     <string>SegmentID</string>
+     <string>SegmentID*</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="segmentIDcomboBox">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -96,7 +96,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="idLabel">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -115,7 +115,7 @@
     <string>Id*</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="id">
    <property name="geometry">
     <rect>
      <x>80</x>
@@ -131,7 +131,7 @@
     </font>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="platformNamelabel">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -147,10 +147,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Platform Name</string>
+    <string>Platform Name*</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="stationNamelabel">
    <property name="geometry">
     <rect>
      <x>260</x>
@@ -166,10 +166,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Station Name</string>
+    <string>Station Name*</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="typeLabel">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -185,10 +185,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Type</string>
+    <string>Type*</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="tagsLabel">
    <property name="geometry">
     <rect>
      <x>260</x>
@@ -207,7 +207,7 @@
     <string>Tags</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="platform_name">
    <property name="geometry">
     <rect>
      <x>142</x>
@@ -223,7 +223,7 @@
     </font>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="station_name">
    <property name="geometry">
     <rect>
      <x>360</x>
@@ -239,7 +239,7 @@
     </font>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
+  <widget class="QTextEdit" name="tags">
    <property name="geometry">
     <rect>
      <x>310</x>
@@ -255,7 +255,7 @@
     </font>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="type">
    <property name="geometry">
     <rect>
      <x>90</x>

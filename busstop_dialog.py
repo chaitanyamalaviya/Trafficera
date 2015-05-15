@@ -29,7 +29,7 @@ from qgis.utils import *
 
 
 class BusstopDialog(QtGui.QDialog, Ui_Busstop):
-    busstoplist = []
+
     original_id = 0
     def __init__(self):
         QtGui.QDialog.__init__(self)
@@ -42,27 +42,50 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
         self.info = None
         self.isModified = False
 
+    def getSegmentList(self):
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory, nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+        listSegments = []
+        for segment in root.iter('segment'):
+            listSegments.append(segment.find("id").text)
+        return listSegments
+
+    def setSegmentList(self):
+
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory, nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+        for segment in root.iter('segment'):
+            self.segmentIDcomboBox.addItem(segment.find('id').text)
+
     def setSegmentId(self, segmentId):
-        self.segmentId.setText(str(segmentId))
+        self.segmentIDcomboBox.setCurrentIndex(self.getSegmentList().index(str(segmentId)))
 
     def setInfo(self, info):
         self.info = info
         global original_id
+        # self.setSegmentList()
         if self.info is not None:
             self.isModified = True
+            self.setSegmentList()
             self.actionButton.setText("SAVE")
-            self.segmentId.setText(str(self.info["segmentId"]))
+            self.segmentIDcomboBox.setCurrentIndex(self.getSegmentList().index(str(self.info["segment_id"])))
             self.id.setText(str(self.info["id"]))
             original_id = self.info["id"]
             self.offset.setText(str(self.info["offset"]))
-            self.busCapacity.setText(str(self.info["busCapacity"]))
-            self.busstopNo.setText(str(self.info["busstopno"]))
+            self.length.setText(str(self.info["length"]))
+            self.name.setText(str(self.info["name"]))
+            self.busstopCode.setText(str(self.info["busstopCode"]))
             if self.info["isTerminal"] == "true" or self.info["isTerminal"] == "True":
                 self.isTerminal.setCheckState(QtCore.Qt.Checked)
             if self.info["isBay"] == "true" or self.info["isBay"] == "True":
                 self.isBay.setCheckState(QtCore.Qt.Checked)   
             if self.info["hasShelter"] == "true" or self.info["hasShelter"] == "True":
-                self.hasShelter.setCheckState(QtCore.Qt.Checked)          
+                self.hasShelter.setCheckState(QtCore.Qt.Checked)
+            self.busstoptags.setPlainText(str(self.info["tags"]))
         else:
             self.actionButton.setText("ADD")
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
@@ -72,28 +95,23 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
         self.errorMessage.setText("")
         self.info = {}
         busstopList = []
-
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory,nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
         # geom = f.geometry()
         # print geom.asPoint()
         # QgsPoint
         # self.info["segmentId"]
-
-
 
         id = self.id.text()
         if id.isdigit() is False:
             self.errorMessage.setText("id is invalid. It must be a number.")
             return
 
-
         if len(id) > 5 :
             self.errorMessage.setText("BusStopId is beyond range. Enter a shorter BusStopID.")
             return
-
-        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
-        (myDirectory,nameFile) = os.path.split(layerfi)
-        tree = ElementTree.parse(myDirectory + '/data.xml')
-        root = tree.getroot()
 
         for BusStop in root.iter('bus_stop'):
             busstopid = BusStop.find('id').text
@@ -106,23 +124,28 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
         self.info["id"] = int(id)
         busstopList.append(id)
 
+        segmentID = self.segmentIDcomboBox.currentText()
+        self.info["segment_id"] = int(segmentID)
+
         offset = self.offset.text()
         if offset.isdigit() is False:
-            self.errorMessage.setText("offset is invalid. It must be a number.")
+            self.errorMessage.setText("Offset is invalid. It must be a number.")
             return
         self.info["offset"] = int(offset)
 
-        length = self.busCapacity.text()
+        length = self.length.text()
         if length.isdigit() is False:
             self.errorMessage.setText("Length is invalid. It must be a number.")
             return
         self.info["length"] = int(length)
 
-        busstopno = self.busstopNo.text()
-        if busstopno.isdigit() is False:
-            self.errorMessage.setText("Busstop No is invalid. It must be a number.")
+        busstopCode = self.busstopCode.text()
+        if busstopCode.isdigit() is False:
+            self.errorMessage.setText("Busstop Code is invalid. It must be a number.")
             return
-        self.info["busstopno"] = int(busstopno)
+        self.info["busstopCode"] = int(busstopCode)
+
+        self.info["name"] = self.name.text()
 
         if self.isTerminal.isChecked():
             self.info["isTerminal"] = "true"
@@ -135,9 +158,9 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
         if self.hasShelter.isChecked():
             self.info["hasShelter"] = "true"
         else:
-            self.info["hasShelter"] = "false"  
+            self.info["hasShelter"] = "false"
 
-        self.info["segmentId"] = int(self.segmentId.text())
+        self.info["tags"] = self.busstoptags.toPlainText()
 
         self.isModified = True
         self.accept()

@@ -44,7 +44,7 @@ class ActionHandler():
     def addMultiNode(self, point, nodeData):
         '''ADD FEATURE TO LAYER'''
         feat = QgsFeature()
-        feat.initAttributes (1)
+        feat.initAttributes(1)
         feat.setAttribute(0, nodeData["id"])
         feat.setGeometry(QgsGeometry.fromPoint(QgsPoint(point.x(),point.y())))
         self.active_layer.dataProvider().addFeatures([feat])
@@ -76,6 +76,7 @@ class ActionHandler():
             if nodeData["turningPath"]:
                 turningPathParent = ElementTree.SubElement(turningGroup, 'turning_paths')
                 for tP in nodeData["turningPath"]:
+                    coordinates = []
                     if tP[0] == tG[0]:
                         turningPath = ElementTree.SubElement(turningPathParent, 'turning_path')
                         ElementTree.SubElement(turningPath, 'group_id').text = str(tP[0])
@@ -86,41 +87,43 @@ class ActionHandler():
                         ElementTree.SubElement(turningPath, 'tags').text = str(tP[5])
                         polyline = ElementTree.SubElement(turningPath, 'polyline')
                         points = ElementTree.SubElement(polyline, 'points')
-                        pointtp = ElementTree.SubElement(points,'point')
-                        # for link in roadNetwork.iter('link'):
-                        #     if link.find('id').text == str(tG[1]):
-                        #         link1 = link
-                        #         for point in link1.iter('point'):
-                        #             if maxseqID
-                        #         ElementTree.SubElement(pointtp, 'x').text = link1.find('')
-                        #         ElementTree.SubElement(pointtp, 'y').text = str(feat.geometry().asPoint().y())
-                        #     if link.find('id').text == str(tG[2]):
-                        #         link2 = link
 
-
+                        for lane in roadNetwork.iter('lane'):
+                             if lane.find('id').text == str(tP[2]):
+                                lane1 = lane
+                                for point in lane1.iter('point'):
+                                    if int(point.find('seq_id').text) == 2:
+                                        pointtp = ElementTree.SubElement(points,'point')
+                                        ElementTree.SubElement(pointtp, 'seq_id').text = str(0)
+                                        ElementTree.SubElement(pointtp, 'x').text = point.find('x').text
+                                        ElementTree.SubElement(pointtp, 'y').text = point.find('y').text
+                                        ElementTree.SubElement(pointtp, 'z').text = str(0)
+                                        coordinates.extend([QgsPoint(float(point.find('x').text),float(point.find('y').text))])
+                             if lane.find('id').text == str(tP[3]):
+                                lane2 = lane
+                                for point in lane2.iter('point'):
+                                    if int(point.find('seq_id').text)==1:
+                                        pointtp = ElementTree.SubElement(points,'point')
+                                        ElementTree.SubElement(pointtp, 'seq_id').text = str(1)
+                                        ElementTree.SubElement(pointtp, 'x').text = point.find('x').text
+                                        ElementTree.SubElement(pointtp, 'y').text = point.find('y').text
+                                        ElementTree.SubElement(pointtp, 'z').text = str(0)
+                                        coordinates.extend([QgsPoint(float(point.find('x').text),float(point.find('y').text))])
+                        feat2 = QgsFeature()
+                        feat2.initAttributes(2)
+                        feat2.setAttribute(0, tP[1])
+                        feat2.setAttribute(1, tP[0])
+                        feat2.setGeometry(QgsGeometry.fromPolyline(coordinates))
+                        self.layers[TYPE.TURNINGPATH].dataProvider().addFeatures([feat2])
 
 
         #add location
-        point = ElementTree.SubElement(multiNode, 'point')
+        point = ElementTree.SubElement(node, 'point')
         ElementTree.SubElement(point, 'x').text = str(feat.geometry().asPoint().x())
         ElementTree.SubElement(point, 'y').text = str(feat.geometry().asPoint().y())
         ElementTree.SubElement(point, 'z').text = str(0)
         #add originalDB_ID
         # ElementTree.SubElement(multiNode, 'originalDB_ID').text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
-        # #add roadSegmentsAt
-        # roadSegmentsAt = ElementTree.SubElement(multiNode, 'roadSegmentsAt')
-        # for roadSegment in nodeData["roadSegments"]:
-        #     ElementTree.SubElement(roadSegmentsAt, 'segmentID').text = str(roadSegment)
-        # #add connectors
-        # connectorsEle = ElementTree.SubElement(multiNode, 'Connectors')
-        # for multiConnector in nodeData["multiConnectors"]:
-        #     multiConnectorEle = ElementTree.SubElement(connectorsEle, 'MultiConnectors')
-        #     ElementTree.SubElement(multiConnectorEle, 'RoadSegment').text = str(multiConnector[0])
-        #     connectors = ElementTree.SubElement(multiConnectorEle, 'Connectors')
-        #     for innerConnector in multiConnector[1]:
-        #         connector = ElementTree.SubElement(connectors, 'Connector')
-        #         ElementTree.SubElement(connector, 'laneFrom').text = str(innerConnector[0])
-        #         ElementTree.SubElement(connector, 'laneTo').text = str(innerConnector[1])
 
 
     def updateMultiNode(self, feature, nodeData):
@@ -157,14 +160,11 @@ class ActionHandler():
 
         #addTurningGroup
         turningGroupParent = selectedNode.find("turning_groups")
+        turningGroups = turningGroupParent.findall("turning_group")
+        turningPaths = turningGroupParent.findall("turning_path")
+        # for tG in turningGroupParent.findall('turning_group'):
+        #     turningGroupParent.remove(tG)
 
-        for tG in turningGroupParent.findall('turning_group'):
-            turningGroupParent.remove(tG)
-        for tG in selectedNode.findall('turning_group'):
-            msgBox = QtGui.QMessageBox()
-            msgBox.setText(tG.text)
-            msgBox.exec_()
-            return
         # for tG in nodeData["turningGroup"]:
         #     turningGroup = ElementTree.SubElement(turningGroup.text = str(tG[1])
         #     ElementTree.SubElement(turningGroup, 'toLink').text = str(tG[2])
@@ -182,26 +182,29 @@ class ActionHandler():
 
 
         i=0
-        for tG in nodeData["turningGroup"]:
+        for tG in turningGroups:
             j=0
-            tG.find("ID").text = str(nodeData["turningGroup"][i][0])
-            tG.find("fromLink").text = str(nodeData["turningGroup"][i][1])
-            tG.find("toLink").text = str(nodeData["turningGroup"][i][2])
-            tG.find("Phases").text = str(nodeData["turningGroup"][i][3])
-            tG.find('Rules').text = str(nodeData["turningGroup"][i][4])
-            for tP in nodeData["turningPath"]:
+            tG.find("id").text = str(nodeData["turningGroup"][i][0])
+            tG.find("from_link").text = str(nodeData["turningGroup"][i][1])
+            tG.find("to_link").text = str(nodeData["turningGroup"][i][2])
+            tG.find("phase").text = str(nodeData["turningGroup"][i][3])
+            tG.find('rules').text = str(nodeData["turningGroup"][i][4])
+            tG.find('visibility').text = str(nodeData["turningGroup"][i][5])
+            tG.find('tags').text = str(nodeData["turningGroup"][i][6])
+
+            for tP in turningPaths:
                 if str(nodeData["turningGroup"][i][0]) == str(nodeData["turningPath"][j][0]):
                     tP.find("group_id").text = str(nodeData["turningPath"][j][0])
-                    tP.find("ID").text = str(nodeData["turningPath"][j][1])
-                    tP.find("fromLane").text = str(nodeData["turningPath"][j][2])
-                    tP.find("toLane").text = str(nodeData["turningPath"][j][3])
+                    tP.find("id").text = str(nodeData["turningPath"][j][1])
+                    tP.find("from_lane").text = str(nodeData["turningPath"][j][2])
+                    tP.find("to_lane").text = str(nodeData["turningPath"][j][3])
+                    tP.find("max_speed").text = str(nodeData["turningPath"][j][4])
+                    tP.find("tags").text = str(nodeData["turningPath"][j][5])
                 j+=1
             i+=1
 
         #update aimsunId
         # selectedNode.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
-
-
 
 
     def getMultiNode(self, feature):
@@ -227,7 +230,7 @@ class ActionHandler():
             # info["aimsunId"] = aimsunIds[0]
             info["nodeType"] = selectedNode.find("node_type").text
             info["trafficLightID"] = selectedNode.find("traffic_light_id").text
-
+            info["tags"] = selectedNode.find("tags").text
 
         turningGroups = selectedNode.find("turning_groups")
 
@@ -242,37 +245,22 @@ class ActionHandler():
             # msgBox.exec_()
             # return
             for tG in turningGroup:
-                tags = tG.find("tags")
-                if not tags:
+
+                if tG.find("tags") is not None:
+                    tags = tG.find("tags").text
+                else:
                     tags = ""
-                info["turningGroup"].append([tG.find("id").text,tG.find("from_link").text,tG.find("to_link").text,tG.find("phase").text,tG.find("rules").text,tG.find("visibility"),tags.text])
+                info["turningGroup"].append([tG.find("id").text,tG.find("from_link").text,tG.find("to_link").text,tG.find("phase").text,tG.find("rules").text,tG.find("visibility").text, tags])
                 # turningPaths = turningGroups.findall("TurningPath")
                 # if turningPaths:
                 for tP in selectedNode.iter('turning_path'):
                     if tP.find("group_id").text == tG.find("id").text:
-                        if not tags:
-                            tags = ""
-                        # info["turningPath"].append(tP)
-                        info["turningPath"].append([tP.find("group_id").text,tP.find("id").text,tP.find("from_lane").text,tP.find("to_lane").text,tP.find("max_speed").text,tP.find("tags").text])
+                        if tP.find("tags") is not None:
+                            tags1 = tP.find("tags").text
+                        else:
+                            tags1 = ""
+                        info["turningPath"].append([tP.find("group_id").text,tP.find("id").text,tP.find("from_lane").text,tP.find("to_lane").text,tP.find("max_speed").text, tags1])
 
-
-
-            # info["roadSegmentsAt"] = None
-            # roadSegmentsAt = selectedNode.find("roadSegmentsAt")
-            # if roadSegmentsAt is not None:
-            #     info["roadSegmentsAt"] = []
-            #     for segmentID in roadSegmentsAt.findall('segmentID'):
-            #         info["roadSegmentsAt"].append(segmentID.text)
-            # info["connectors"] = None
-            # connectors = selectedNode.find("Connectors")
-            # if connectors is not None:
-            #     info["connectors"] = []
-            #     for multiConnector in connectors.findall('MultiConnectors'):
-            #         roadSegment = multiConnector.find("RoadSegment").text
-            #         innerConnectors = []
-            #         for innerConnector in multiConnector.find("Connectors"):
-            #             innerConnectors.append("%s,%s"%(innerConnector.find("laneFrom").text,innerConnector.find("laneTo").text))
-            #         info["connectors"].append([roadSegment, innerConnectors])
             return info
         return None    
 
@@ -627,7 +615,7 @@ class ActionHandler():
         '''ADD FEATURE TO LAYER'''
         feat = QgsFeature()
         feat.initAttributes(2)
-        feat.setAttribute(0, data["segmentId"])
+        feat.setAttribute(0, data["segment_id"])
         feat.setAttribute(1, data["id"])
         feat.setGeometry(QgsGeometry.fromPoint(QgsPoint(point.x(),point.y())))
         self.active_layer.dataProvider().addFeatures([feat])
@@ -652,16 +640,23 @@ class ActionHandler():
         if not pt_stops:
             pt_stops = ElementTree.SubElement(roadNetwork,'pt_stops')
 
-        busstop = ElementTree.SubElement(obstacles, 'BusStop')
+        busstop = ElementTree.SubElement(pt_stops, 'bus_stop')
         #add Info
-        ElementTree.SubElement(busstop, 'segment_id').text = str(data["segmentId"])
         ElementTree.SubElement(busstop, 'id').text = str(data["id"])
-        ElementTree.SubElement(busstop, 'Offset').text = str(data["offset"])
+        ElementTree.SubElement(busstop, 'segment_id').text = str(data["segment_id"])
+        ElementTree.SubElement(busstop, 'code').text = str(data["busstopCode"])
+        ElementTree.SubElement(busstop, 'name').text = str(data["name"])
+        ElementTree.SubElement(busstop, 'offset').text = str(data["offset"])
         ElementTree.SubElement(busstop, 'is_terminal').text = str(data["isTerminal"])
         ElementTree.SubElement(busstop, 'is_bay').text = str(data["isBay"])
         ElementTree.SubElement(busstop, 'has_shelter').text = str(data["hasShelter"])
-        ElementTree.SubElement(busstop, 'busCapacityAsLength').text = str(data["busCapacity"])
-        ElementTree.SubElement(busstop, 'busstopno').text = str(data["busstopno"])
+        ElementTree.SubElement(busstop, 'length').text = str(data["length"])
+        ElementTree.SubElement(busstop, 'tags').text = str(data["tags"])
+        point = ElementTree.SubElement(busstop,'point')
+        ElementTree.SubElement(point,'x').text = str(feat.geometry().asPoint().x())
+        ElementTree.SubElement(point,'y').text = str(feat.geometry().asPoint().y())
+        ElementTree.SubElement(point,'z').text = str(0)
+
 
     def updateBusstop(self, feature, data):
          #update feature if necessary
@@ -672,32 +667,32 @@ class ActionHandler():
             attrs = {0 : selectedsegmentId, 1: data["id"]}
             self.active_layer.dataProvider().changeAttributeValues({int(feature.id()) : attrs })
         #get info
-        roadNetwork = self.document.find('geospatial/road_network')
-        linkParent = roadNetwork.find('links')
-        segments = linkParent.findall('link/segments/segment')
+        roadNetwork = self.document.find('road_network')
+        pt_stops = roadNetwork.find('pt_stops')
+        busstops = pt_stops.findall('bus_stop')
         selectedBusstop = None
-        if segments is not None:
-            for segment in segments:
-                segmentId = int(segment.find("id").text)
-                if segmentId == selectedsegmentId:
-                    obstacles = segment.find("Obstacles")
-                    if obstacles is not None: 
-                        busstops = obstacles.findall('BusStop')
-                        for busstop in busstops:
-                            busstopId = int(busstop.find("id").text)
-                            if busstopId == oldBusstopId:
-                                selectedBusstop = busstop
+        if busstops is not None:
+            for busstop in busstops:
+                busstopId = int(busstop.find("id").text)
+                if busstopId == oldBusstopId:
+                    selectedBusstop = busstop
                     break
+
         if selectedBusstop is None:
-            QgsMessageLog.logMessage("updateBusstop can not find busstop id %s"%str(oldBusstopId), 'SimGDC')
+            QgsMessageLog.logMessage("Can not find busstop id %s"%str(oldBusstopId), 'SimGDC')
             return
         selectedBusstop.find("id").text = str(data["id"])
-        selectedBusstop.find("Offset").text = str(data["offset"])
+        selectedBusstop.find("segment_id").text = str(data["segment_id"])
+        selectedBusstop.find("code").text = str(data["busstopCode"])
+        selectedBusstop.find("offset").text = str(data["offset"])
+        selectedBusstop.find("name").text = str(data["name"])
         selectedBusstop.find("is_terminal").text = data["isTerminal"]
         selectedBusstop.find("is_bay").text = data["isBay"]   
         selectedBusstop.find("has_shelter").text = data["hasShelter"]   
-        selectedBusstop.find("busCapacityAsLength").text = str(data["busCapacity"])  
-        selectedBusstop.find("busstopno").text = str(data["busstopno"])                   
+        selectedBusstop.find("length").text = str(data["length"])
+
+        if data["tags"]:
+            selectedBusstop.find("tags").text = str(data["tags"])
 
     def getBusstop(self, feature):
          #get id from feature
@@ -705,35 +700,35 @@ class ActionHandler():
         selectedSegmentId = int(attrs[0])
         selectedBusstopId = int(attrs[1])       
         #get info
-        roadNetwork = self.document.find('geospatial/road_network')
-        linkParent = roadNetwork.find('links')
-        segments = linkParent.findall('link/segments/segment')
+        roadNetwork = self.document.find('road_network')
+        pt_stops = roadNetwork.find('pt_stops')
+        busstops = pt_stops.findall('bus_stop')
         selectedBusstop = None
-        if segments is not None:
-            for segment in segments:
-                segmentId = int(segment.find("id").text)
-                if segmentId == selectedSegmentId:
-                    obstacles = segment.find("Obstacles")
-                    if obstacles is not None: 
-                        busstops = obstacles.findall('BusStop')
-                        for busstop in busstops:
-                            busstopId = int(busstop.find("id").text)
-                            if busstopId == selectedBusstopId:
-                                selectedBusstop = busstop
+        if busstops is not None:
+            for busstop in busstops:
+                busstopId = int(busstop.find("id").text)
+                if busstopId == selectedBusstopId:
+                    selectedBusstop = busstop
                     break
+
         if selectedBusstop is not None:
             info = {}
-            info["segmentId"] = selectedSegmentId
             info["id"] = selectedBusstop.find("id").text
-            info["offset"] = selectedBusstop.find("Offset").text
+            info["segment_id"] = selectedBusstop.find("segment_id").text
+            info["busstopCode"] = selectedBusstop.find("code").text
+            info["offset"] = selectedBusstop.find("offset").text
+            info["name"] = selectedBusstop.find("name").text
             info["isTerminal"] = selectedBusstop.find("is_terminal").text
             info["isTerminal"] = info["isTerminal"].strip().lower()
             info["isBay"] = selectedBusstop.find("is_bay").text
             info["isBay"] = info["isBay"].strip().lower()
             info["hasShelter"] = selectedBusstop.find("has_shelter").text
             info["hasShelter"] = info["hasShelter"].strip().lower()
-            info["busCapacity"] = selectedBusstop.find("busCapacityAsLength").text
-            info["busstopno"] = selectedBusstop.find("busstopno").text
+            info["length"] = selectedBusstop.find("length").text
+            if selectedBusstop.find("tags"):
+                info["tags"] = selectedBusstop.find("tags").text
+            else:
+                info["tags"] = ""
             return info
         return None
 
@@ -741,7 +736,7 @@ class ActionHandler():
         '''ADD FEATURE TO LAYER'''
         feat = QgsFeature()
         feat.initAttributes(2)
-        distance = 1000
+        distance = 10
         coordinates = [QgsPoint(point.x(),point.y()), QgsPoint(point.x() + distance,point.y() + distance)]
         feat.setAttribute(0, data["segmentId"])
         feat.setAttribute(1, data["id"])
@@ -786,12 +781,13 @@ class ActionHandler():
 
             polyline = ElementTree.SubElement(lane, 'polyline')
             points = ElementTree.SubElement(polyline, 'points')
-
+        i = 0
         for pt in selectedSegment.iter(point):
             clkpoint = ElementTree.SubElement(points, 'point')
-            ElementTree.SubElement(clkpoint, 'x').text = pt.find('x').text
-            ElementTree.SubElement(clkpoint, 'y').text = pt.find('y').text
-            ElementTree.SubElement(clkpoint, 'z').text = pt.find('z').text
+            ElementTree.SubElement(clkpoint, 'seq_id').text = i
+            ElementTree.SubElement(clkpoint, 'x').text = str(feat.geometry().asPoint().x() + 10*i)
+            ElementTree.SubElement(clkpoint, 'y').text = str(feat.geometry().asPoint().y() + 10*i)
+            ElementTree.SubElement(clkpoint, 'z').text = str(0)
 
 
     def updateLane(self, feature, data):
@@ -945,7 +941,7 @@ class ActionHandler():
             attrs = {0 : selectedsegmentId, 1: data["laneNumber"]}
             self.active_layer.dataProvider().changeAttributeValues({int(feature.id()) : attrs })
         #get info
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         segments = linkParent.findall('link/segments/segment')
         selectedLaneEdge = None
@@ -1105,9 +1101,12 @@ class ActionHandler():
             ElementTree.SubElement(lane, 'is_u_turn_allowed').text = "false"
             ElementTree.SubElement(lane, 'tags').text = ""
             #add shape
-            feat = QgsFeature()
-            feat.initAttributes(2)
             coordinates = []
+
+            polyline = ElementTree.SubElement(lane, 'polyline')
+            points = ElementTree.SubElement(polyline, 'points')
+
+
 
             # coordinates = [QgsPoint(gapXTop/2 + listPoints[0].x() + gapXTop*num, gapYTop/2 + listPoints[0].y() + gapYTop*num), QgsPoint(gapXBottom/2 + listPoints[3].x() + gapXBottom*num, gapYBottom/2 + listPoints[3].y() + gapYBottom*num)]
             for pt in range(num_points):
@@ -1135,6 +1134,13 @@ class ActionHandler():
                 i = i-1
             elif num > (nLane-1)/2:
                 j = j-1
+
+            for pts in coordinates:
+                clkpoint = ElementTree.SubElement(points, 'point')
+                ElementTree.SubElement(clkpoint, 'seq_id').text = str(coordinates.index(pts))
+                ElementTree.SubElement(clkpoint, 'x').text = str(pts.x())
+                ElementTree.SubElement(clkpoint, 'y').text = str(pts.y())
+                ElementTree.SubElement(clkpoint, 'z').text = str(0)
 
             feat.setAttribute(0, selectedSegmentId)
             feat.setAttribute(1, int(laneId))
@@ -1174,14 +1180,14 @@ class ActionHandler():
             self.active_layer.dataProvider().deleteFeatures([feature.id()])
             attrs = feature.attributes()
             ids[int(attrs[0])] = True
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         nodesParent = roadNetwork.find('nodes')
         nodes = nodesParent.find('node')
         if nodes is not None:
             for node in nodes:
-                nodeId = int(node.find("nodeID").text)
+                nodeId = int(node.find("id").text)
                 if nodeId in ids:
-                    nodesParent.remove(mulNode)
+                    nodesParent.remove(node)
 
     def deleteSegmentComponents(self, features):                            #for busstop, crossing, laneedge
         ids = {}
@@ -1193,11 +1199,11 @@ class ActionHandler():
                 ids[attrs[0]] = {}
             ids[attrs[0]][attrs[1]] = True
 
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         segments = linkParent.findall('link/segments/segment')
         for segment in segments:
-            segmentId = int(segment.find("segmentID").text)
+            segmentId = int(segment.find("id").text)
             if segmentId in ids:
                 if self.active_layer_id == TYPE.LANE:
                     laneParent = segment.find("lanes")
@@ -1224,13 +1230,13 @@ class ActionHandler():
                             if crossing_id in ids[segmentId]:
                                 obstacles.remove(crossing)
                 elif self.active_layer_id == TYPE.BUSSTOP:
-                    obstacles = segment.find("Obstacles")
-                    if obstacles is not None:
-                        busstops = obstacles.findall("BusStop")
+                    pt_stops = roadNetwork.find("pt_stops")
+                    if pt_stops is not None:
+                        busstops = pt_stops.findall("bus_stop")
                         for busstop in busstops:
                             busstop_id = int(busstop.find("id").text)
                             if busstop_id in ids[segmentId]:
-                                obstacles.remove(busstop)
+                                pt_stops.remove(busstop)
 
 
     def deleteSegment(self, features):
@@ -1251,7 +1257,7 @@ class ActionHandler():
             if len(delete_feature_ids) > 0:
                 layer.dataProvider().deleteFeatures(delete_feature_ids)
 
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         if linkParent is not None:
             links = linkParent.findall('link')

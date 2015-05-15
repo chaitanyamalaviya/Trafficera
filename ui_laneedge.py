@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui_laneedge.ui'
 #
-# Created: Thu May  8 12:51:40 2014
-#      by: PyQt4 UI code generator 4.10.3
+# Created: Fri May 15 15:58:40 2015
+#      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -101,6 +101,6 @@ class Ui_LaneEdge(object):
         self.titleLabel.setText(_translate("LaneEdge", "Lane Edge", None))
         self.SegmentGroupBox.setTitle(_translate("LaneEdge", "Segment", None))
         self.segmentIdLabel.setText(_translate("LaneEdge", "SegmentId*", None))
-        self.laneNumberLabel.setText(_translate("LaneEdge", "lane number*", None))
+        self.laneNumberLabel.setText(_translate("LaneEdge", "Lane number*", None))
         self.actionButton.setText(_translate("LaneEdge", "ADD", None))
 

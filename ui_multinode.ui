@@ -90,7 +90,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Traffic Light ID</string>
+        <string>Traffic Light ID*</string>
        </property>
        <property name="buddy">
         <cstring>trafficLightID</cstring>
@@ -112,7 +112,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Node Type</string>
+        <string>Node Type*</string>
        </property>
        <property name="buddy">
         <cstring>nodeType</cstring>
@@ -349,7 +349,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Turning Group ID</string>
+         <string>Turning Group ID*</string>
         </property>
         <property name="buddy">
          <cstring>turningGroupID</cstring>
@@ -381,7 +381,7 @@
          </font>
         </property>
         <property name="text">
-         <string>fromLink</string>
+         <string>fromLink*</string>
         </property>
         <property name="buddy">
          <cstring>fromLink</cstring>
@@ -413,7 +413,7 @@
          </font>
         </property>
         <property name="text">
-         <string>toLink</string>
+         <string>toLink*</string>
         </property>
         <property name="buddy">
          <cstring>toLink</cstring>
@@ -445,7 +445,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Phases</string>
+         <string>Phases*</string>
         </property>
         <property name="buddy">
          <cstring>Phases</cstring>
@@ -502,7 +502,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Rules</string>
+         <string>Rules*</string>
         </property>
         <property name="buddy">
          <cstring>Rules</cstring>
@@ -553,7 +553,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Visibility Distance</string>
+         <string>Visibility Distance*</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="visibility_distance">
@@ -669,7 +669,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Turning Path ID</string>
+         <string>Turning Path ID*</string>
         </property>
         <property name="buddy">
          <cstring>TurningPath</cstring>
@@ -690,7 +690,7 @@
          <rect>
           <x>10</x>
           <y>60</y>
-          <width>61</width>
+          <width>71</width>
           <height>20</height>
          </rect>
         </property>
@@ -701,7 +701,7 @@
          </font>
         </property>
         <property name="text">
-         <string>fromLane</string>
+         <string>fromLane*</string>
         </property>
         <property name="buddy">
          <cstring>fromLane</cstring>
@@ -733,7 +733,7 @@
          </font>
         </property>
         <property name="text">
-         <string>toLane</string>
+         <string>toLane*</string>
         </property>
         <property name="buddy">
          <cstring>toLane</cstring>
@@ -784,7 +784,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Max Speed</string>
+         <string>Max Speed*</string>
         </property>
        </widget>
        <widget class="QTextEdit" name="tags_turningpath">

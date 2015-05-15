@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_segment.ui'
 #
-# Created: Wed Apr 29 15:27:03 2015
+# Created: Fri May 15 15:59:45 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -190,7 +190,7 @@ class Ui_Segment(object):
         self.laneID.setGeometry(QtCore.QRect(150, 49, 101, 21))
         self.laneID.setObjectName(_fromUtf8("laneID"))
         self.laneidlabel = QtGui.QLabel(self.tab_4)
-        self.laneidlabel.setGeometry(QtCore.QRect(20, 50, 121, 20))
+        self.laneidlabel.setGeometry(QtCore.QRect(10, 50, 131, 20))
         self.laneidlabel.setObjectName(_fromUtf8("laneidlabel"))
         self.fromSectionlabel = QtGui.QLabel(self.tab_4)
         self.fromSectionlabel.setGeometry(QtCore.QRect(50, 90, 81, 20))
@@ -244,11 +244,11 @@ class Ui_Segment(object):
         self.actionButton.setText(_translate("Segment", "ADD", None))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_2), _translate("Segment", "Section", None))
         self.label.setText(_translate("Segment", "Lane Connectors", None))
-        self.laneidlabel.setText(_translate("Segment", "Lane Connector ID", None))
-        self.fromSectionlabel.setText(_translate("Segment", "fromSection", None))
-        self.toSectionlabel.setText(_translate("Segment", "toSection", None))
-        self.fromLanelabel.setText(_translate("Segment", "fromLane", None))
-        self.toLanelabel.setText(_translate("Segment", "toLane", None))
+        self.laneidlabel.setText(_translate("Segment", "Lane Connector ID*", None))
+        self.fromSectionlabel.setText(_translate("Segment", "fromSection*", None))
+        self.toSectionlabel.setText(_translate("Segment", "toSection*", None))
+        self.fromLanelabel.setText(_translate("Segment", "fromLane*", None))
+        self.toLanelabel.setText(_translate("Segment", "toLane*", None))
         self.pushButton.setText(_translate("Segment", "Add New", None))
         self.delButton.setText(_translate("Segment", "Delete", None))
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_4), _translate("Segment", "Connectors", None))

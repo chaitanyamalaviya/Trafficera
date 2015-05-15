@@ -55,7 +55,7 @@
    <property name="title">
     <string>Segment</string>
    </property>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="segmentIdlabel">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -68,7 +68,7 @@
      <string>SegmentID</string>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="segmentIDcomboBox">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -145,12 +145,12 @@
      <rect>
       <x>30</x>
       <y>80</y>
-      <width>47</width>
+      <width>61</width>
       <height>19</height>
      </rect>
     </property>
     <property name="text">
-     <string>Length</string>
+     <string>Length*</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
@@ -166,7 +166,7 @@
      <string>Tags</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="length">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -176,7 +176,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTextEdit" name="busstoptags">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -268,7 +268,7 @@
      <string>Name*</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="busCapacity">
+   <widget class="QLineEdit" name="name">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -303,7 +303,7 @@
      <string>BusStopCode*</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="busstopNo">
+   <widget class="QLineEdit" name="busstopCode">
     <property name="geometry">
      <rect>
       <x>330</x>

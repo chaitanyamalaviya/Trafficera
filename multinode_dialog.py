@@ -74,7 +74,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             self.nodeId.setText(str(self.info["id"]))
             original_id = self.info["id"]
             # self.aimsunId.setText(str(self.info["aimsunId"]))
-            self.nodeType.setEditText(self.info["nodeType"])
+            self.nodeType.setCurrentIndex(int(self.info["nodeType"]))
             self.trafficLightID.setText(self.info["trafficLightID"])
             self.tags_node.setPlainText(self.info["tags"])
 
@@ -152,7 +152,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         self.TurningPathTable.setItem(ridx,0,QtGui.QTableWidgetItem(turningPathID))
         self.TurningPathTable.setItem(ridx,1,QtGui.QTableWidgetItem(self.fromLane.currentText()))
         self.TurningPathTable.setItem(ridx,2,QtGui.QTableWidgetItem(self.toLane.currentText()))
-        self.TurningPathTable.setItem(ridx,3,QtGui.QTableWidgetItem(self.visibility_distance.currentText()))
+        self.TurningPathTable.setItem(ridx,3,QtGui.QTableWidgetItem(self.visibility_distance.text()))
         self.TurningPathTable.setItem(ridx,4,QtGui.QTableWidgetItem(self.tags_turningpath.toPlainText()))
 
         # for cidx in range(3) :
@@ -200,7 +200,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             # return
             if self.turningGroupID.text() == str(path[0]):
                 self.TurningPathTable.insertRow(i)
-                for cidx in range(5) :
+                for cidx in range(5):
                     self.TurningPathTable.setItem(i,cidx,QtGui.QTableWidgetItem(path[cidx+1]))
                 i+=1
 
@@ -322,7 +322,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         #     return
         # self.info["aimsunId"] = int(aimsunId)
 
-        self.info["nodeType"]= self.nodeType.currentText()
+        self.info["nodeType"]= self.nodeType.currentIndex()
 
         trafficLightID = self.trafficLightID.text()
         if trafficLightID.isdigit() is False:
@@ -332,7 +332,7 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
         self.info["trafficLightID"] = int(trafficLightID)
 
-        self.info["tags"] = self.tags_node.text()
+        self.info["tags"] = self.tags_node.toPlainText()
 
         # if not self.info["turningGroup"]:
         #     self.info["turningGroup"] = []

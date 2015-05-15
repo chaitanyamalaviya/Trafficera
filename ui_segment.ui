@@ -422,14 +422,14 @@
     <widget class="QLabel" name="laneidlabel">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>50</y>
-       <width>121</width>
+       <width>131</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string>Lane Connector ID</string>
+      <string>Lane Connector ID*</string>
      </property>
     </widget>
     <widget class="QLabel" name="fromSectionlabel">
@@ -442,7 +442,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>fromSection</string>
+      <string>fromSection*</string>
      </property>
     </widget>
     <widget class="QComboBox" name="fromSectioncomboBox">
@@ -465,7 +465,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>toSection</string>
+      <string>toSection*</string>
      </property>
     </widget>
     <widget class="QComboBox" name="toSectioncomboBox">
@@ -488,7 +488,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>fromLane</string>
+      <string>fromLane*</string>
      </property>
     </widget>
     <widget class="QLabel" name="toLanelabel">
@@ -501,7 +501,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>toLane</string>
+      <string>toLane*</string>
      </property>
     </widget>
     <widget class="QComboBox" name="toLanecomboBox">

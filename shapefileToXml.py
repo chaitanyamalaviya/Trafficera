@@ -16,7 +16,7 @@ class ShapefileToXml(QObject):
         self.formula = formula
 
     def warnNonExist(self, typeId, id):
-        print "Warning: there is not %s whose id is %s in shapefile!" % (typeId, id)
+        print "Warning: There is no %s whose id is %s in shapefile!" % (typeId, id)
     
     def updateLocation(self, element, data):
         x = float(data.x())
@@ -40,14 +40,14 @@ class ShapefileToXml(QObject):
         ElementTree.SubElement(location, 'y').text = str(eval(self.formula[1]))
 
 
-    def updateMulnodes(self, mulnodes):
+    def updateNodes(self, nodes):
         nodeCoordinates = self.reader.getNodes(SHTYPE.MULNODE)
-        for mulnode in mulnodes:
-            nodeId = int(mulnode.find("id").text)
+        for node in nodes:
+            nodeId = int(node.find("id").text)
             if nodeId in nodeCoordinates:
-                location = mulnode.find("point")
+                location = node.find("point")
                 if location is None:
-                    self.addXMLLocation(mulnode, nodeCoordinates[nodeId])
+                    self.addXMLLocation(node, nodeCoordinates[nodeId])
                 else:
                     self.updateLocation(location, nodeCoordinates[nodeId])
             else:
@@ -65,7 +65,7 @@ class ShapefileToXml(QObject):
             index = 0
             for point in laneCoordinates[laneID]:
                 polyPoint = ElementTree.SubElement(polyline, 'point')
-                ElementTree.SubElement(polyPoint, 'pointID').text = str(index)
+                ElementTree.SubElement(polyPoint, 'seq_id').text = str(index)
                 self.addXMLLocation(polyPoint, point)
                 index = index + 1
         else:
@@ -78,12 +78,12 @@ class ShapefileToXml(QObject):
         if laneNumber in laneEdgeCoordinates:
             if polyline is None:
                 polyline = ElementTree.SubElement(laneEdge, 'polyline')
-            for polyPoint in polyline.findall('PolyPoint'):
+            for polyPoint in polyline.findall('point'):
                 polyline.remove(polyPoint)
             index = 0
             for point in laneEdgeCoordinates[laneNumber]:
-                polyPoint = ElementTree.SubElement(polyline, 'PolyPoint')
-                ElementTree.SubElement(polyPoint, 'pointID').text = str(index)
+                polyPoint = ElementTree.SubElement(polyline, 'point')
+                ElementTree.SubElement(polyPoint, 'seq_id').text = str(index)
                 self.addXMLLocation(polyPoint, point)
                 index = index + 1
         else:
@@ -134,7 +134,7 @@ class ShapefileToXml(QObject):
             for index in range(0, len(segmentCoordinate)-1):
                 point = segmentCoordinate[index]
                 polyPoint = ElementTree.SubElement(polyline, 'point')
-                ElementTree.SubElement(polyPoint, 'pointID').text = str(index)
+                ElementTree.SubElement(polyPoint, 'seq_id').text = str(index)
                 self.addXMLLocation(polyPoint, point)
         else:
             self.warnNonExist("segment", segmentID)
@@ -149,7 +149,7 @@ class ShapefileToXml(QObject):
             for laneEdge in laneEdges.findall('laneEdgePolyline_cached'):
                 self.updateLaneEdge(segmentID, laneEdge)
         #update obstacles
-        obstacles = segment.find("Obstacles")
+        pt_stops = segment.find("Obstacles")
         if obstacles is not None:
             for obstacle in obstacles.iter():
                 if obstacle.tag == "Crossing":
@@ -171,7 +171,7 @@ class ShapefileToXml(QObject):
         nodes = roadNetwork.find('nodes')
 
         if nodes is not None:
-            self.updateMulnodes(nodes.findall('node'))
+            self.updateNodes(nodes.findall('node'))
         self.prog_sig.emit(50)
         #update segment
         linksParent = roadNetwork.find('links')
