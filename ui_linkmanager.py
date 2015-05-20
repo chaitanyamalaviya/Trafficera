@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_linkmanager.ui'
 #
-# Created: Fri May 15 15:59:59 2015
+# Created: Wed May 20 14:36:54 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -155,6 +155,9 @@ class Ui_LinkManager(object):
         self.roadType.addItem(_fromUtf8(""))
         self.roadType.addItem(_fromUtf8(""))
         self.roadType.addItem(_fromUtf8(""))
+        self.roadType.addItem(_fromUtf8(""))
+        self.roadType.addItem(_fromUtf8(""))
+        self.roadType.addItem(_fromUtf8(""))
         self.titleLabel = QtGui.QLabel(LinkManager)
         self.titleLabel.setGeometry(QtCore.QRect(160, 20, 123, 17))
         font = QtGui.QFont()
@@ -217,9 +220,12 @@ class Ui_LinkManager(object):
         self.roadNameLabel.setText(_translate("LinkManager", "Road Name*", None))
         self.roadTypeLabel.setText(_translate("LinkManager", "Road Type*", None))
         self.roadType.setItemText(0, _translate("LinkManager", "Default", None))
-        self.roadType.setItemText(1, _translate("LinkManager", "Freeway", None))
-        self.roadType.setItemText(2, _translate("LinkManager", "Ramp", None))
-        self.roadType.setItemText(3, _translate("LinkManager", "Urban Road", None))
+        self.roadType.setItemText(1, _translate("LinkManager", "Expressway", None))
+        self.roadType.setItemText(2, _translate("LinkManager", "Urban", None))
+        self.roadType.setItemText(3, _translate("LinkManager", "Ramp", None))
+        self.roadType.setItemText(4, _translate("LinkManager", "Roundabout", None))
+        self.roadType.setItemText(5, _translate("LinkManager", "Access", None))
+        self.roadType.setItemText(6, _translate("LinkManager", "Freeway", None))
         self.titleLabel.setText(_translate("LinkManager", "LINK MANAGER", None))
         self.linkGroupBox.setTitle(_translate("LinkManager", "Links", None))
         self.linkIdLabel.setText(_translate("LinkManager", "LinkId*", None))

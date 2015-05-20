@@ -453,6 +453,7 @@ class ActionHandler():
 
         connectorsroot = selectedLink.find("connectors").text
         connectors = connectorsroot.findall("connector")
+        # connectorsroot.remove("connector")
         for conn in data["connectors"]:
             conn.find("id").text = str(conn[0])
             conn.find("from_segment").text = str(conn[1])
@@ -727,6 +728,107 @@ class ActionHandler():
             info["length"] = selectedBusstop.find("length").text
             if selectedBusstop.find("tags"):
                 info["tags"] = selectedBusstop.find("tags").text
+            else:
+                info["tags"] = ""
+            return info
+        return None
+
+    def addTrainstop(self, point, data):
+        '''ADD FEATURE TO LAYER'''
+        feat = QgsFeature()
+        feat.initAttributes(2)
+        feat.setAttribute(0, str(data["segments"]))
+        feat.setAttribute(1, data["id"])
+        feat.setGeometry(QgsGeometry.fromPoint(QgsPoint(point.x(),point.y())))
+        self.active_layer.dataProvider().addFeatures([feat])
+        '''ADD TO data.xml '''
+         #get info
+        roadNetwork = self.document.find('road_network')
+
+        pt_stops = roadNetwork.find('pt_stops')
+        if not pt_stops:
+            pt_stops = ElementTree.SubElement(roadNetwork,'pt_stops')
+
+        trainstop = ElementTree.SubElement(pt_stops, 'train_stop')
+        #add Info
+        ElementTree.SubElement(trainstop, 'id').text = str(data["id"])
+        segments = ElementTree.SubElement(trainstop, 'segments')
+        for segment in data["segments"]:
+            ElementTree.SubElement(segments, 'segment_id').text = str(segment)
+        ElementTree.SubElement(trainstop, 'platform_name').text = str(data["platform_name"])
+        ElementTree.SubElement(trainstop, 'station_name').text = str(data["station_name"])
+        ElementTree.SubElement(trainstop, 'type').text = str(data["type"])
+        ElementTree.SubElement(trainstop, 'tags').text = str(data["tags"])
+        point = ElementTree.SubElement(trainstop,'point')
+        ElementTree.SubElement(point,'x').text = str(feat.geometry().asPoint().x())
+        ElementTree.SubElement(point,'y').text = str(feat.geometry().asPoint().y())
+        ElementTree.SubElement(point,'z').text = str(0)
+
+    def updateTrainstop(self, feature, data):
+         #update feature if necessary
+        segList = []
+        attrs = feature.attributes()
+        selectedsegments = str(attrs[0])
+        oldTrainstopId = int(attrs[1])
+        if oldTrainstopId != data["id"]:
+            attrs = {0 : selectedsegments, 1: data["id"]}
+            self.active_layer.dataProvider().changeAttributeValues({int(feature.id()) : attrs })
+        #get info
+        roadNetwork = self.document.find('road_network')
+        pt_stops = roadNetwork.find('pt_stops')
+        trainstops = pt_stops.findall('train_stop')
+        selectedTrainstop = None
+        if trainstops is not None:
+            for trainstop in trainstops:
+                trainstopId = int(trainstop.find("id").text)
+                if trainstopId == oldTrainstopId:
+                    selectedTrainstop = trainstop
+                    break
+        if selectedTrainstop is None:
+            QgsMessageLog.logMessage("Can not find trainstop id %s"%str(oldTrainstopId), 'SimGDC')
+            return
+        selectedTrainstop.find("id").text = str(data["id"])
+        segments = selectedTrainstop.find("segments")
+        for segment in data["segments"]:
+            segList.append(int(segment))
+        segments.find('segment_id').text= ",".join(segList)
+        selectedTrainstop.find("platform_name").text = str(data["platform_name"])
+        selectedTrainstop.find("station_name").text = str(data["station_name"])
+        selectedTrainstop.find("type").text = str(data["type"])
+
+        if data["tags"]:
+            selectedBusstop.find("tags").text = str(data["tags"])
+
+    def getTrainstop(self, feature):
+         #get id from feature
+        attrs = feature.attributes()
+        selectedSegments = str(attrs[0])
+        selectedTrainstopId = int(attrs[1])
+        #get info
+        roadNetwork = self.document.find('road_network')
+        pt_stops = roadNetwork.find('pt_stops')
+        trainstops = pt_stops.findall('train_stop')
+        selectedTrainstop = None
+        if trainstops is not None:
+            for trainstop in trainstops:
+                trainstopId = int(trainstop.find("id").text)
+                if trainstopId == selectedTrainstopId:
+                    selectedTrainstop = trainstop
+                    break
+
+        if selectedTrainstop is not None:
+            info = {}
+            info["id"] = selectedTrainstop.find("id").text
+            segmentParent = selectedTrainstop.find("segments")
+            segments = segmentParent.findall("segment_id")
+            info["segments"] = []
+            for segment in segments:
+                info["segments"].append(segment.text())
+            info["platform_name"] = selectedTrainstop.find("platform_name").text
+            info["station_name"] = selectedTrainstop.find("station_name").text
+            info["type"] = selectedTrainstop.find("type").text
+            if selectedTrainstop.find("tags"):
+                info["tags"] = selectedTrainstop.find("tags").text
             else:
                 info["tags"] = ""
             return info
@@ -1102,7 +1204,10 @@ class ActionHandler():
             ElementTree.SubElement(lane, 'tags').text = ""
             #add shape
             coordinates = []
-
+            m = []
+            del m[:]
+            c = []
+            del c[:]
             polyline = ElementTree.SubElement(lane, 'polyline')
             points = ElementTree.SubElement(polyline, 'points')
 
@@ -1115,25 +1220,54 @@ class ActionHandler():
                 listPoints1.append(listPoints[pt])
                 listPoints1.append(listPoints[pt+1])
                 slope = (listPoints1[1].y()-listPoints1[0].y())/(listPoints1[1].x()-listPoints1[0].x())
+                m.append(slope)
                 angle = math.atan(slope)
-                # angle2 = math.radians(90) + angle
+                c.append(listPoints1[0].y()-m[pt]*listPoints1[0].x())
 
+            #     if num == (nLane-1)/2 and nLane%2==1:
+            #         coordinates.extend([QgsPoint(listPoints1[0]), QgsPoint(listPoints1[1])])
+            #     elif num == (nLane-1)/2 and nLane%2==0:
+            #         coordinates.extend([QgsPoint(listPoints1[0].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[0].y()+(width*math.cos(angle)*i*pow(-1,pt))), QgsPoint(listPoints1[1].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[1].y()+(width*math.cos(angle)**pow(-1,pt)))])
+            #     elif num < (nLane-1)/2 :
+            #         coordinates.extend([QgsPoint(listPoints1[0].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[0].y()+(width*math.cos(angle)*i*pow(-1,pt))), QgsPoint(listPoints1[1].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[1].y()+(width*math.cos(angle)*i*pow(-1,pt)))])
+            #     elif num > (nLane-1)/2 :
+            #         coordinates.extend([QgsPoint(listPoints1[0].x()+(width*math.sin(angle)*j*pow(-1,pt)), listPoints1[0].y()-(width*math.cos(angle)*j*pow(-1,pt))), QgsPoint(listPoints1[1].x()+(width*math.sin(angle)*j*pow(-1,pt)), listPoints1[1].y()-(width*math.cos(angle)*j*pow(-1,pt)))])
+            #
+            #
+            # if num < (nLane-1)/2 or (num == (nLane-1)/2 and nLane%2==0):
+            #     i = i-1
+            # elif num > (nLane-1)/2:
+            #     j = j-1
+
+            if pt == 0:
                 if num == (nLane-1)/2 and nLane%2==1:
-                    coordinates.extend([QgsPoint(listPoints1[0]), QgsPoint(listPoints1[1])])
+                    coordinates.extend([QgsPoint(listPoints1[0])])
                 elif num == (nLane-1)/2 and nLane%2==0:
-                    coordinates.extend([QgsPoint(listPoints1[0].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[0].y()+(width*math.cos(angle)*i*pow(-1,pt))), QgsPoint(listPoints1[1].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[1].y()+(width*math.cos(angle)**pow(-1,pt)))])
+                    coordinates.extend([QgsPoint(listPoints1[0].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[0].y()+(width*math.cos(angle)*i*pow(-1,pt)))])
                 elif num < (nLane-1)/2 :
-                    coordinates.extend([QgsPoint(listPoints1[0].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[0].y()+(width*math.cos(angle)*i*pow(-1,pt))), QgsPoint(listPoints1[1].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[1].y()+(width*math.cos(angle)*i*pow(-1,pt)))])
+                    coordinates.extend([QgsPoint(listPoints1[0].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[0].y()+(width*math.cos(angle)*i*pow(-1,pt)))])
                 elif num > (nLane-1)/2 :
-                    coordinates.extend([QgsPoint(listPoints1[0].x()+(width*math.sin(angle)*j*pow(-1,pt)), listPoints1[0].y()-(width*math.cos(angle)*j*pow(-1,pt))), QgsPoint(listPoints1[1].x()+(width*math.sin(angle)*j*pow(-1,pt)), listPoints1[1].y()-(width*math.cos(angle)*j*pow(-1,pt)))])
+                    coordinates.extend([QgsPoint(listPoints1[0].x()+(width*math.sin(angle)*j*pow(-1,pt)), listPoints1[0].y()-(width*math.cos(angle)*j*pow(-1,pt)))])
+
+            elif pt == 1:
+                if num == (nLane-1)/2 and nLane%2==1:
+                    coordinates.extend([QgsPoint(listPoints1[1])])
+                elif num == (nLane-1)/2 and nLane%2==0:
+                    coordinates.extend([QgsPoint(listPoints1[1].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[1].y()+(width*math.cos(angle)**pow(-1,pt)))])
+                elif num < (nLane-1)/2 :
+                    coordinates.extend([QgsPoint(listPoints1[1].x()-(width*math.sin(angle)*i*pow(-1,pt)), listPoints1[1].y()+(width*math.cos(angle)*i*pow(-1,pt)))])
+                elif num > (nLane-1)/2 :
+                    coordinates.extend([QgsPoint(listPoints1[1].x()+(width*math.sin(angle)*j*pow(-1,pt)), listPoints1[1].y()-(width*math.cos(angle)*j*pow(-1,pt)))])
 
 
-                # if num%2==1 and num < (nLane-1)/2:
-                #     coordinates.append(QgsPoint(listPoints1[0].x()-math.sqrt(2)*width*math.cos(),QgsPoint(listPoints1[1].x()-math.sqrt(2)*width*math.sin())))
             if num < (nLane-1)/2 or (num == (nLane-1)/2 and nLane%2==0):
                 i = i-1
             elif num > (nLane-1)/2:
                 j = j-1
+
+            y1 = (m[0]*c[1] - m[1]*c[0])/(m[0]- m[1])
+            x1 = c[1] - c[0] / m[0] - m[1]
+            coordinates.append(QgsPoint(x1,y1))
 
             for pts in coordinates:
                 clkpoint = ElementTree.SubElement(points, 'point')
@@ -1142,6 +1276,8 @@ class ActionHandler():
                 ElementTree.SubElement(clkpoint, 'y').text = str(pts.y())
                 ElementTree.SubElement(clkpoint, 'z').text = str(0)
 
+            feat = QgsFeature()
+            feat.initAttributes(2)
             feat.setAttribute(0, selectedSegmentId)
             feat.setAttribute(1, int(laneId))
             feat.setGeometry(QgsGeometry.fromPolyline(coordinates))

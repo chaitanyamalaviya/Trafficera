@@ -340,7 +340,12 @@
     </item>
     <item>
      <property name="text">
-      <string>Freeway</string>
+      <string>Expressway</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Urban</string>
      </property>
     </item>
     <item>
@@ -350,7 +355,12 @@
     </item>
     <item>
      <property name="text">
-      <string>Urban Road</string>
+      <string>Roundabout</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Access</string>
      </property>
     </item>
    </widget>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>511</width>
-    <height>300</height>
+    <height>357</height>
    </rect>
   </property>
   <property name="font">
@@ -22,10 +22,10 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>250</y>
-     <width>75</width>
-     <height>23</height>
+     <x>350</x>
+     <y>310</y>
+     <width>101</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -42,9 +42,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>30</y>
+     <y>50</y>
      <width>491</width>
-     <height>51</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="font">
@@ -61,10 +61,10 @@
    <widget class="QLabel" name="segmentIDlabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>91</width>
-      <height>21</height>
+      <x>30</x>
+      <y>10</y>
+      <width>81</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="font">
@@ -95,12 +95,41 @@
      </font>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>55</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Segments*</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="segmentsListLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>120</x>
+      <y>59</y>
+      <width>361</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QLabel" name="idLabel">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>100</y>
+     <x>30</x>
+     <y>150</y>
      <width>31</width>
      <height>20</height>
     </rect>
@@ -118,8 +147,8 @@
   <widget class="QLineEdit" name="id">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>100</y>
+     <x>70</x>
+     <y>150</y>
      <width>161</width>
      <height>20</height>
     </rect>
@@ -134,8 +163,8 @@
   <widget class="QLabel" name="platformNamelabel">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>140</y>
+     <x>30</x>
+     <y>190</y>
      <width>101</width>
      <height>16</height>
     </rect>
@@ -153,8 +182,8 @@
   <widget class="QLabel" name="stationNamelabel">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>140</y>
+     <x>250</x>
+     <y>190</y>
      <width>91</width>
      <height>16</height>
     </rect>
@@ -172,8 +201,8 @@
   <widget class="QLabel" name="typeLabel">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>170</y>
+     <x>30</x>
+     <y>220</y>
      <width>41</width>
      <height>41</height>
     </rect>
@@ -191,8 +220,8 @@
   <widget class="QLabel" name="tagsLabel">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>170</y>
+     <x>250</x>
+     <y>220</y>
      <width>61</width>
      <height>41</height>
     </rect>
@@ -210,8 +239,8 @@
   <widget class="QLineEdit" name="platform_name">
    <property name="geometry">
     <rect>
-     <x>142</x>
-     <y>140</y>
+     <x>132</x>
+     <y>190</y>
      <width>101</width>
      <height>20</height>
     </rect>
@@ -226,8 +255,8 @@
   <widget class="QLineEdit" name="station_name">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>140</y>
+     <x>350</x>
+     <y>190</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -242,8 +271,8 @@
   <widget class="QTextEdit" name="tags">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>180</y>
+     <x>300</x>
+     <y>230</y>
      <width>181</width>
      <height>51</height>
     </rect>
@@ -258,8 +287,8 @@
   <widget class="QLineEdit" name="type">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>180</y>
+     <x>80</x>
+     <y>230</y>
      <width>151</width>
      <height>20</height>
     </rect>
@@ -269,6 +298,27 @@
      <family>Times New Roman</family>
      <pointsize>11</pointsize>
     </font>
+   </property>
+  </widget>
+  <widget class="QLabel" name="TrainStoplabel">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>10</y>
+     <width>111</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Times New Roman</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>TRAIN STOP</string>
    </property>
   </widget>
  </widget>

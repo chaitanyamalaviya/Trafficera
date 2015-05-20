@@ -92,7 +92,7 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
 
     def update(self):
         global original_id
-        self.errorMessage.setText("")
+        msgBox = QtGui.QMessageBox()
         self.info = {}
         busstopList = []
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
@@ -106,11 +106,13 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
 
         id = self.id.text()
         if id.isdigit() is False:
-            self.errorMessage.setText("id is invalid. It must be a number.")
+            msgBox.setText("ID is invalid. It must be a number.")
+            msgBox.exec_()
             return
 
         if len(id) > 5 :
-            self.errorMessage.setText("BusStopId is beyond range. Enter a shorter BusStopID.")
+            msgBox.setText("BusStopId is beyond range. Enter a shorter BusStopID.")
+            msgBox.exec_()
             return
 
         for BusStop in root.iter('bus_stop'):
@@ -118,7 +120,8 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
             busstopList.append(busstopid)
 
         if id in busstopList and id != original_id:
-            self.errorMessage.setText("BusStop ID exists. Please enter another ID.")
+            msgBox.setText("BusStop ID exists. Please enter another ID.")
+            msgBox.exec_()
             return
 
         self.info["id"] = int(id)
@@ -129,20 +132,25 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
 
         offset = self.offset.text()
         if offset.isdigit() is False:
-            self.errorMessage.setText("Offset is invalid. It must be a number.")
+            msgBox.setText("Offset is invalid. It must be a number.")
+            msgBox.exec_()
             return
+
         self.info["offset"] = int(offset)
 
         length = self.length.text()
         if length.isdigit() is False:
-            self.errorMessage.setText("Length is invalid. It must be a number.")
+            msgBox.setText("Length is invalid. It must be a number.")
+            msgBox.exec_()
             return
         self.info["length"] = int(length)
 
         busstopCode = self.busstopCode.text()
         if busstopCode.isdigit() is False:
-            self.errorMessage.setText("Busstop Code is invalid. It must be a number.")
+            msgBox.setText("Busstop Code is invalid. It must be a number.")
+            msgBox.exec_()
             return
+
         self.info["busstopCode"] = int(busstopCode)
 
         self.info["name"] = self.name.text()

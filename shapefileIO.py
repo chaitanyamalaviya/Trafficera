@@ -14,12 +14,13 @@ SCHEMA = {}
 SCHEMA[TYPE.MULNODE] = [QGis.WKBPoint, [QgsField("id", QVariant.Int)]] 
 SCHEMA[TYPE.SEGMENT] = [QGis.WKBLineString, [QgsField("link-id", QVariant.Int), QgsField("segmentID", QVariant.Int)]]
 SCHEMA[TYPE.TURNINGPATH] = [QGis.WKBLineString, [QgsField("turningPathID", QVariant.Int)], [QgsField("groupID", QVariant.Int)]]
-SCHEMA[TYPE.LINK] = [QGis.WKBLineString, [QgsField("linkID", QVariant.Int)], [QgsField("road_name", QVariant.Int)]]
+SCHEMA[TYPE.TURNINGPATH] = [QGis.WKBLineString, [QgsField("turningPathID", QVariant.Int)], [QgsField("groupID", QVariant.Int)]]
+SCHEMA[TYPE.LINK] = [QGis.WKBLineString, [QgsField("linkID", QVariant.Int)], [QgsField("road_name", QVariant.String)]]
 SCHEMA[TYPE.LANE]    = [QGis.WKBLineString, [QgsField("segmentID", QVariant.Int), QgsField("laneID", QVariant.Int)]]
 SCHEMA[TYPE.CROSSING]= [QGis.WKBPolygon, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]
 SCHEMA[TYPE.BUSSTOP] = [QGis.WKBPoint, [QgsField("segmentID", QVariant.Int), QgsField("id", QVariant.Int)]]
-SCHEMA[TYPE.TRAINSTOP] = [QGis.WKBPoint, [QgsField("segments", QVariant.Int), QgsField("id", QVariant.Int)]]
-SCHEMA[TYPE.LANEEDGE]= [QGis.WKBLineString, [QgsField("segmentID", QVariant.Int), QgsField("number", QVariant.Int)]] 
+SCHEMA[TYPE.TRAINSTOP] = [QGis.WKBPoint, [QgsField("segments", QVariant.String), QgsField("id", QVariant.Int)]]
+SCHEMA[TYPE.LANEEDGE]= [QGis.WKBLineString, [QgsField("segmentID", QVariant.Int), QgsField("number", QVariant.Int)]]
 
 class ShapefileWriter:
     def __init__(self, path):

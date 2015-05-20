@@ -32,6 +32,7 @@ from multinode_dialog import MultiNodeDialog
 from segment_dialog import SegmentDialog
 from crossing_dialog import CrossingDialog
 from busstop_dialog import BusstopDialog
+from trainstop_dialog import TrainstopDialog
 from lane_dialog import LaneDialog
 from laneedge_dialog import LaneEdgeDialog
 from linkmanager_dialog import LinkManagerDialog
@@ -268,6 +269,16 @@ class SimGDC:
 
             self.featuredlg.setSegmentId(selectedSegmentId)
 
+        elif typeId == TYPE.TRAINSTOP:
+            segmentLayer = handler.getLayer(TYPE.SEGMENT)
+            selectedSegments = segmentLayer.selectedFeatures()
+            if len(selectedSegments) == 0:
+                QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "Please select a segment from the segment layer.")
+                return
+            # attrs = str(selectedSegments)
+            self.featuredlg = TrainstopDialog()
+            self.featuredlg.setSegmentList()
+
         #show the dialog
         self.featuredlg.setInfo(None)
         self.featuredlg.show()
@@ -292,6 +303,11 @@ class SimGDC:
             elif typeId == TYPE.BUSSTOP:
                 busstopData = self.featuredlg.info
                 handler.addBusstop(point, busstopData)
+                handler.save()
+                self.canvas.refresh()
+            elif typeId == TYPE.TRAINSTOP:
+                trainstopData = self.featuredlg.info
+                handler.addTrainstop(point, trainstopData)
                 handler.save()
                 self.canvas.refresh()
             elif typeId == TYPE.LANE:
@@ -361,6 +377,12 @@ class SimGDC:
                 QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "No data for that feature.")
                 return
             self.featuredlg = BusstopDialog()
+        elif typeId == TYPE.TRAINSTOP:
+            eleData = handler.getTrainstop(selected_features[0])
+            if eleData is None:
+                QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "No data for that feature.")
+                return
+            self.featuredlg = TrainstopDialog()
         elif typeId == TYPE.LANE:      
             eleData = handler.getLane(selected_features[0])
             if eleData is None:
@@ -397,6 +419,11 @@ class SimGDC:
             elif typeId == TYPE.BUSSTOP:
                 newData = self.featuredlg.info
                 handler.updateBusstop(selected_features[0], newData)
+                handler.save()
+                self.canvas.refresh()
+            elif typeId == TYPE.TRAINSTOP:
+                newData = self.featuredlg.info
+                handler.updateTrainstop(selected_features[0], newData)
                 handler.save()
                 self.canvas.refresh()
             elif typeId == TYPE.LANE:
