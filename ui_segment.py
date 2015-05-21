@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_segment.ui'
 #
-# Created: Fri May 15 15:59:45 2015
+# Created: Thu May 21 15:04:58 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -193,13 +193,13 @@ class Ui_Segment(object):
         self.laneidlabel.setGeometry(QtCore.QRect(10, 50, 131, 20))
         self.laneidlabel.setObjectName(_fromUtf8("laneidlabel"))
         self.fromSectionlabel = QtGui.QLabel(self.tab_4)
-        self.fromSectionlabel.setGeometry(QtCore.QRect(50, 90, 81, 20))
+        self.fromSectionlabel.setGeometry(QtCore.QRect(40, 90, 91, 20))
         self.fromSectionlabel.setObjectName(_fromUtf8("fromSectionlabel"))
         self.fromSectioncomboBox = QtGui.QComboBox(self.tab_4)
         self.fromSectioncomboBox.setGeometry(QtCore.QRect(130, 90, 121, 22))
         self.fromSectioncomboBox.setObjectName(_fromUtf8("fromSectioncomboBox"))
         self.toSectionlabel = QtGui.QLabel(self.tab_4)
-        self.toSectionlabel.setGeometry(QtCore.QRect(270, 90, 61, 20))
+        self.toSectionlabel.setGeometry(QtCore.QRect(270, 90, 71, 20))
         self.toSectionlabel.setObjectName(_fromUtf8("toSectionlabel"))
         self.toSectioncomboBox = QtGui.QComboBox(self.tab_4)
         self.toSectioncomboBox.setGeometry(QtCore.QRect(340, 90, 121, 22))
@@ -230,7 +230,7 @@ class Ui_Segment(object):
         self.tabWidget_2.addTab(self.tab_4, _fromUtf8(""))
 
         self.retranslateUi(Segment)
-        self.tabWidget_2.setCurrentIndex(0)
+        self.tabWidget_2.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(Segment)
 
     def retranslateUi(self, Segment):
@@ -245,8 +245,8 @@ class Ui_Segment(object):
         self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_2), _translate("Segment", "Section", None))
         self.label.setText(_translate("Segment", "Lane Connectors", None))
         self.laneidlabel.setText(_translate("Segment", "Lane Connector ID*", None))
-        self.fromSectionlabel.setText(_translate("Segment", "fromSection*", None))
-        self.toSectionlabel.setText(_translate("Segment", "toSection*", None))
+        self.fromSectionlabel.setText(_translate("Segment", "fromSegment*", None))
+        self.toSectionlabel.setText(_translate("Segment", "toSegment*", None))
         self.fromLanelabel.setText(_translate("Segment", "fromLane*", None))
         self.toLanelabel.setText(_translate("Segment", "toLane*", None))
         self.pushButton.setText(_translate("Segment", "Add New", None))

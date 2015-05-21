@@ -70,6 +70,25 @@ class TrainstopDialog(QtGui.QDialog, Ui_TrainStop):
         segList.append(self.segmentIDcomboBox.currentText())
         self.segmentsListLineEdit.setText(",".join(segList))
 
+
+    def addnewid(self):
+        trainList = []
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory, nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+
+        for trainstop in root.iter('train_stop'):
+            trainList.append(int(trainstop.find('id').text))
+        if trainList is not None:
+            self.id.setText(str(max(trainList)+1))
+        else:
+            self.id.setText(str(0))
+        return
+
+    def setSegmentId(self, segIDstring):
+        self.segmentsListLineEdit.setText(segIDstring)
+
     def setInfo(self, info):
         self.info = info
         global original_id
@@ -82,13 +101,14 @@ class TrainstopDialog(QtGui.QDialog, Ui_TrainStop):
             self.segmentIDcomboBox.setCurrentIndex(0)
             self.id.setText(str(self.info["id"]))
             original_id = self.info["id"]
-            self.segmentsListLineEdit.setText(",".join(self.info["segments"]))
+            self.segmentsListLineEdit.setText(','.join(str(seg) for seg in info["segments"]))
             self.platform_name.setText(str(self.info["platform_name"]))
             self.station_name.setText(str(self.info["station_name"]))
             self.type.setText(str(self.info["type"]))
             self.tags.setPlainText(str(self.info["tags"]))
         else:
             self.pushButton.setText("ADD")
+            self.addnewid()
         QtCore.QObject.connect(self.segmentIDcomboBox, QtCore.SIGNAL('currentIndexChanged(int)'), self.addSegment)
         QtCore.QObject.connect(self.pushButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 

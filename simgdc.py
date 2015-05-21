@@ -275,9 +275,17 @@ class SimGDC:
             if len(selectedSegments) == 0:
                 QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "Please select a segment from the segment layer.")
                 return
-            # attrs = str(selectedSegments)
+
+            segIDlist = []
+            for segment in selectedSegments:
+                attrs = segment.attributes()
+                selectedSegmentId = str(attrs[1])
+                segIDlist.append(selectedSegmentId)
+
+            segIDstring = ",".join(segIDlist)
             self.featuredlg = TrainstopDialog()
             self.featuredlg.setSegmentList()
+            self.featuredlg.setSegmentId(segIDstring)
 
         #show the dialog
         self.featuredlg.setInfo(None)
@@ -524,9 +532,11 @@ class SimGDC:
             return
 
         nLane, ok = QInputDialog.getInt(self.iface.mainWindow(), 'Number of Lanes', 'Enter number of Lanes:', 1, 1, 20)
-        if ok:
+        width, ok2 = QInputDialog.getInt(self.iface.mainWindow(), 'Width', 'Enter width of the Lanes:', 100, 1, 1000)
+        if ok and ok2:
             handler = ActionHandler(sh_dir, self.canvas)
-            handler.generateLaneByNumber(selected_features[0], nLane)
+            handler.generateLaneByNumber(selected_features[0], nLane, width)
+            handler.generateLaneByNumber(selected_features[0], nLane, width)
             handler.save()
             self.canvas.refresh()
 

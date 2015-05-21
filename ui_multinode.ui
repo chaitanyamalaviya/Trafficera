@@ -90,7 +90,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Traffic Light ID*</string>
+        <string>Traffic Light ID</string>
        </property>
        <property name="buddy">
         <cstring>trafficLightID</cstring>

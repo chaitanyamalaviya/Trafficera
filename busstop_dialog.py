@@ -64,6 +64,22 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
     def setSegmentId(self, segmentId):
         self.segmentIDcomboBox.setCurrentIndex(self.getSegmentList().index(str(segmentId)))
 
+    def addnewid(self):
+        busList = []
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory, nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+
+        for busstop in root.iter('bus_stop'):
+            busList.append(int(busstop.find('id').text))
+
+        if busList is not None:
+            self.id.setText(str(max(busList)+1))
+        else:
+            self.id.setText(str(0))
+        return
+
     def setInfo(self, info):
         self.info = info
         global original_id
@@ -88,6 +104,7 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
             self.busstoptags.setPlainText(str(self.info["tags"]))
         else:
             self.actionButton.setText("ADD")
+            self.addnewid()
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
     def update(self):

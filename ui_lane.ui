@@ -122,8 +122,8 @@
     <rect>
      <x>10</x>
      <y>97</y>
-     <width>463</width>
-     <height>305</height>
+     <width>471</width>
+     <height>313</height>
     </rect>
    </property>
    <property name="title">
@@ -142,6 +142,24 @@
     <property name="bottomMargin">
      <number>5</number>
     </property>
+    <item row="4" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QCheckBox" name="is_road_shoulder">
+        <property name="text">
+         <string>is_road_shoulder</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="is_bicycle_lane">
+        <property name="text">
+         <string>is_bicycle_lane</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
     <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -151,7 +169,7 @@
         </property>
        </widget>
       </item>
-      <item>
+      <item alignment="Qt::AlignLeft">
        <widget class="QLineEdit" name="id"/>
       </item>
       <item>
@@ -162,23 +180,12 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="width"/>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QCheckBox" name="can_go_straight">
-        <property name="text">
-         <string>can_go_straight</string>
-        </property>
-       </widget>
+       <widget class="QLineEdit" name="wlineEdit"/>
       </item>
       <item>
-       <widget class="QCheckBox" name="can_turn_left">
+       <widget class="QLabel" name="width">
         <property name="text">
-         <string>can_turn_left</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -215,24 +222,6 @@
        <widget class="QCheckBox" name="can_change_lane_right">
         <property name="text">
          <string>can_change_lane_right</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="4" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
-      <item>
-       <widget class="QCheckBox" name="is_road_shoulder">
-        <property name="text">
-         <string>is_road_shoulder</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="is_bicycle_lane">
-        <property name="text">
-         <string>is_bicycle_lane</string>
         </property>
        </widget>
       </item>
@@ -305,6 +294,24 @@
        <widget class="QCheckBox" name="is_u_turn_allowed">
         <property name="text">
          <string>is_u_turn_allowed</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QCheckBox" name="can_go_straight">
+        <property name="text">
+         <string>can_go_straight</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="can_turn_left">
+        <property name="text">
+         <string>can_turn_left</string>
         </property>
        </widget>
       </item>

@@ -324,13 +324,14 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
         self.info["nodeType"]= self.nodeType.currentIndex()
 
-        trafficLightID = self.trafficLightID.text()
-        if trafficLightID.isdigit() is False:
-            msgBox.setText("Traffic Light ID is invalid. It must be a number.")
-            msgBox.exec_()
-            return
+        if self.trafficLightID.text() is not None:
+            trafficLightID = self.trafficLightID.text()
+            if trafficLightID.isdigit() is False:
+                msgBox.setText("Traffic Light ID is invalid. It must be a number.")
+                msgBox.exec_()
+                return
 
-        self.info["trafficLightID"] = int(trafficLightID)
+            self.info["trafficLightID"] = int(trafficLightID)
 
         self.info["tags"] = self.tags_node.toPlainText()
 

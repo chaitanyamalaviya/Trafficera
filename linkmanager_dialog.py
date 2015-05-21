@@ -22,6 +22,9 @@
 from PyQt4 import QtCore, QtGui
 from ui_linkmanager import Ui_LinkManager
 import os
+from xml.etree import ElementTree
+from qgis.core import *
+from qgis.utils import *
 # create the dialog for zoom to point
 
 
@@ -47,6 +50,7 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
         for linkId in links.iterkeys():
             self.linkIdComboBox.addItem(str(linkId))
         self.linkIdComboBox.setCurrentIndex(0)
+        self.addnewid()
         self.actionButton.setText("ADD")
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
         QtCore.QObject.connect(self.linkIdComboBox, QtCore.SIGNAL('currentIndexChanged(const QString&)'), self.updateLinkName)
@@ -54,7 +58,6 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
     def updateLinkName(self, textLinkId):
         if textLinkId == "add new link":
             self.actionButton.setText("ADD")
-            self.id.setText("")
             self.roadName.setText("")
             self.startNode.setText("")
             self.endNode.setText("")
@@ -67,6 +70,21 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
             self.endNode.setText(str(self.listLinks[linkId][3]))
             self.tagsLink.setPlainText(str(self.listLinks[linkId][4]))
             self.actionButton.setText("SAVE")
+
+    def addnewid(self):
+        linkList = []
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory, nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+
+        for link in root.iter('link'):
+            linkList.append(int(link.find('id').text))
+        if linkList is not None:
+            self.id.setText(str(max(linkList)+1))
+        else:
+            self.id.setText(str(0))
+        return
 
     def update(self):
         self.errorMessage.setText("")

@@ -44,9 +44,10 @@ class LaneDialog(QtGui.QDialog, Ui_Lane):
         self.info = info
         if self.info is not None:
             self.actionButton.setText("SAVE")
+            self.width.hide()
             self.segmentId.setText(str(self.info["segmentId"]))
             self.id.setText(str(self.info["id"]))
-            self.width.setText(str(self.info["width"]))
+            self.wlineEdit.setText(str(self.info["width"]))
             self.tags.setText(str(self.info["tags"]))
 
             if self.info["can_go_straight"] == "true":
@@ -83,6 +84,7 @@ class LaneDialog(QtGui.QDialog, Ui_Lane):
                 self.is_u_turn_allowed.setCheckState(QtCore.Qt.Checked) 
         else:
             self.actionButton.setText("ADD")
+            self.width.hide()
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
     def update(self):
@@ -95,11 +97,15 @@ class LaneDialog(QtGui.QDialog, Ui_Lane):
             return
         self.info["id"] = int(id)
 
-        width = self.width.text()
-        if width.isdigit() is False:
-            self.errorMessage.setText("width is invalid. It must be a number.")
-            return
-        self.info["width"] = int(width)  
+        if self.actionButton.text() == "SAVE":
+            width = self.wlineEdit.text()
+            if width.isdigit() is False:
+                self.errorMessage.setText("Width is invalid. It must be a number.")
+                return
+            self.info["width"] = int(width)
+
+        else:
+            self.info["width"] = int(self.width.text())
 
         if self.can_go_straight.isChecked():
             self.info["can_go_straight"] = "true"
