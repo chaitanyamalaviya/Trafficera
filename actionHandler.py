@@ -93,7 +93,7 @@ class ActionHandler():
                              if lane.find('id').text == str(tP[2]):
                                 lane1 = lane
                                 for point in lane1.iter('point'):
-                                    if int(point.find('seq_id').text) == 2:
+                                    if int(point.find('seq_id').text) == 1:
                                         pointtp = ElementTree.SubElement(points,'point')
                                         ElementTree.SubElement(pointtp, 'seq_id').text = str(0)
                                         ElementTree.SubElement(pointtp, 'x').text = point.find('x').text
@@ -103,7 +103,7 @@ class ActionHandler():
                              if lane.find('id').text == str(tP[3]):
                                 lane2 = lane
                                 for point in lane2.iter('point'):
-                                    if int(point.find('seq_id').text)==1:
+                                    if int(point.find('seq_id').text)==0:
                                         pointtp = ElementTree.SubElement(points,'point')
                                         ElementTree.SubElement(pointtp, 'seq_id').text = str(1)
                                         ElementTree.SubElement(pointtp, 'x').text = point.find('x').text
@@ -417,6 +417,7 @@ class ActionHandler():
 
         for i in range(2):
             clkpoint = ElementTree.SubElement(points, 'point')
+            ElementTree.SubElement(clkpoint, 'seq_id').text = str(i)
             ElementTree.SubElement(clkpoint, 'x').text = str(point.x() + distance*i)
             ElementTree.SubElement(clkpoint, 'y').text = str(point.y() + distance*i)
             ElementTree.SubElement(clkpoint, 'z').text = str(0)

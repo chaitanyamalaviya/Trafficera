@@ -262,12 +262,15 @@ class SimGDC:
             elif typeId == TYPE.BUSSTOP:
                 self.featuredlg = BusstopDialog()
                 self.featuredlg.setSegmentList()
+                self.featuredlg.offset.setText(self.featuredlg.calculateOffset(point, selectedSegmentId))
             elif typeId == TYPE.LANE:
                 self.featuredlg = LaneDialog()    
             elif typeId == TYPE.LANEEDGE:
                 self.featuredlg = LaneEdgeDialog()             
 
             self.featuredlg.setSegmentId(selectedSegmentId)
+
+
 
         elif typeId == TYPE.TRAINSTOP:
             segmentLayer = handler.getLayer(TYPE.SEGMENT)

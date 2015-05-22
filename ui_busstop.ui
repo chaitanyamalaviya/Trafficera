@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>482</width>
+    <width>477</width>
     <height>336</height>
    </rect>
   </property>
@@ -40,9 +40,9 @@
   <widget class="QGroupBox" name="SegmentGroupBox">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>40</y>
-     <width>471</width>
+     <x>0</x>
+     <y>30</y>
+     <width>481</width>
      <height>51</height>
     </rect>
    </property>
@@ -82,9 +82,9 @@
   <widget class="QLabel" name="titleLabel">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>10</x>
      <y>10</y>
-     <width>401</width>
+     <width>451</width>
      <height>20</height>
     </rect>
    </property>
@@ -106,9 +106,9 @@
   <widget class="QGroupBox" name="attributeGroup">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>0</x>
      <y>100</y>
-     <width>471</width>
+     <width>481</width>
      <height>231</height>
     </rect>
    </property>
@@ -171,7 +171,7 @@
      <rect>
       <x>100</x>
       <y>80</y>
-      <width>111</width>
+      <width>121</width>
       <height>21</height>
      </rect>
     </property>
@@ -249,83 +249,13 @@
      <string>ADD</string>
     </property>
    </widget>
-   <widget class="QLabel" name="busCapacityLabel">
-    <property name="geometry">
-     <rect>
-      <x>33</x>
-      <y>40</y>
-      <width>61</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>13</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Name*</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="name">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>40</y>
-      <width>111</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>13</pointsize>
-     </font>
-    </property>
-   </widget>
-   <widget class="QLabel" name="busstopNoLabel">
-    <property name="geometry">
-     <rect>
-      <x>221</x>
-      <y>40</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>13</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>BusStopCode*</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="busstopCode">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>40</y>
-      <width>131</width>
-      <height>25</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>13</pointsize>
-     </font>
-    </property>
-   </widget>
    <widget class="QLabel" name="idLabel">
     <property name="geometry">
      <rect>
-      <x>63</x>
+      <x>12</x>
       <y>1</y>
-      <width>21</width>
-      <height>20</height>
+      <width>22</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -341,9 +271,9 @@
    <widget class="QLineEdit" name="id">
     <property name="geometry">
      <rect>
-      <x>100</x>
-      <y>0</y>
-      <width>111</width>
+      <x>40</x>
+      <y>1</y>
+      <width>167</width>
       <height>25</height>
      </rect>
     </property>
@@ -357,10 +287,10 @@
    <widget class="QLabel" name="OffsetLabel">
     <property name="geometry">
      <rect>
-      <x>272</x>
-      <y>1</y>
-      <width>51</width>
-      <height>20</height>
+      <x>230</x>
+      <y>0</y>
+      <width>53</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -373,45 +303,77 @@
      <string>Offset*</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="offset">
+   <widget class="QLabel" name="offset">
     <property name="geometry">
      <rect>
-      <x>331</x>
+      <x>324</x>
       <y>1</y>
       <width>131</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>13</pointsize>
-     </font>
+    <property name="text">
+     <string/>
     </property>
    </widget>
-  </widget>
-  <widget class="QLabel" name="errorMessage">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>60</y>
-     <width>16</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Times New Roman</family>
-     <pointsize>13</pointsize>
-     <italic>true</italic>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">color: rgb(255, 20, 27)</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>7</x>
+      <y>40</y>
+      <width>451</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="busCapacityLabel">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Name*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="name">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="busstopNoLabel">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>BusStopCode*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="busstopCode">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources/>
