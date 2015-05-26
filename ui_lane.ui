@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>507</width>
-    <height>529</height>
+    <width>495</width>
+    <height>483</height>
    </rect>
   </property>
   <property name="font">
@@ -41,7 +41,7 @@
    <property name="geometry">
     <rect>
      <x>70</x>
-     <y>410</y>
+     <y>380</y>
      <width>161</width>
      <height>71</height>
     </rect>
@@ -123,201 +123,203 @@
      <x>10</x>
      <y>97</y>
      <width>471</width>
-     <height>313</height>
+     <height>271</height>
     </rect>
    </property>
    <property name="title">
     <string/>
    </property>
-   <layout class="QGridLayout" name="gridLayout_2">
-    <property name="leftMargin">
-     <number>5</number>
+   <widget class="QLabel" name="vehicleModelabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
     </property>
-    <property name="topMargin">
-     <number>5</number>
+    <property name="text">
+     <string>Vehicle Mode</string>
     </property>
-    <property name="rightMargin">
-     <number>5</number>
+   </widget>
+   <widget class="QLabel" name="width">
+    <property name="geometry">
+     <rect>
+      <x>441</x>
+      <y>7</y>
+      <width>16</width>
+      <height>21</height>
+     </rect>
     </property>
-    <property name="bottomMargin">
-     <number>5</number>
+    <property name="text">
+     <string/>
     </property>
-    <item row="4" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
-      <item>
-       <widget class="QCheckBox" name="is_road_shoulder">
+   </widget>
+   <widget class="QSplitter" name="splitter">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>461</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <widget class="QCheckBox" name="pedestrian">
+     <property name="text">
+      <string>Pedestrian</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="bicycle">
+     <property name="text">
+      <string>Bicycle</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="truck">
+     <property name="text">
+      <string>Truck</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="bus">
+     <property name="text">
+      <string>Bus</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="van">
+     <property name="text">
+      <string>Van</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="taxi">
+     <property name="text">
+      <string>Taxi</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>192</y>
+      <width>451</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="can_stop">
+       <property name="text">
+        <string>Can_Stop</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="high_occ_veh">
+       <property name="text">
+        <string>High Occupancy Vehicle</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>13</x>
+      <y>221</y>
+      <width>451</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QCheckBox" name="can_park">
+       <property name="text">
+        <string>Can_Park</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_10">
+       <property name="text">
+        <string>Has Road Shoulder</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>131</y>
+      <width>451</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="busLanelabel">
+       <property name="text">
+        <string>Bus Lane</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="bus_lane">
+       <item>
         <property name="text">
-         <string>is_road_shoulder</string>
+         <string>Both cars and buses use lane whole day</string>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="is_bicycle_lane">
+       </item>
+       <item>
         <property name="text">
-         <string>is_bicycle_lane</string>
+         <string>Normal Bus Lane</string>
         </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="idLabel">
+       </item>
+       <item>
         <property name="text">
-         <string>Id*</string>
+         <string>Full Day Bus Lane</string>
         </property>
-       </widget>
-      </item>
-      <item alignment="Qt::AlignLeft">
-       <widget class="QLineEdit" name="id"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="widthLabel">
-        <property name="text">
-         <string>Width*</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="wlineEdit"/>
-      </item>
-      <item>
-       <widget class="QLabel" name="width">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="2" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QCheckBox" name="can_turn_right">
-        <property name="text">
-         <string>can_turn_right</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="can_turn_on_red_signal">
-        <property name="text">
-         <string>can_turn_on_red_signal</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="3" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <item>
-       <widget class="QCheckBox" name="can_change_lane_left">
-        <property name="text">
-         <string>can_change_lane_left</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="can_change_lane_right">
-        <property name="text">
-         <string>can_change_lane_right</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="5" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <item>
-       <widget class="QCheckBox" name="is_pedestrian_lane">
-        <property name="text">
-         <string>is_pedestrian_lane</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="is_vehicle_lane">
-        <property name="text">
-         <string>is_vehicle_lane</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="6" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_7">
-      <item>
-       <widget class="QCheckBox" name="is_standard_bus_lane">
-        <property name="text">
-         <string>is_standard_bus_lane</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="is_whole_day_bus_lane">
-        <property name="text">
-         <string>is_whole_day_bus_lane</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="7" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_8">
-      <item>
-       <widget class="QCheckBox" name="is_high_occupancy_vehicle_lane">
-        <property name="text">
-         <string>is_high_occupancy_vehicle_lane</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="can_freely_park_here">
-        <property name="text">
-         <string>can_freely_park_here</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="8" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_9">
-      <item>
-       <widget class="QCheckBox" name="can_stop_here">
-        <property name="text">
-         <string>can_stop_here</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="is_u_turn_allowed">
-        <property name="text">
-         <string>is_u_turn_allowed</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QCheckBox" name="can_go_straight">
-        <property name="text">
-         <string>can_go_straight</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="can_turn_left">
-        <property name="text">
-         <string>can_turn_left</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-   </layout>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>7</x>
+      <y>7</y>
+      <width>461</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QLabel" name="idLabel">
+       <property name="text">
+        <string>Id*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="id"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="widthLabel">
+       <property name="text">
+        <string>Width*</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="wlineEdit"/>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QLabel" name="errorMessage">
    <property name="geometry">
@@ -344,7 +346,7 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>400</y>
+     <y>370</y>
      <width>61</width>
      <height>41</height>
     </rect>
@@ -356,8 +358,8 @@
   <widget class="QPushButton" name="actionButton">
    <property name="geometry">
     <rect>
-     <x>310</x>
-     <y>440</y>
+     <x>320</x>
+     <y>400</y>
      <width>100</width>
      <height>29</height>
     </rect>

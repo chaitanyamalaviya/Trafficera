@@ -122,6 +122,8 @@ class TrainstopDialog(QtGui.QDialog, Ui_TrainStop):
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
 
+
+
         id = self.id.text()
         if id.isdigit() is False:
             msgBox.setText("ID is invalid. It must be a number.")
@@ -129,7 +131,7 @@ class TrainstopDialog(QtGui.QDialog, Ui_TrainStop):
             return
 
         if len(id) > 5 :
-            msgBox.setText("TrainStopId is beyond range. Enter a shorter TrainStopID.")
+            msgBox.setText("TrainStopId is beyond range. Please enter a shorter TrainStopID.")
             msgBox.exec_()
             return
 
@@ -147,8 +149,32 @@ class TrainstopDialog(QtGui.QDialog, Ui_TrainStop):
 
         self.info["segments"] = self.segmentsListLineEdit.text().split(',')
 
+
+        if self.platform_name.text() is None:
+            msgBox.setText("Platform Name cannot be empty. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
+        elif len(self.platform_name.text())>20:
+            msgBox.setText("Platform Name cannot be longer than 20 characters. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
         self.info["platform_name"] = self.platform_name.text()
+
+
+        if self.station_name.text() is None:
+            msgBox.setText("Station Name cannot be empty. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
+        elif len(self.station_name.text())>20:
+            msgBox.setText("Station Name cannot be longer than 20 characters. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
         self.info["station_name"] = self.station_name.text()
+
+        if self.type.text() is None:
+            msgBox.setText("Type cannot be empty. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
         self.info["type"] = self.type.text()
         self.info["tags"] = self.tags.toPlainText()
 

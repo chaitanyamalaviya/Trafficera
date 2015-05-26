@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_multinode.ui'
 #
-# Created: Thu May 21 15:05:14 2015
+# Created: Tue May 26 15:36:14 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,7 +27,7 @@ class Ui_MultiNode(object):
     def setupUi(self, MultiNode):
         MultiNode.setObjectName(_fromUtf8("MultiNode"))
         MultiNode.setEnabled(True)
-        MultiNode.resize(485, 616)
+        MultiNode.resize(473, 616)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Tahoma"))
         font.setPointSize(13)
@@ -304,7 +304,7 @@ class Ui_MultiNode(object):
         self.newTurningPath.setFont(font)
         self.newTurningPath.setObjectName(_fromUtf8("newTurningPath"))
         self.maxSpeed_label = QtGui.QLabel(self.turningPath)
-        self.maxSpeed_label.setGeometry(QtCore.QRect(10, 90, 81, 21))
+        self.maxSpeed_label.setGeometry(QtCore.QRect(10, 90, 121, 21))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
@@ -314,7 +314,7 @@ class Ui_MultiNode(object):
         self.tags_turningpath.setGeometry(QtCore.QRect(290, 90, 151, 51))
         self.tags_turningpath.setObjectName(_fromUtf8("tags_turningpath"))
         self.tagts_tp_label = QtGui.QLabel(self.turningPath)
-        self.tagts_tp_label.setGeometry(QtCore.QRect(240, 90, 31, 21))
+        self.tagts_tp_label.setGeometry(QtCore.QRect(260, 90, 31, 21))
         font = QtGui.QFont()
         font.setBold(False)
         font.setWeight(50)
@@ -333,7 +333,7 @@ class Ui_MultiNode(object):
         self.TurningPathTable.setColumnCount(0)
         self.TurningPathTable.setRowCount(0)
         self.maxSpeed = QtGui.QLineEdit(self.tab_3)
-        self.maxSpeed.setGeometry(QtCore.QRect(90, 390, 141, 21))
+        self.maxSpeed.setGeometry(QtCore.QRect(130, 390, 121, 21))
         self.maxSpeed.setObjectName(_fromUtf8("maxSpeed"))
         self.tabWidget.addTab(self.tab_3, _fromUtf8(""))
         self.tab_2 = QtGui.QWidget()
@@ -366,11 +366,11 @@ class Ui_MultiNode(object):
         self.toLanelabel.setBuddy(self.toLane)
 
         self.retranslateUi(MultiNode)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(MultiNode)
 
     def retranslateUi(self, MultiNode):
-        self.TrafficLightIDlabel.setText(_translate("MultiNode", "Traffic Light ID*", None))
+        self.TrafficLightIDlabel.setText(_translate("MultiNode", "Traffic Light ID", None))
         self.NodeTypelabel.setText(_translate("MultiNode", "Node Type*", None))
         self.nodeType.setItemText(0, _translate("MultiNode", "Default Node", None))
         self.nodeType.setItemText(1, _translate("MultiNode", "Urban Intersection with Signal", None))
@@ -400,7 +400,7 @@ class Ui_MultiNode(object):
         self.fromLanelabel.setText(_translate("MultiNode", "fromLane*", None))
         self.toLanelabel.setText(_translate("MultiNode", "toLane*", None))
         self.newTurningPath.setText(_translate("MultiNode", "Add new", None))
-        self.maxSpeed_label.setText(_translate("MultiNode", "Max Speed*", None))
+        self.maxSpeed_label.setText(_translate("MultiNode", "Max Speed*(km/hr)", None))
         self.tagts_tp_label.setText(_translate("MultiNode", "Tags", None))
         self.delturningpathButton.setText(_translate("MultiNode", "Delete", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MultiNode", "Turnings", None))

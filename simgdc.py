@@ -238,13 +238,16 @@ class SimGDC:
 
         if typeId == TYPE.MULNODE:
             self.featuredlg = MultiNodeDialog()
+        elif typeId == TYPE.LINK:
+            self.manageLinks()
         elif typeId == TYPE.SEGMENT:
             linkLists = handler.getLinkList()
             if len(linkLists) == 0:
                 QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "There is no link, so it is impossible to add a segment.")
                 return
             self.featuredlg = SegmentDialog()
-            self.featuredlg.setLinkList(linkLists)  
+            self.featuredlg.setLinkList(linkLists)
+
         elif typeId == TYPE.CROSSING or typeId == TYPE.BUSSTOP or typeId == TYPE.LANE or typeId == TYPE.LANEEDGE:
             segmenLayer = handler.getLayer(TYPE.SEGMENT)
             selectedSegments = segmenLayer.selectedFeatures()
@@ -290,10 +293,11 @@ class SimGDC:
             self.featuredlg.setSegmentList()
             self.featuredlg.setSegmentId(segIDstring)
 
-        #show the dialog
-        self.featuredlg.setInfo(None)
-        self.featuredlg.show()
-        self.featuredlg.exec_()
+        if typeId!=TYPE.LINK:
+            #show the dialog
+            self.featuredlg.setInfo(None)
+            self.featuredlg.show()
+            self.featuredlg.exec_()
 
         if self.featuredlg is not None and self.featuredlg.isModified is True:
             if typeId == TYPE.MULNODE:
@@ -467,15 +471,15 @@ class SimGDC:
             return
 
         # confirm message
-        reply = QMessageBox.question(self.iface.mainWindow(), "Are you sure?", "Are you sure to delete the selected features ? It is NOT possible to undo this action.", 
+        reply = QMessageBox.question(self.iface.mainWindow(), "Are you sure?", "Are you sure to delete the selected features ? It is not possible to undo this action.",
             QMessageBox.Yes | QMessageBox.No, QMessageBox.No);
         if reply == QMessageBox.No:
             return
 
-        #should save all changes before deleting
-        if active_layer.isEditable():
-            QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "Please save all of your changes and turn of editing mode before deleting features.")
-            return
+        # #should save all changes before deleting
+        # if active_layer.isEditable():
+        #     QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "Please save all of your changes and turn of editing mode before deleting features.")
+        #     return
 
         handler = ActionHandler(sh_dir, self.canvas)
         # remove data dependency
@@ -499,7 +503,7 @@ class SimGDC:
         linkLists = handler.getLinkListDetail()
         self.featuredlg = LinkManagerDialog()
         self.featuredlg.setLinkList(linkLists)
-
+        self.featuredlg.setNodeList()
         self.featuredlg.show()
         self.featuredlg.exec_()
 

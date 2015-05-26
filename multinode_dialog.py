@@ -119,11 +119,40 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             msgBox.setText("Turning Group ID is invalid. It must be a number.")
             msgBox.exec_()
             return
+        elif len(turningGroupID)>6:
+            msgBox.setText("Turning Group ID is beyond range. Please enter a shorter Turning Group ID.")
+            msgBox.exec_()
+            return
+
         for turningGroup in self.info["turningGroup"]:
             if turningGroup[0]==turningGroupID:
                 msgBox.setText("Turning Group ID exists. Please enter a different ID.")
                 msgBox.exec_()
                 return
+
+        if self.fromLink.currentText()==self.toLink.currentText():
+            msgBox.setText("fromLink cannot be same as toLink. Please enter different link IDs.")
+            msgBox.exec_()
+            return
+
+        if len(self.Phases.text())>5:
+            msgBox.setText("Phase information cannot be longer than 5 characters. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
+        elif not self.Phases.text():
+            msgBox.setText("Phases field cannot be empty. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
+
+        if len(self.visibility_distance.text())>5:
+            msgBox.setText("Visibility distance cannot be longer than 5 characters. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
+        elif not self.visibility_distance.text():
+            msgBox.setText("Visibility Distance cannot be empty. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
+
         ridx = len(self.info["turningGroup"])
         self.info["turningGroup"].append([turningGroupID, self.fromLink.currentText(), self.toLink.currentText(), self.Phases.text(), self.Rules.currentText(),self.visibility_distance.text(),self.tags_turninggroup.toPlainText()])
 
@@ -141,9 +170,29 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
             msgBox.setText("Turning Path ID is invalid. It must be a number.")
             msgBox.exec_()
             return
-            # self.errorMessage.setText("Turning Path ID is invalid. It must be a number.")
-            # return
+        for id in range(self.TurningPathTable.rowCount()):
+            if self.TurningPathTable.item(id,0).text() == turningPathID:
+                msgBox.setText("Turning Path ID exists. Please enter a different ID.")
+                msgBox.exec_()
+                return
+
+        if self.fromLane.currentText() == self.toLane.currentText():
+            msgBox.setText("fromLane cannot be same as toLane. Please enter different lane IDs.")
+            msgBox.exec_()
+            return
+
         group_id = self.turningGroupID.text()
+
+        maxSpeed = self.maxSpeed.text()
+        if maxSpeed.isdigit() is False:
+            msgBox.setText("maxSpeed is invalid. It must be a number.")
+            msgBox.exec_()
+            return
+
+        elif len(maxSpeed) > 3:
+            msgBox.setText("maxSpeed is beyond range. Enter a shorter value for speed.")
+            msgBox.exec_()
+            return
 
         ridx = self.TurningPathTable.rowCount()
         self.info["turningPath"].append([group_id, turningPathID, self.fromLane.currentText(), self.toLane.currentText(),self.maxSpeed.text(),self.tags_turningpath.toPlainText()])
@@ -226,7 +275,8 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         for link in root.iter('link'):
             self.fromLink.addItem(link.find('id').text)
             self.toLink.addItem(link.find('id').text)
-
+        self.fromLink.setCurrentIndex(0)
+        self.toLink.setCurrentIndex(0)
 
     def setLanelist(self):
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
@@ -236,6 +286,8 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
         for lane in root.iter('lane'):
             self.fromLane.addItem(lane.find('id').text)
             self.toLane.addItem(lane.find('id').text)
+        self.fromLane.setCurrentIndex(0)
+        self.toLane.setCurrentIndex(0)
 
     def addnewid(self):
         nodeList = []
@@ -285,7 +337,6 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
     def update(self):
         global original_id
-        self.errorMessage.setText("")
         msgBox = QtGui.QMessageBox()
         nodeList = []
         #self.info = {}
@@ -316,70 +367,22 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
         self.info["id"] = int(nodeId)
 
-        # aimsunId = self.aimsunId.text()
-        # if aimsunId.isdigit() is False:
-        #     self.errorMessage.setText("aimsunId is invalid. It must be a number.")
-        #     return
-        # self.info["aimsunId"] = int(aimsunId)
-
         self.info["nodeType"]= self.nodeType.currentIndex()
 
-        if self.trafficLightID.text() is not None:
-            trafficLightID = self.trafficLightID.text()
+
+        trafficLightID = self.trafficLightID.text()
+        if trafficLightID:
             if trafficLightID.isdigit() is False:
                 msgBox.setText("Traffic Light ID is invalid. It must be a number.")
                 msgBox.exec_()
                 return
-
-            self.info["trafficLightID"] = int(trafficLightID)
+            else:
+                self.info["trafficLightID"] = int(trafficLightID)
+        else:
+            self.info["trafficLightID"] = trafficLightID
 
         self.info["tags"] = self.tags_node.toPlainText()
 
-        # if not self.info["turningGroup"]:
-        #     self.info["turningGroup"] = []
-        # if not self.info["turningPath"]:
-        #     self.info["turningPath"] = []
-
-        # self.info["multiConnectors"] = []
-        # mulConnectors = self.mulConnectorEdit.toPlainText()
-        # if mulConnectors:
-        #     self.info["multiConnectors"] = self.parseMultiConnectors(mulConnectors)
-        #     if self.info["multiConnectors"] is None:
-        #         self.errorMessage.setText("The multiconnectors are in invalid format. Please enter in format 'laneFrom, laneTo'.")
-        #         return
-
-
-
-        # for con in root.iter('Connector'):
-        #     lf = int(con.find('laneFrom').text)
-        #     lt = int(con.find('laneTo').text)
-        #     lanepairlist.append([lf,lt])
-        #
-        # for lane in root.iter('Lane'):
-        #     lanelist.append(lane.find('laneID').text)
-
-        # for multiconnector in self.info["multiConnectors"]:
- #       self.errorMessage.setText(laneFromlist)
-  #      return
-# and self.info["multiConnectors"][0][1][0][1] in laneTolist)
-
-        # for multiconnector in self.info["multiConnectors"]:
-        #     if multiconnector[1][0] in lanepairlist and nodeId != original_id:
-        #         self.errorMessage.setText("A turning already exists between these lanes ")
-        #         return
-        #     if str(multiconnector[0]) not in seglist :
-        #         self.errorMessage.setText("The segmentid in multiconnectors does not exist.")
-        #         return
-        #     if str(multiconnector[1][0][0]) not in lanelist or str(multiconnector[1][0][1]) not in lanelist :
-        #         self.errorMessage.setText("The laneid does not exist.")
-        #         return
-        #     if multiconnector[1][0][0] == multiconnector[1][0][1] :
-        #         self.errorMessage.setText("Lanefrom id and Laneto id cannot be the same.")
-        #         return
-
         self.isModified = True
-
-        #self.errorMessage.setText(str(self.isModified))
-        #return
 
         self.accept()

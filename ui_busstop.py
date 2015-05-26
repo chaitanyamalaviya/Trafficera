@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_busstop.ui'
 #
-# Created: Fri May 22 14:27:05 2015
+# Created: Tue May 26 15:37:05 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!

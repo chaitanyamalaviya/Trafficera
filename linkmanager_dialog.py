@@ -40,34 +40,50 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
         self.info = None
         self.listLinks = None
         self.isModified = False
-
+        self.nodeList = []
 
 
     def setLinkList(self, links):
         self.listLinks = links
+        sortedList = []
         self.linkIdComboBox.clear()
         self.linkIdComboBox.addItem("Add new link")
         for linkId in links.iterkeys():
-            self.linkIdComboBox.addItem(str(linkId))
+            sortedList.append(int(linkId))
+        for id in sorted(sortedList):
+            self.linkIdComboBox.addItem(str(id))
         self.linkIdComboBox.setCurrentIndex(0)
         self.addnewid()
         self.actionButton.setText("ADD")
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
         QtCore.QObject.connect(self.linkIdComboBox, QtCore.SIGNAL('currentIndexChanged(const QString&)'), self.updateLinkName)
 
+    def setNodeList(self):
+
+        layerfi = iface.activeLayer().dataProvider().dataSourceUri()
+        (myDirectory, nameFile) = os.path.split(layerfi)
+        tree = ElementTree.parse(myDirectory + '/data.xml')
+        root = tree.getroot()
+        for node in root.iter('node'):
+            nodeID = int(node.find('id').text)
+            self.nodeList.append(nodeID)
+        for id in sorted(self.nodeList):
+            self.startNode.addItem(str(id))
+            self.endNode.addItem(str(id))
+
     def updateLinkName(self, textLinkId):
         if textLinkId == "add new link":
             self.actionButton.setText("ADD")
             self.roadName.setText("")
-            self.startNode.setText("")
-            self.endNode.setText("")
+            self.startNode.setCurrentIndex(0)
+            self.endNode.setcurrentIndex(0)
             self.tagsLink.setPlainText("")
         else:
             linkId = int(textLinkId)
             self.id.setText(textLinkId)
             self.roadName.setText(self.listLinks[linkId][1])
-            self.startNode.setText(str(self.listLinks[linkId][2]))
-            self.endNode.setText(str(self.listLinks[linkId][3]))
+            self.startNode.setCurrentIndex(self.nodeList.index(self.listLinks[linkId][2]))
+            self.endNode.setCurrentIndex(self.nodeList.index(self.listLinks[linkId][3]))
             self.tagsLink.setPlainText(str(self.listLinks[linkId][4]))
             self.actionButton.setText("SAVE")
 
@@ -90,6 +106,7 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
         self.errorMessage.setText("")
         self.info = {}
         msgBox = QtGui.QMessageBox()
+
         oldLinkId = 0
         #get linkid
         linkIdStr = self.linkIdComboBox.currentText()
@@ -118,20 +135,15 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
 
         self.info["roadName"] = roadName
 
-        startNode = self.startNode.text()
-        if startNode.isdigit() is False:
-            msgBox.setText("startNode is invalid. It must be a number.")
+        startNode = self.startNode.currentText()
+        endNode = self.endNode.currentText()
+
+        if startNode == endNode:
+            msgBox.setText("Start Node cannot be same as End Node. Please enter different node IDs.")
             msgBox.exec_()
             return
 
-        self.info["startingNode"] = int(startNode)       
-
-        endNode = self.endNode.text()
-        if endNode.isdigit() is False:
-            msgBox.setText("endNode is invalid. It must be a number.")
-            msgBox.exec_()
-            return
-
+        self.info["startingNode"] = int(startNode)
         self.info["endingNode"] = int(endNode)
 
 

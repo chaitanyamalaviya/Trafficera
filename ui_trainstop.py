@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_trainstop.ui'
 #
-# Created: Mon May 18 14:41:15 2015
+# Created: Tue May 26 15:37:16 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!

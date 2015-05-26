@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_linkmanager.ui'
 #
-# Created: Wed May 20 14:36:54 2015
+# Created: Tue May 26 15:36:43 2015
 #      by: PyQt4 UI code generator 4.10
 #
 # WARNING! All changes made in this file will be lost!
@@ -27,7 +27,7 @@ class Ui_LinkManager(object):
     def setupUi(self, LinkManager):
         LinkManager.setObjectName(_fromUtf8("LinkManager"))
         LinkManager.setEnabled(True)
-        LinkManager.resize(431, 462)
+        LinkManager.resize(438, 462)
         font = QtGui.QFont()
         font.setFamily(_fromUtf8("Tahoma"))
         font.setPointSize(13)
@@ -81,13 +81,6 @@ class Ui_LinkManager(object):
         self.tagsLink = QtGui.QTextEdit(self.attributeGroup)
         self.tagsLink.setGeometry(QtCore.QRect(80, 160, 321, 71))
         self.tagsLink.setObjectName(_fromUtf8("tagsLink"))
-        self.startNode = QtGui.QLineEdit(self.attributeGroup)
-        self.startNode.setGeometry(QtCore.QRect(80, 37, 111, 21))
-        font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Times New Roman"))
-        font.setPointSize(11)
-        self.startNode.setFont(font)
-        self.startNode.setObjectName(_fromUtf8("startNode"))
         self.startNodeLabel = QtGui.QLabel(self.attributeGroup)
         self.startNodeLabel.setGeometry(QtCore.QRect(7, 28, 67, 41))
         font = QtGui.QFont()
@@ -102,13 +95,6 @@ class Ui_LinkManager(object):
         font.setPointSize(11)
         self.endNodeLabel.setFont(font)
         self.endNodeLabel.setObjectName(_fromUtf8("endNodeLabel"))
-        self.endNode = QtGui.QLineEdit(self.attributeGroup)
-        self.endNode.setGeometry(QtCore.QRect(283, 38, 121, 23))
-        font = QtGui.QFont()
-        font.setFamily(_fromUtf8("Times New Roman"))
-        font.setPointSize(11)
-        self.endNode.setFont(font)
-        self.endNode.setObjectName(_fromUtf8("endNode"))
         self.id = QtGui.QLineEdit(self.attributeGroup)
         self.id.setGeometry(QtCore.QRect(80, 10, 111, 23))
         font = QtGui.QFont()
@@ -157,7 +143,12 @@ class Ui_LinkManager(object):
         self.roadType.addItem(_fromUtf8(""))
         self.roadType.addItem(_fromUtf8(""))
         self.roadType.addItem(_fromUtf8(""))
-        self.roadType.addItem(_fromUtf8(""))
+        self.startNode = QtGui.QComboBox(self.attributeGroup)
+        self.startNode.setGeometry(QtCore.QRect(80, 40, 111, 22))
+        self.startNode.setObjectName(_fromUtf8("startNode"))
+        self.endNode = QtGui.QComboBox(self.attributeGroup)
+        self.endNode.setGeometry(QtCore.QRect(280, 40, 121, 22))
+        self.endNode.setObjectName(_fromUtf8("endNode"))
         self.titleLabel = QtGui.QLabel(LinkManager)
         self.titleLabel.setGeometry(QtCore.QRect(160, 20, 123, 17))
         font = QtGui.QFont()
@@ -225,7 +216,6 @@ class Ui_LinkManager(object):
         self.roadType.setItemText(3, _translate("LinkManager", "Ramp", None))
         self.roadType.setItemText(4, _translate("LinkManager", "Roundabout", None))
         self.roadType.setItemText(5, _translate("LinkManager", "Access", None))
-        self.roadType.setItemText(6, _translate("LinkManager", "Freeway", None))
         self.titleLabel.setText(_translate("LinkManager", "LINK MANAGER", None))
         self.linkGroupBox.setTitle(_translate("LinkManager", "Links", None))
         self.linkIdLabel.setText(_translate("LinkManager", "LinkId*", None))

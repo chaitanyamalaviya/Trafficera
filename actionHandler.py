@@ -58,6 +58,7 @@ class ActionHandler():
         #addType
         ElementTree.SubElement(node, 'node_type').text = str(nodeData["nodeType"])
         #addTrafficLightId
+
         ElementTree.SubElement(node, 'traffic_light_id').text = str(nodeData["trafficLightID"])
         #addTags
         ElementTree.SubElement(node,'tags').text = str(nodeData["tags"])
@@ -233,37 +234,38 @@ class ActionHandler():
             info["trafficLightID"] = selectedNode.find("traffic_light_id").text
             info["tags"] = selectedNode.find("tags").text
 
-        turningGroups = selectedNode.find("turning_groups")
+            turningGroups = selectedNode.find("turning_groups")
 
-        turningGroup = turningGroups.findall("turning_group")
+            turningGroup = turningGroups.findall("turning_group")
 
-        info["turningGroup"] = []
-        info["turningPath"] = []
+            info["turningGroup"] = []
+            info["turningPath"] = []
 
-        if turningGroup:
-            # msgBox = QtGui.QMessageBox()
-            # msgBox.setText(turningGroup[1].find("id").text)
-            # msgBox.exec_()
-            # return
-            for tG in turningGroup:
+            if turningGroup:
+                # msgBox = QtGui.QMessageBox()
+                # msgBox.setText(turningGroup[1].find("id").text)
+                # msgBox.exec_()
+                # return
+                for tG in turningGroup:
 
-                if tG.find("tags") is not None:
-                    tags = tG.find("tags").text
-                else:
-                    tags = ""
-                info["turningGroup"].append([tG.find("id").text,tG.find("from_link").text,tG.find("to_link").text,tG.find("phase").text,tG.find("rules").text,tG.find("visibility").text, tags])
-                # turningPaths = turningGroups.findall("TurningPath")
-                # if turningPaths:
-                for tP in selectedNode.iter('turning_path'):
-                    if tP.find("group_id").text == tG.find("id").text:
-                        if tP.find("tags") is not None:
-                            tags1 = tP.find("tags").text
-                        else:
-                            tags1 = ""
-                        info["turningPath"].append([tP.find("group_id").text,tP.find("id").text,tP.find("from_lane").text,tP.find("to_lane").text,tP.find("max_speed").text, tags1])
+                    if tG.find("tags") is not None:
+                        tags = tG.find("tags").text
+                    else:
+                        tags = ""
+                    info["turningGroup"].append([tG.find("id").text,tG.find("from_link").text,tG.find("to_link").text,tG.find("phase").text,tG.find("rules").text,tG.find("visibility").text, tags])
+                    # turningPaths = turningGroups.findall("TurningPath")
+                    # if turningPaths:
+                    for tP in selectedNode.iter('turning_path'):
+                        if tP.find("group_id").text == tG.find("id").text:
+                            if tP.find("tags") is not None:
+                                tags1 = tP.find("tags").text
+                            else:
+                                tags1 = ""
+                            info["turningPath"].append([tP.find("group_id").text,tP.find("id").text,tP.find("from_lane").text,tP.find("to_lane").text,tP.find("max_speed").text, tags1])
 
             return info
-        return None    
+
+        return None
 
 
     def getLinkList(self):
@@ -291,7 +293,8 @@ class ActionHandler():
                 linkName = link.find("road_name").text
                 startNode = int(link.find("from_node").text)
                 endNode = int(link.find("to_node").text)
-                listLinks[linkId] = [linkId, linkName, startNode, endNode]
+                tags = link.find("tags").text
+                listLinks[linkId] = [linkId, linkName, startNode, endNode, tags]
         return listLinks
 
     def manageLink(self, data):
@@ -1401,7 +1404,7 @@ class ActionHandler():
             attrs = feature.attributes()
             ids[attrs[1]] = attrs[1]
         # delete inside components
-        layers = [self.getLayer(TYPE.LANEEDGE), self.getLayer(TYPE.LANE), self.getLayer(TYPE.CROSSING), self.getLayer(TYPE.BUSSTOP)]
+        layers = [self.getLayer(TYPE.LANEEDGE), self.getLayer(TYPE.LANE), self.getLayer(TYPE.CROSSING), self.getLayer(TYPE.BUSSTOP),self.getLayer(TYPE.TRAINSTOP)]
         for layer in layers:
             delete_feature_ids = []
             for feature in layer.getFeatures():

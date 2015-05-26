@@ -155,12 +155,12 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
 
         id = self.id.text()
         if id.isdigit() is False:
-            msgBox.setText("ID is invalid. It must be a number.")
+            msgBox.setText("BusStop ID is invalid. It must be a number.")
             msgBox.exec_()
             return
 
         if len(id) > 5 :
-            msgBox.setText("BusStopId is beyond range. Enter a shorter BusStopID.")
+            msgBox.setText("BusStop ID is beyond range. Enter a shorter BusStopID.")
             msgBox.exec_()
             return
 
@@ -187,16 +187,40 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
             msgBox.setText("Length is invalid. It must be a number.")
             msgBox.exec_()
             return
-        self.info["length"] = int(length)
+        elif int(length)>500:
+            msgBox.setText("Length of bus stop is beyond range. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
+        elif length is None:
+            msgBox.setText("Length cannot be empty. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
+        self.info["length"] = float(length)
 
         busstopCode = self.busstopCode.text()
         if busstopCode.isdigit() is False:
             msgBox.setText("Busstop Code is invalid. It must be a number.")
             msgBox.exec_()
             return
+        elif len(busstopCode)>10:
+            msgBox.setText("Busstop Code cannot be longer than 10 digits. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
+        elif busstopCode is None:
+            msgBox.setText("Busstop Code cannot be empty. Please enter an appropriate value.")
+            msgBox.exec_()
+            return
 
-        self.info["busstopCode"] = int(busstopCode)
+        self.info["busstopCode"] = busstopCode
 
+        if len(self.name.text())>20:
+            msgBox.setText("Busstop Name cannot be longer than 20 characters. Please enter an appropriate name.")
+            msgBox.exec_()
+            return
+        elif self.name.text is None:
+            msgBox.setText("Busstop Name cannot be empty. Please enter an appropriate name.")
+            msgBox.exec_()
+            return
         self.info["name"] = self.name.text()
 
         if self.isTerminal.isChecked():

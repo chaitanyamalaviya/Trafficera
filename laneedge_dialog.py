@@ -51,13 +51,15 @@ class LaneEdgeDialog(QtGui.QDialog, Ui_LaneEdge):
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
     def update(self):
-        self.errorMessage.setText("")
+        msgBox = QtGui.QMessageBox()
         self.info = {}
 
         laneNumber = self.laneNumber.text()
         if laneNumber.isdigit() is False:
-            self.errorMessage.setText("laneNumber is invalid. It must be a number.")
+            msgBox.setText("laneNumber is invalid. It must be a number.")
+            msgBox.exec_()
             return
+
         self.info["laneNumber"] = int(laneNumber)
 
         self.info["segmentId"] = int(self.segmentId.text())

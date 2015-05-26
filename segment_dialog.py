@@ -232,8 +232,8 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
 
-        for Segment in root.iter('segment'):
-            segmentid = Segment.find('id').text
+        for segment in root.iter('segment'):
+            segmentid = segment.find('id').text
             seglist.append(segmentid)
 
 
@@ -248,12 +248,12 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             return
 
 
-        if len(id) > 10:
+        elif len(id) > 10:
             msgBox.setText("SegmentId is beyond range. Enter a shorter SegmentID.")
             msgBox.exec_()
             return                                                                         # unsigned long in data structure
 
-        if id in seglist and id != original_id:
+        elif id in seglist and id != original_id:
             msgBox.setText("Segment ID exists. Please enter another ID.")
             msgBox.exec_()
             return
@@ -280,6 +280,12 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         if sequence_no.isdigit() is False:
             self.errorMessage.setText("Sequence No is invalid. It must be a number.")
             return
+
+        elif len(sequence_no) > 3:
+            msgBox.setText("SequenceNo is beyond range. Enter a shorter sequence number.")
+            msgBox.exec_()
+            return
+
         self.info["sequence_no"] = int(sequence_no)
 
 
@@ -289,6 +295,11 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         capacity = self.capacity.text()
         if capacity.isdigit() is False:
             self.errorMessage.setText("Capacity is invalid. It must be a number.")
+            return
+
+        elif len(capacity) > 3:
+            msgBox.setText("Capacity is beyond range. Enter a shorter value for capacity.")
+            msgBox.exec_()
             return
         self.info["capacity"] = int(capacity)
 
@@ -324,6 +335,11 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         maxSpeed = self.maxSpeed.text()
         if maxSpeed.isdigit() is False:
             self.errorMessage.setText("maxSpeed is invalid. It must be a number.")
+            return
+
+        elif len(maxSpeed) > 3:
+            msgBox.setText("maxSpeed is beyond range. Enter a shorter value for speed.")
+            msgBox.exec_()
             return
         self.info["max_speed"] = int(maxSpeed)
 
