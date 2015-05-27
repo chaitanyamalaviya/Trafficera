@@ -890,22 +890,12 @@ class ActionHandler():
             lane = ElementTree.SubElement(laneParent, 'lane')
             ElementTree.SubElement(lane, 'id').text = str(data["id"])
             ElementTree.SubElement(lane, 'width').text = str(data["width"])
-            ElementTree.SubElement(lane, 'can_go_straight').text = str(data["can_go_straight"])
-            ElementTree.SubElement(lane, 'can_turn_left').text = str(data["can_turn_left"])
-            ElementTree.SubElement(lane, 'can_turn_right').text = str(data["can_turn_right"])
-            ElementTree.SubElement(lane, 'can_turn_on_red_signal').text = str(data["can_turn_on_red_signal"])
-            ElementTree.SubElement(lane, 'can_change_lane_left').text = str(data["can_change_lane_left"])
-            ElementTree.SubElement(lane, 'can_change_lane_right').text = str(data["can_change_lane_right"])
-            ElementTree.SubElement(lane, 'is_road_shoulder').text = str(data["is_road_shoulder"])
-            ElementTree.SubElement(lane, 'is_bicycle_lane').text = str(data["is_bicycle_lane"])
-            ElementTree.SubElement(lane, 'is_pedestrian_lane').text = str(data["is_pedestrian_lane"])
-            ElementTree.SubElement(lane, 'is_vehicle_lane').text = str(data["is_vehicle_lane"])
-            ElementTree.SubElement(lane, 'is_standard_bus_lane').text = str(data["is_standard_bus_lane"])
-            ElementTree.SubElement(lane, 'is_whole_day_bus_lane').text = str(data["is_whole_day_bus_lane"])
-            ElementTree.SubElement(lane, 'is_high_occupancy_vehicle_lane').text = str(data["is_high_occupancy_vehicle_lane"])
-            ElementTree.SubElement(lane, 'can_freely_park_here').text = str(data["can_freely_park_here"])
-            ElementTree.SubElement(lane, 'can_stop_here').text = str(data["can_stop_here"])
-            ElementTree.SubElement(lane, 'is_u_turn_allowed').text = str(data["is_u_turn_allowed"])
+            ElementTree.SubElement(lane, 'vehicle_mode').text = str(data["vehicle_mode"])
+            ElementTree.SubElement(lane, 'bus_lane').text = str(data["bus_lane"])
+            ElementTree.SubElement(lane, 'can_stop').text = str(data["can_stop"])
+            ElementTree.SubElement(lane, 'can_park').text = str(data["can_park"])
+            ElementTree.SubElement(lane, 'high_occ_veh').text = str(data["high_occ_veh"])
+            ElementTree.SubElement(lane, 'has_road_shoulder').text = str(data["has_road_shoulder"])
             ElementTree.SubElement(lane, 'tags').text = str(data["tags"])
 
             polyline = ElementTree.SubElement(lane, 'polyline')
@@ -949,22 +939,12 @@ class ActionHandler():
             return
         selectedLane.find("id").text = str(data["id"])
         selectedLane.find("width").text = str(data["width"])
-        selectedLane.find("can_go_straight").text = str(data["can_go_straight"])
-        selectedLane.find("can_turn_left").text = str(data["can_turn_left"])
-        selectedLane.find("can_turn_right").text = str(data["can_turn_right"])
-        selectedLane.find("can_turn_on_red_signal").text = str(data["can_turn_on_red_signal"])
-        selectedLane.find("can_change_lane_left").text = str(data["can_change_lane_left"])    
-        selectedLane.find("can_change_lane_right").text = str(data["can_change_lane_right"])   
-        selectedLane.find("is_road_shoulder").text = str(data["is_road_shoulder"])   
-        selectedLane.find("is_bicycle_lane").text = str(data["is_bicycle_lane"]) 
-        selectedLane.find("is_pedestrian_lane").text = str(data["is_pedestrian_lane"]) 
-        selectedLane.find("is_vehicle_lane").text = str(data["is_vehicle_lane"])
-        selectedLane.find("is_standard_bus_lane").text = str(data["is_standard_bus_lane"])
-        selectedLane.find("is_whole_day_bus_lane").text = str(data["is_whole_day_bus_lane"])
-        selectedLane.find("is_high_occupancy_vehicle_lane").text = str(data["is_high_occupancy_vehicle_lane"])
-        selectedLane.find("can_freely_park_here").text = str(data["can_freely_park_here"])
-        selectedLane.find("can_stop_here").text = str(data["can_stop_here"])
-        selectedLane.find("is_u_turn_allowed").text = str(data["is_u_turn_allowed"])
+        selectedLane.find("vehicle_mode").text = str(data["vehicle_mode"])
+        selectedLane.find("bus_lane").text = str(data["bus_lane"])
+        selectedLane.find("can_stop").text = str(data["can_stop"])
+        selectedLane.find("can_park").text = str(data["can_park"])
+        selectedLane.find("high_occ_veh").text = str(data["high_occ_veh"])
+        selectedLane.find("has_road_shoulder").text = str(data["has_road_shoulder"])
         selectedLane.find("tags").text = str(data["tags"])
 
     def getLane(self, feature):
@@ -994,38 +974,13 @@ class ActionHandler():
             info["segmentId"] = selectedSegmentId
             info["id"] = selectedLane.find("id").text
             info["width"] = selectedLane.find("width").text 
-            info["can_go_straight"] = selectedLane.find("can_go_straight").text
-            info["can_go_straight"] = info["can_go_straight"].strip().lower()  
-            info["can_turn_left"] = selectedLane.find("can_turn_left").text
-            info["can_turn_left"] = info["can_turn_left"].strip().lower()   
-            info["can_turn_right"] = selectedLane.find("can_turn_right").text
-            info["can_turn_right"] = info["can_turn_right"].strip().lower()  
-            info["can_turn_on_red_signal"] = selectedLane.find("can_turn_on_red_signal").text
-            info["can_turn_on_red_signal"] = info["can_turn_on_red_signal"].strip().lower()    
-            info["can_change_lane_left"] = selectedLane.find("can_change_lane_left").text
-            info["can_change_lane_left"] = info["can_change_lane_left"].strip().lower()   
-            info["can_change_lane_right"] = selectedLane.find("can_change_lane_right").text
-            info["can_change_lane_right"] = info["can_change_lane_right"].strip().lower()  
-            info["is_road_shoulder"] = selectedLane.find("is_road_shoulder").text
-            info["is_road_shoulder"] = info["is_road_shoulder"].strip().lower() 
-            info["is_bicycle_lane"] = selectedLane.find("is_bicycle_lane").text
-            info["is_bicycle_lane"] = info["is_bicycle_lane"].strip().lower() 
-            info["is_pedestrian_lane"] = selectedLane.find("is_pedestrian_lane").text
-            info["is_pedestrian_lane"] = info["is_pedestrian_lane"].strip().lower() 
-            info["is_vehicle_lane"] = selectedLane.find("is_vehicle_lane").text
-            info["is_vehicle_lane"] = info["is_vehicle_lane"].strip().lower() 
-            info["is_standard_bus_lane"] = selectedLane.find("is_standard_bus_lane").text
-            info["is_standard_bus_lane"] = info["is_standard_bus_lane"].strip().lower() 
-            info["is_whole_day_bus_lane"] = selectedLane.find("is_whole_day_bus_lane").text
-            info["is_whole_day_bus_lane"] = info["is_whole_day_bus_lane"].strip().lower() 
-            info["is_high_occupancy_vehicle_lane"] = selectedLane.find("is_high_occupancy_vehicle_lane").text
-            info["is_high_occupancy_vehicle_lane"] = info["is_high_occupancy_vehicle_lane"].strip().lower() 
-            info["can_freely_park_here"] = selectedLane.find("can_freely_park_here").text
-            info["can_freely_park_here"] = info["can_freely_park_here"].strip().lower() 
-            info["can_stop_here"] = selectedLane.find("can_stop_here").text
-            info["can_stop_here"] = info["can_stop_here"].strip().lower() 
-            info["is_u_turn_allowed"] = selectedLane.find("is_u_turn_allowed").text
-            info["is_u_turn_allowed"] = info["is_u_turn_allowed"].strip().lower()
+            info["vehicle_mode"] = int(selectedLane.find("vehicle_mode").text)
+            info["bus_lane"] = int(selectedLane.find("bus_lane").text)
+            info["can_stop"] = int(selectedLane.find("can_stop").text)
+            info["can_park"] = int(selectedLane.find("can_park").text)
+            info["high_occ_veh"] = int(selectedLane.find("high_occ_veh").text)
+            info["has_road_shoulder"] = int(selectedLane.find("has_road_shoulder").text)
+
             if selectedLane.find("tags") is not None:
                 info["tags"] = selectedLane.find("tags").text
 
@@ -1097,7 +1052,7 @@ class ActionHandler():
         selectedSegmentId = int(attrs[0])
         selectedLaneEdgeNumber = int(attrs[1])
         #get info
-        roadNetwork = self.document.find('geospatial/road_network')
+        roadNetwork = self.document.find('road_network')
         linkParent = roadNetwork.find('links')
         segments = linkParent.findall('link/segments/segment')
         selectedLaneEdge = None
@@ -1212,22 +1167,12 @@ class ActionHandler():
             laneId = "%s%s"%(str(selectedSegmentId), str(num))
             ElementTree.SubElement(lane, 'id').text = laneId
             ElementTree.SubElement(lane, 'width').text = "100"
-            ElementTree.SubElement(lane, 'can_go_straight').text = "false"
-            ElementTree.SubElement(lane, 'can_turn_left').text = "false"
-            ElementTree.SubElement(lane, 'can_turn_right').text = "false"
-            ElementTree.SubElement(lane, 'can_turn_on_red_signal').text = "false"
-            ElementTree.SubElement(lane, 'can_change_lane_left').text = "false"
-            ElementTree.SubElement(lane, 'can_change_lane_right').text = "false"
-            ElementTree.SubElement(lane, 'is_road_shoulder').text = "false"
-            ElementTree.SubElement(lane, 'is_bicycle_lane').text = "false"
-            ElementTree.SubElement(lane, 'is_pedestrian_lane').text = "false"
-            ElementTree.SubElement(lane, 'is_vehicle_lane').text = "true"
-            ElementTree.SubElement(lane, 'is_standard_bus_lane').text = "false"
-            ElementTree.SubElement(lane, 'is_whole_day_bus_lane').text = "false"
-            ElementTree.SubElement(lane, 'is_high_occupancy_vehicle_lane').text = "false"
-            ElementTree.SubElement(lane, 'can_freely_park_here').text = "false"
-            ElementTree.SubElement(lane, 'can_stop_here').text = "false"
-            ElementTree.SubElement(lane, 'is_u_turn_allowed').text = "false"
+            ElementTree.SubElement(lane, 'vehicle_mode').text = '0010000'
+            ElementTree.SubElement(lane, 'bus_lane').text = str(0)
+            ElementTree.SubElement(lane, 'can_stop').text = str(0)
+            ElementTree.SubElement(lane, 'can_park').text = str(0)
+            ElementTree.SubElement(lane, 'high_occ_veh').text = str(0)
+            ElementTree.SubElement(lane, 'has_road_shoulder').text = str(0)
             ElementTree.SubElement(lane, 'tags').text = ""
             #add shape
             coordinates = []
@@ -1307,28 +1252,13 @@ class ActionHandler():
     def delete(self, features):
         if self.active_layer_id == TYPE.MULNODE:
             self.deleteMulNode(features)
+        elif self.active_layer_id == TYPE.LINK:
+            self.deleteLink(features)
         elif self.active_layer_id == TYPE.SEGMENT:
             self.deleteSegment(features)
         else:
             self.deleteSegmentComponents(features)
 
-    # def deleteUniNode(self, features):
-    #     ids = {}
-    #     # delete from shapefile
-    #     for feature in features:
-    #         self.active_layer.dataProvider().deleteFeatures([feature.id()])
-    #         attrs = feature.attributes()
-    #         ids[int(attrs[0])] = True
-    #     # delete data dependency
-    #     roadNetwork = self.document.find('geospatial/road_network')
-    #     nodes = roadNetwork.find('Nodes')
-    #     uniNodeParent = nodes.find('UniNodes')
-    #     uniNodes = uniNodeParent.findall('UniNode')
-    #     if uniNodes is not None:
-    #         for uniNode in uniNodes:
-    #             nodeId = int(uniNode.find("nodeID").text)
-    #             if nodeId in ids:
-    #                 uniNodeParent.remove(uniNode)
 
     def deleteMulNode(self, features):
         ids = {}
@@ -1339,13 +1269,26 @@ class ActionHandler():
             attrs = feature.attributes()
             ids[int(attrs[0])] = True
         roadNetwork = self.document.find('road_network')
-        nodesParent = roadNetwork.find('nodes')
-        nodes = nodesParent.find('node')
-        if nodes is not None:
-            for node in nodes:
-                nodeId = int(node.find('id').text)
-                if nodeId==int(attrs[0]):
-                    nodesParent.remove(node)
+        nodeParent = roadNetwork.find('nodes')
+        for node in nodeParent.findall('node'):
+            nodeId = int(node.find('id').text)
+            if nodeId==int(attrs[0]):
+                nodeParent.remove(node)
+
+    def deleteLink(self,features):
+        ids = {}
+        # delete from shapefile
+        attrs=[]
+        for feature in features:
+            self.active_layer.dataProvider().deleteFeatures([feature.id()])
+            attrs = feature.attributes()
+            ids[int(attrs[0])] = True
+        roadNetwork = self.document.find('road_network')
+        linkParent = roadNetwork.find('links')
+        for link in linkParent.findall('link'):
+            linkId = int(link.find('id').text)
+            if linkId==int(attrs[0]):
+                linkParent.remove(link)
 
     def deleteSegmentComponents(self, features):                            #for busstop, crossing, laneedge
         ids = {}

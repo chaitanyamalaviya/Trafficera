@@ -50,127 +50,122 @@ class LaneDialog(QtGui.QDialog, Ui_Lane):
             self.wlineEdit.setText(str(self.info["width"]))
             self.tags.setText(str(self.info["tags"]))
 
-            if self.info["can_go_straight"] == "true":
-                self.can_go_straight.setCheckState(QtCore.Qt.Checked)
-            if self.info["can_turn_left"] == "true":
-                self.can_turn_left.setCheckState(QtCore.Qt.Checked)   
-            if self.info["can_turn_right"] == "true":
-                self.can_turn_right.setCheckState(QtCore.Qt.Checked)   
-            if self.info["can_turn_on_red_signal"] == "true":
-                self.can_turn_on_red_signal.setCheckState(QtCore.Qt.Checked)  
-            if self.info["can_change_lane_left"] == "true":
-                self.can_change_lane_left.setCheckState(QtCore.Qt.Checked)  
-            if self.info["can_change_lane_right"] == "true":
-                self.can_change_lane_right.setCheckState(QtCore.Qt.Checked)   
-            if self.info["is_road_shoulder"] == "true":
-                self.is_road_shoulder.setCheckState(QtCore.Qt.Checked)     
-            if self.info["is_bicycle_lane"] == "true":
-                self.is_bicycle_lane.setCheckState(QtCore.Qt.Checked)  
-            if self.info["is_pedestrian_lane"] == "true":
-                self.is_pedestrian_lane.setCheckState(QtCore.Qt.Checked)  
-            if self.info["is_vehicle_lane"] == "true":
-                self.is_vehicle_lane.setCheckState(QtCore.Qt.Checked)  
-            if self.info["is_standard_bus_lane"] == "true":
-                self.is_standard_bus_lane.setCheckState(QtCore.Qt.Checked)  
-            if self.info["is_whole_day_bus_lane"] == "true":
-                self.is_whole_day_bus_lane.setCheckState(QtCore.Qt.Checked) 
-            if self.info["is_high_occupancy_vehicle_lane"] == "true":
-                self.is_high_occupancy_vehicle_lane.setCheckState(QtCore.Qt.Checked) 
-            if self.info["can_freely_park_here"] == "true":
-                self.can_freely_park_here.setCheckState(QtCore.Qt.Checked) 
-            if self.info["can_stop_here"] == "true":
-                self.can_stop_here.setCheckState(QtCore.Qt.Checked) 
-            if self.info["is_u_turn_allowed"] == "true":
-                self.is_u_turn_allowed.setCheckState(QtCore.Qt.Checked) 
+            mode = bin(self.info["vehicle_mode"])
+            if mode[2]=='1':
+                self.pedestrian.setCheckState(QtCore.Qt.Checked)
+            if mode[3]=='1':
+                self.bicycle.setCheckState(QtCore.Qt.Checked)
+            if mode[4]=='1':
+                self.car.setCheckState(QtCore.Qt.Checked)
+            if mode[5]=='1':
+                self.van.setCheckState(QtCore.Qt.Checked)
+            if mode[6]=='1':
+                self.truck.setCheckState(QtCore.Qt.Checked)
+            if mode[7]=='1':
+                self.bus.setCheckState(QtCore.Qt.Checked)
+            if mode[8]=='1':
+                self.taxi.setCheckState(QtCore.Qt.Checked)
+
+            if self.info["can_stop"]==1:
+                self.can_stop.setCheckState(QtCore.Qt.Checked)
+
+            if self.info["can_park"]==1:
+                self.can_park.setCheckState(QtCore.Qt.Checked)
+
+            if self.info["high_occ_veh"]==1:
+                self.high_occ_veh.setCheckState(QtCore.Qt.Checked)
+
+            if self.info["has_road_shoulder"]==1:
+                self.has_road_shoulder.setCheckState(QtCore.Qt.Checked)
+
+            self.bus_lane.setCurrentIndex(self.info["bus_lane"])
+
         else:
             self.actionButton.setText("ADD")
             self.width.hide()
         QtCore.QObject.connect(self.actionButton, QtCore.SIGNAL('clicked(bool)'), self.update)
 
     def update(self):
-        self.errorMessage.setText("")
-        self.info = {}
 
+        self.info = {}
+        msgBox = QtGui.QMessageBox()
         id = self.id.text()
         if id.isdigit() is False:
-            self.errorMessage.setText("id is invalid. It must be a number.")
+            msgBox.setText("LaneID is invalid. It must be a number.")
+            msgBox.exec_()
             return
+
         self.info["id"] = int(id)
 
         if self.actionButton.text() == "SAVE":
             width = self.wlineEdit.text()
             if width.isdigit() is False:
-                self.errorMessage.setText("Width is invalid. It must be a number.")
+                msgBox.setText("Width is invalid. It must be a number.")
+                msgBox.exec_()
                 return
             self.info["width"] = int(width)
-
         else:
             self.info["width"] = int(self.width.text())
 
-        if self.can_go_straight.isChecked():
-            self.info["can_go_straight"] = "true"
+        if self.pedestrian.isChecked():
+            pedestrian = 1
         else:
-            self.info["can_go_straight"] = "false"                        
-        if self.can_turn_left.isChecked():
-            self.info["can_turn_left"] = "true"
+            pedestrian = 0
+
+        if self.bicycle.isChecked():
+            bicycle = 1
         else:
-            self.info["can_turn_left"] = "false"  
-        if self.can_turn_right.isChecked():
-            self.info["can_turn_right"] = "true"
+            bicycle = 0
+
+        if self.car.isChecked():
+            car = 1
         else:
-            self.info["can_turn_right"] = "false"  
-        if self.can_turn_on_red_signal.isChecked():
-            self.info["can_turn_on_red_signal"] = "true"
+            car = 0
+
+        if self.van.isChecked():
+            van = 1
         else:
-            self.info["can_turn_on_red_signal"] = "false"  
-        if self.can_change_lane_left.isChecked():
-            self.info["can_change_lane_left"] = "true"
+            van = 0
+
+        if self.truck.isChecked():
+            truck = 1
         else:
-            self.info["can_change_lane_left"] = "false" 
-        if self.can_change_lane_right.isChecked():
-            self.info["can_change_lane_right"] = "true"
+            truck = 0
+
+        if self.bus.isChecked():
+            bus = 1
         else:
-            self.info["can_change_lane_right"] = "false" 
-        if self.is_road_shoulder.isChecked():
-            self.info["is_road_shoulder"] = "true"
+            bus = 0
+
+        if self.taxi.isChecked():
+            taxi = 1
         else:
-            self.info["is_road_shoulder"] = "false" 
-        if self.is_bicycle_lane.isChecked():
-            self.info["is_bicycle_lane"] = "true"
+            taxi = 0
+
+        vehicle_mode = pow(2,6)*pedestrian+pow(2,5)*bicycle+pow(2,4)*car+pow(2,3)*van+pow(2,2)*truck+pow(2,1)*bus+pow(2,0)*taxi
+        self.info["vehicle_mode"] = vehicle_mode
+
+        self.info["bus_lane"] = self.bus_lane.currentIndex()
+
+        if self.can_stop.isChecked():
+            self.info["can_stop"] = 1
         else:
-            self.info["is_bicycle_lane"] = "false" 
-        if self.is_pedestrian_lane.isChecked():
-            self.info["is_pedestrian_lane"] = "true"
+            self.info["can_stop"] = 0
+
+        if self.can_park.isChecked():
+            self.info["can_park"] = 1
         else:
-            self.info["is_pedestrian_lane"] = "false" 
-        if self.is_vehicle_lane.isChecked():
-            self.info["is_vehicle_lane"] = "true"
+            self.info["can_park"] = 0
+
+        if self.high_occ_veh.isChecked():
+            self.info["high_occ_veh"] = 1
         else:
-            self.info["is_vehicle_lane"] = "false" 
-        if self.is_standard_bus_lane.isChecked():
-            self.info["is_standard_bus_lane"] = "true"
+            self.info["high_occ_veh"] = 0
+
+        if self.has_road_shoulder.isChecked():
+            self.info["has_road_shoulder"] = 1
         else:
-            self.info["is_standard_bus_lane"] = "false" 
-        if self.is_whole_day_bus_lane.isChecked():
-            self.info["is_whole_day_bus_lane"] = "true"
-        else:
-            self.info["is_whole_day_bus_lane"] = "false" 
-        if self.is_high_occupancy_vehicle_lane.isChecked():
-            self.info["is_high_occupancy_vehicle_lane"] = "true"
-        else:
-            self.info["is_high_occupancy_vehicle_lane"] = "false" 
-        if self.can_freely_park_here.isChecked():
-            self.info["can_freely_park_here"] = "true"
-        else:
-            self.info["can_freely_park_here"] = "false" 
-        if self.can_stop_here.isChecked():
-            self.info["can_stop_here"] = "true"
-        else:
-            self.info["can_stop_here"] = "false" 
-        if self.is_u_turn_allowed.isChecked():
-            self.info["is_u_turn_allowed"] = "true"
-        else:
-            self.info["is_u_turn_allowed"] = "false" 
+            self.info["has_road_shoulder"] = 0
 
         self.info["segmentId"] = int(self.segmentId.text())
 
