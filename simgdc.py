@@ -371,7 +371,9 @@ class SimGDC:
             if eleData is None:
                 QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "No data for that feature.")
                 return
-            self.featuredlg = MultiNodeDialog()    
+            self.featuredlg = MultiNodeDialog()
+        elif typeId == TYPE.LINK:
+            self.manageLinks()
         elif typeId == TYPE.SEGMENT:
             responseInfo = handler.getSegment(selected_features[0])
             if responseInfo is None:
@@ -411,9 +413,10 @@ class SimGDC:
                 return
             self.featuredlg = LaneEdgeDialog()
 
-        self.featuredlg.setInfo(eleData)
-        self.featuredlg.show()
-        self.featuredlg.exec_()
+        if typeId!=TYPE.LINK:
+            self.featuredlg.setInfo(eleData)
+            self.featuredlg.show()
+            self.featuredlg.exec_()
 
         if self.featuredlg is not None and self.featuredlg.isModified is True:
             if typeId == TYPE.MULNODE:

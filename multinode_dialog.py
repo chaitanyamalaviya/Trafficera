@@ -267,25 +267,30 @@ class MultiNodeDialog(QtGui.QDialog, Ui_MultiNode):
 
 
     def setLinklist(self):
-
+        linkList = []
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
         for link in root.iter('link'):
-            self.fromLink.addItem(link.find('id').text)
-            self.toLink.addItem(link.find('id').text)
+            linkList.append(int(link.find('id').text))
+        for id in sorted(linkList):
+            self.fromLink.addItem(str(id))
+            self.toLink.addItem(str(id))
         self.fromLink.setCurrentIndex(0)
         self.toLink.setCurrentIndex(0)
 
     def setLanelist(self):
+        laneList = []
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
         for lane in root.iter('lane'):
-            self.fromLane.addItem(lane.find('id').text)
-            self.toLane.addItem(lane.find('id').text)
+            laneList.append(int(lane.find('id').text))
+        for id in sorted(laneList):
+            self.fromLane.addItem(str(id))
+            self.toLane.addItem(str(id))
         self.fromLane.setCurrentIndex(0)
         self.toLane.setCurrentIndex(0)
 

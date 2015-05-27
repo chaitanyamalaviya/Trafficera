@@ -56,12 +56,15 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         # for Link in root.iter('Link'):
         #     linkid = Link.find('linkID').text
         #     self.listLinks.append(linkid)
-
+        sortedList = []
+        segList = []
+        laneList = []
         self.listLinks = links
         self.linkidcomboBox.clear()
         for linkId in self.listLinks.iterkeys():
-            self.linkidcomboBox.addItem(str(linkId))
-
+            sortedList.append(int(linkId))
+        for id in sorted(sortedList):
+            self.linkIdComboBox.addItem(str(id))
 
         self.fromSectioncomboBox.clear()
         self.toSectioncomboBox.clear()
@@ -69,15 +72,16 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         self.toLanecomboBox.clear()
 
         for segment in root.iter('segment'):
-            segmentID = segment.find('id').text
-            self.fromSectioncomboBox.addItem(str(segmentID))
-            self.toSectioncomboBox.addItem(str(segmentID))
+            segList.append(int(segment.find('id').text))
+        for id in sorted(segList):
+            self.fromSectioncomboBox.addItem(str(id))
+            self.toSectioncomboBox.addItem(str(id))
 
         for lane in root.iter('lane'):
-            laneID = lane.find('id').text
-            self.fromLanecomboBox.addItem(str(laneID))
-            self.toLanecomboBox.addItem(str(laneID))
-
+            laneList.append(int(lane.find('id').text))
+        for id in sorted(laneList):
+            self.fromLanecomboBox.addItem(str(id))
+            self.toLanecomboBox.addItem(str(id))
 
 
     def setInfo(self, info):
@@ -259,22 +263,6 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
             return
 
         self.info["id"] = int(id)
-
-        # aimsunId = self.aimsunId.text()
-        # if aimsunId.isdigit() is False:
-        #     self.errorMessage.setText("aimsunId is invalid. It must be a number.")
-        #     return
-        # self.info["aimsunId"] = int(aimsunId)
-
-        # startNode = self.startNode.text()
-        # if startNode.isdigit() is False:
-        #     self.errorMessage.setText("startNode is invalid. It must be a number.")
-        #     return
-        #
-        # endNode = self.endNode.text()
-        # if endNode.isdigit() is False:
-        #     self.errorMessage.setText("endNode is invalid. It must be a number.")
-        #     return
 
         sequence_no = self.sequenceno.text()
         if sequence_no.isdigit() is False:

@@ -54,13 +54,15 @@ class TrainstopDialog(QtGui.QDialog, Ui_TrainStop):
         return listSegments
 
     def setSegmentList(self):
-
+        segList = []
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
         for segment in root.iter('segment'):
-            self.segmentIDcomboBox.addItem(segment.find('id').text)
+            segList.append(int(segment.find('id').text))
+        for id in sorted(segList):
+            self.segmentIDcomboBox.addItem(str(id))
 
     def addSegment(self):
         segments = self.segmentsListLineEdit.text()
@@ -150,7 +152,7 @@ class TrainstopDialog(QtGui.QDialog, Ui_TrainStop):
         self.info["segments"] = self.segmentsListLineEdit.text().split(',')
 
 
-        if self.platform_name.text() is None:
+        if not self.platform_name.text():
             msgBox.setText("Platform Name cannot be empty. Please enter an appropriate value.")
             msgBox.exec_()
             return
@@ -161,7 +163,7 @@ class TrainstopDialog(QtGui.QDialog, Ui_TrainStop):
         self.info["platform_name"] = self.platform_name.text()
 
 
-        if self.station_name.text() is None:
+        if not self.station_name.text():
             msgBox.setText("Station Name cannot be empty. Please enter an appropriate value.")
             msgBox.exec_()
             return
@@ -171,7 +173,7 @@ class TrainstopDialog(QtGui.QDialog, Ui_TrainStop):
             return
         self.info["station_name"] = self.station_name.text()
 
-        if self.type.text() is None:
+        if not self.type.text():
             msgBox.setText("Type cannot be empty. Please enter an appropriate value.")
             msgBox.exec_()
             return

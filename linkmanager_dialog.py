@@ -128,7 +128,7 @@ class LinkManagerDialog(QtGui.QDialog, Ui_LinkManager):
                 return
 
         roadName = self.roadName.text()
-        if roadName == "":
+        if not roadName:
             msgBox.setText("roadName can not be empty.")
             msgBox.exec_()
             return

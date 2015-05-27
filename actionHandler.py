@@ -1333,6 +1333,7 @@ class ActionHandler():
     def deleteMulNode(self, features):
         ids = {}
         # delete from shapefile
+        attrs=[]
         for feature in features:
             self.active_layer.dataProvider().deleteFeatures([feature.id()])
             attrs = feature.attributes()
@@ -1342,8 +1343,8 @@ class ActionHandler():
         nodes = nodesParent.find('node')
         if nodes is not None:
             for node in nodes:
-                nodeId = int(node.find("id").text)
-                if nodeId in ids:
+                nodeId = int(node.find('id').text)
+                if nodeId==int(attrs[0]):
                     nodesParent.remove(node)
 
     def deleteSegmentComponents(self, features):                            #for busstop, crossing, laneedge

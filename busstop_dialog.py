@@ -56,13 +56,15 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
         return listSegments
 
     def setSegmentList(self):
-
+        segList = []
         layerfi = iface.activeLayer().dataProvider().dataSourceUri()
         (myDirectory, nameFile) = os.path.split(layerfi)
         tree = ElementTree.parse(myDirectory + '/data.xml')
         root = tree.getroot()
         for segment in root.iter('segment'):
-            self.segmentIDcomboBox.addItem(segment.find('id').text)
+            segList.append(int(segment.find('id').text))
+        for id in sorted(segList):
+            self.segmentIDcomboBox.addItem(str(id))
 
     def setSegmentId(self, segmentId):
         self.segmentIDcomboBox.setCurrentIndex(self.getSegmentList().index(str(segmentId)))
@@ -191,7 +193,7 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
             msgBox.setText("Length of bus stop is beyond range. Please enter an appropriate value.")
             msgBox.exec_()
             return
-        elif length is None:
+        elif not length:
             msgBox.setText("Length cannot be empty. Please enter an appropriate value.")
             msgBox.exec_()
             return
@@ -206,7 +208,7 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
             msgBox.setText("Busstop Code cannot be longer than 10 digits. Please enter an appropriate value.")
             msgBox.exec_()
             return
-        elif busstopCode is None:
+        elif not busstopCode:
             msgBox.setText("Busstop Code cannot be empty. Please enter an appropriate value.")
             msgBox.exec_()
             return
@@ -217,7 +219,7 @@ class BusstopDialog(QtGui.QDialog, Ui_Busstop):
             msgBox.setText("Busstop Name cannot be longer than 20 characters. Please enter an appropriate name.")
             msgBox.exec_()
             return
-        elif self.name.text is None:
+        elif not self.name.text:
             msgBox.setText("Busstop Name cannot be empty. Please enter an appropriate name.")
             msgBox.exec_()
             return
