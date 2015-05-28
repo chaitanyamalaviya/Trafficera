@@ -34,7 +34,7 @@ class XmlToShapefile(QObject):
         attr = [nodeId]
         turningPaths = mulnode.find("turning_path")
 
-        self.writer.addPoint(SHTYPE.MULNODE, point, attr)
+        self.writer.addPoint(SHTYPE.NODE, point, attr)
 
     def parseLane(self, segmentId, lane):
         laneId = lane.find("id").text

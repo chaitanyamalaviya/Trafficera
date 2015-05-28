@@ -41,7 +41,7 @@ class ShapefileToXml(QObject):
 
 
     def updateNodes(self, nodes):
-        nodeCoordinates = self.reader.getNodes(SHTYPE.MULNODE)
+        nodeCoordinates = self.reader.getNodes(SHTYPE.NODE)
         for node in nodes:
             nodeId = int(node.find("id").text)
             if nodeId in nodeCoordinates:

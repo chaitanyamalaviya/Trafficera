@@ -1164,7 +1164,7 @@ class ActionHandler():
 
         for num in range(0, nLane):
             lane = ElementTree.SubElement(lanes, 'lane')
-            laneId = "%s%s"%(str(selectedSegmentId), str(num))
+            laneId = "%s%s"%(str(selectedSegmentId), str(nLane-num-1))
             ElementTree.SubElement(lane, 'id').text = laneId
             ElementTree.SubElement(lane, 'width').text = "100"
             ElementTree.SubElement(lane, 'vehicle_mode').text = '0010000'
@@ -1250,12 +1250,18 @@ class ActionHandler():
             laneLayer.dataProvider().addFeatures([feat])
 
     def delete(self, features):
-        if self.active_layer_id == TYPE.MULNODE:
+        if self.active_layer_id == TYPE.NODE:
             self.deleteMulNode(features)
         elif self.active_layer_id == TYPE.LINK:
             self.deleteLink(features)
+        elif self.active_layer_id == TYPE.BUSSTOP:
+            self.deleteBusStop(features)
+        elif self.active_layer_id == TYPE.TRAINSTOP:
+            self.deleteTrainStop(features)
         elif self.active_layer_id == TYPE.SEGMENT:
             self.deleteSegment(features)
+        elif self.active_layer_id == TYPE.LANE:
+            self.deleteLane(features)
         else:
             self.deleteSegmentComponents(features)
 
@@ -1275,6 +1281,34 @@ class ActionHandler():
             if nodeId==int(attrs[0]):
                 nodeParent.remove(node)
 
+    def deleteBusStop(self, features):
+        ids = {}
+        # delete from shapefile
+        attrs=[]
+        for feature in features:
+            self.active_layer.dataProvider().deleteFeatures([feature.id()])
+            attrs = feature.attributes()
+            ids[int(attrs[1])] = True
+        roadNetwork = self.document.find('road_network')
+        pt_stops = roadNetwork.find('pt_stops')
+        for busstop in pt_stops.findall('bus_stop'):
+            if int(busstop.find('id').text)==int(attrs[1]):
+                pt_stops.remove(busstop)
+
+    def deleteTrainStop(self, features):
+        ids = {}
+        # delete from shapefile
+        attrs=[]
+        for feature in features:
+            self.active_layer.dataProvider().deleteFeatures([feature.id()])
+            attrs = feature.attributes()
+            ids[int(attrs[1])] = True
+        roadNetwork = self.document.find('road_network')
+        pt_stops = roadNetwork.find('pt_stops')
+        for trainstop in pt_stops.findall('train_stop'):
+            if int(trainstop.find('id').text)==int(attrs[1]):
+                pt_stops.remove(trainstop)
+
     def deleteLink(self,features):
         ids = {}
         # delete from shapefile
@@ -1289,6 +1323,24 @@ class ActionHandler():
             linkId = int(link.find('id').text)
             if linkId==int(attrs[0]):
                 linkParent.remove(link)
+
+    def deleteLane(self, features):
+        ids = {}
+        # delete from shapefile
+        attrs=[]
+        for feature in features:
+            self.active_layer.dataProvider().deleteFeatures([feature.id()])
+            attrs = feature.attributes()
+            ids[int(attrs[0])] = True
+        roadNetwork = self.document.find('road_network')
+        segmentParent = roadNetwork.find('segments')
+        for segment in segmentParent.findall('segment'):
+            segId = int(segment.find('id').text)
+            if segId==int(attrs[0]):
+                for lane in segment.findall('lane'):
+                    laneID = int(lane.find('id').text)
+                    if laneID==int(attrs[1]):
+                        segment.remove(lane)
 
     def deleteSegmentComponents(self, features):                            #for busstop, crossing, laneedge
         ids = {}
@@ -1330,18 +1382,12 @@ class ActionHandler():
                             crossing_id = int(crossing.find("id").text)
                             if crossing_id in ids[segmentId]:
                                 obstacles.remove(crossing)
-                elif self.active_layer_id == TYPE.BUSSTOP:
-                    pt_stops = roadNetwork.find("pt_stops")
-                    if pt_stops is not None:
-                        busstops = pt_stops.findall("bus_stop")
-                        for busstop in busstops:
-                            busstop_id = int(busstop.find("id").text)
-                            if busstop_id in ids[segmentId]:
-                                pt_stops.remove(busstop)
+
 
 
     def deleteSegment(self, features):
         ids = {}
+        msgBox = QtGui.QMessageBox()
         # delete from shapefile
         for feature in features:
             self.active_layer.dataProvider().deleteFeatures([feature.id()])
@@ -1353,7 +1399,10 @@ class ActionHandler():
             delete_feature_ids = []
             for feature in layer.getFeatures():
                 attrs = feature.attributes()
-                if attrs[0] in ids:
+                if attrs[1] in ids:
+                    msgBox.setText("Please delete %s first", layer)
+                    msgBox.exec_()
+                    return
                     delete_feature_ids.append(feature.id())
             if len(delete_feature_ids) > 0:
                 layer.dataProvider().deleteFeatures(delete_feature_ids)

@@ -236,7 +236,7 @@ class SimGDC:
         # initialize handler
         handler = ActionHandler(sh_dir, self.canvas)
 
-        if typeId == TYPE.MULNODE:
+        if typeId == TYPE.NODE:
             self.featuredlg = MultiNodeDialog()
         elif typeId == TYPE.LINK:
             self.manageLinks()
@@ -300,7 +300,7 @@ class SimGDC:
             self.featuredlg.exec_()
 
         if self.featuredlg is not None and self.featuredlg.isModified is True:
-            if typeId == TYPE.MULNODE:
+            if typeId == TYPE.NODE:
                 nodeData = self.featuredlg.info
                 handler.addMultiNode(point, nodeData)
                 handler.save()
@@ -366,7 +366,7 @@ class SimGDC:
             self.featuredlg = None
 
         handler = ActionHandler(sh_dir, self.canvas)
-        if typeId == TYPE.MULNODE:
+        if typeId == TYPE.NODE:
             eleData = handler.getMultiNode(selected_features[0])
             if eleData is None:
                 QMessageBox.critical(self.iface.mainWindow(),"SimGDC Error", "No data for that feature.")
@@ -419,7 +419,7 @@ class SimGDC:
             self.featuredlg.exec_()
 
         if self.featuredlg is not None and self.featuredlg.isModified is True:
-            if typeId == TYPE.MULNODE:
+            if typeId == TYPE.NODE:
                 newData = self.featuredlg.info
                 handler.updateMultiNode(selected_features[0], newData)
                 handler.save()

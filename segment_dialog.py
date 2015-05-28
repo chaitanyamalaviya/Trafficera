@@ -60,11 +60,15 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
         segList = []
         laneList = []
         self.listLinks = links
-        self.linkidcomboBox.clear()
-        for linkId in self.listLinks.iterkeys():
-            sortedList.append(int(linkId))
+        # self.linkidcomboBox.clear()
+        # for linkId in self.listLinks.iterkeys():
+        #     sortedList.append(int(linkId))
+        sortedList = []
+        for link in root.iter('link'):
+            sortedList.append(int(link.find('id').text))
+
         for id in sorted(sortedList):
-            self.linkIdComboBox.addItem(str(id))
+            self.linkidcomboBox.addItem(str(id))
 
         self.fromSectioncomboBox.clear()
         self.toSectioncomboBox.clear()
@@ -87,7 +91,6 @@ class SegmentDialog(QtGui.QDialog, Ui_Segment):
     def setInfo(self, info):
         self.info = info
         global original_id
-
         self.laneConnectorTable.setRowCount(0)
         self.laneConnectorTable.setColumnCount(5)
         TableHeader = ['ID','fromSegment','toSegment','fromLane','toLane']
