@@ -44,6 +44,7 @@ class ActionHandler():
 
     def addMultiNode(self, point, nodeData):
         '''ADD FEATURE TO LAYER'''
+        msgBox = QtGui.QMessageBox()
         feat = QgsFeature()
         feat.initAttributes(1)
         feat.setAttribute(0, nodeData["id"])
@@ -67,6 +68,7 @@ class ActionHandler():
 
         #if nodeData["turningGroup"]:
         for tG in nodeData["turningGroup"]:
+
             turningGroup = ElementTree.SubElement(turningGroupParent, 'turning_group')
             ElementTree.SubElement(turningGroup, 'id').text = str(tG[0])
             ElementTree.SubElement(turningGroup, 'from_link').text = str(tG[1])
@@ -77,6 +79,9 @@ class ActionHandler():
             ElementTree.SubElement(turningGroup, 'tags').text = str(tG[6])
             if nodeData["turningPath"]:
                 turningPathParent = ElementTree.SubElement(turningGroup, 'turning_paths')
+                # msgBox.setText("we are here value.")
+                # msgBox.exec_()
+                # return
                 for tP in nodeData["turningPath"]:
                     coordinates = []
                     if tP[0] == tG[0]:
@@ -155,10 +160,12 @@ class ActionHandler():
         selectedNode.find("node_type").text = str(nodeData["nodeType"])
 
         #addTrafficLightID
-        selectedNode.find("traffic_light_id").text = str(nodeData["trafficLightID"])
+        if nodeData["trafficLightID"]:
+            selectedNode.find("traffic_light_id").text = str(nodeData["trafficLightID"])
 
         #add Tags
-        selectedNode.find("tags").text = str(nodeData["tags"])
+        if nodeData["tags"]:
+            selectedNode.find("tags").text = str(nodeData["tags"])
 
         #addTurningGroup
         turningGroupParent = selectedNode.find("turning_groups")
@@ -182,28 +189,91 @@ class ActionHandler():
         #                 ElementTree.SubElement(turningPath, 'fromLane').text = str(tP[2])
         #                 ElementTree.SubElement(turningPath, 'toLane').text = str(tP[3])
 
+        #
+        # i=0
+        # for tG in turningGroups:
+        #     j=0
+        #     tG.find("id").text = str(nodeData["turningGroup"][i][0])
+        #     tG.find("from_link").text = str(nodeData["turningGroup"][i][1])
+        #     tG.find("to_link").text = str(nodeData["turningGroup"][i][2])
+        #     tG.find("phase").text = str(nodeData["turningGroup"][i][3])
+        #     tG.find('rules').text = str(nodeData["turningGroup"][i][4])
+        #     tG.find('visibility').text = str(nodeData["turningGroup"][i][5])
+        #     tG.find('tags').text = str(nodeData["turningGroup"][i][6])
+        #
+        #     for tP in turningPaths:
+        #         if str(nodeData["turningGroup"][i][0]) == str(nodeData["turningPath"][j][0]):
+        #             tP.find("group_id").text = str(nodeData["turningPath"][j][0])
+        #             tP.find("id").text = str(nodeData["turningPath"][j][1])
+        #             tP.find("from_lane").text = str(nodeData["turningPath"][j][2])
+        #             tP.find("to_lane").text = str(nodeData["turningPath"][j][3])
+        #             tP.find("max_speed").text = str(nodeData["turningPath"][j][4])
+        #             tP.find("tags").text = str(nodeData["turningPath"][j][5])
+        #         j+=1
+        #     i+=1
 
-        i=0
+        existingIDs = []
         for tG in turningGroups:
-            j=0
-            tG.find("id").text = str(nodeData["turningGroup"][i][0])
-            tG.find("from_link").text = str(nodeData["turningGroup"][i][1])
-            tG.find("to_link").text = str(nodeData["turningGroup"][i][2])
-            tG.find("phase").text = str(nodeData["turningGroup"][i][3])
-            tG.find('rules').text = str(nodeData["turningGroup"][i][4])
-            tG.find('visibility').text = str(nodeData["turningGroup"][i][5])
-            tG.find('tags').text = str(nodeData["turningGroup"][i][6])
+            existingIDs.append(tG.find("id").text)
 
-            for tP in turningPaths:
-                if str(nodeData["turningGroup"][i][0]) == str(nodeData["turningPath"][j][0]):
-                    tP.find("group_id").text = str(nodeData["turningPath"][j][0])
-                    tP.find("id").text = str(nodeData["turningPath"][j][1])
-                    tP.find("from_lane").text = str(nodeData["turningPath"][j][2])
-                    tP.find("to_lane").text = str(nodeData["turningPath"][j][3])
-                    tP.find("max_speed").text = str(nodeData["turningPath"][j][4])
-                    tP.find("tags").text = str(nodeData["turningPath"][j][5])
-                j+=1
-            i+=1
+
+        for tG in nodeData["turningGroup"]:
+
+            if str(tG[0]) not in existingIDs:
+
+                turningGroup = ElementTree.SubElement(turningGroupParent, 'turning_group')
+                ElementTree.SubElement(turningGroup, 'id').text = str(tG[0])
+                ElementTree.SubElement(turningGroup, 'from_link').text = str(tG[1])
+                ElementTree.SubElement(turningGroup, 'to_link').text = str(tG[2])
+                ElementTree.SubElement(turningGroup, 'phase').text = str(tG[3])
+                ElementTree.SubElement(turningGroup, 'rules').text = str(tG[4])
+                ElementTree.SubElement(turningGroup, 'visibility').text = str(tG[5])
+                ElementTree.SubElement(turningGroup, 'tags').text = str(tG[6])
+                if nodeData["turningPath"]:
+                    turningPathParent = ElementTree.SubElement(turningGroup, 'turning_paths')
+                    # msgBox.setText("we are here value.")
+                    # msgBox.exec_()
+                    # return
+                    for tP in nodeData["turningPath"]:
+                        coordinates = []
+                        if tP[0] == tG[0]:
+                            turningPath = ElementTree.SubElement(turningPathParent, 'turning_path')
+                            ElementTree.SubElement(turningPath, 'group_id').text = str(tP[0])
+                            ElementTree.SubElement(turningPath, 'id').text = str(tP[1])
+                            ElementTree.SubElement(turningPath, 'from_lane').text = str(tP[2])
+                            ElementTree.SubElement(turningPath, 'to_lane').text = str(tP[3])
+                            ElementTree.SubElement(turningPath, 'max_speed').text = str(tP[4])
+                            ElementTree.SubElement(turningPath, 'tags').text = str(tP[5])
+                            polyline = ElementTree.SubElement(turningPath, 'polyline')
+                            points = ElementTree.SubElement(polyline, 'points')
+
+                            for lane in roadNetwork.iter('lane'):
+                                 if lane.find('id').text == str(tP[2]):
+                                    lane1 = lane
+                                    for point in lane1.iter('point'):
+                                        if int(point.find('seq_id').text) == 1:
+                                            pointtp = ElementTree.SubElement(points,'point')
+                                            ElementTree.SubElement(pointtp, 'seq_id').text = str(0)
+                                            ElementTree.SubElement(pointtp, 'x').text = point.find('x').text
+                                            ElementTree.SubElement(pointtp, 'y').text = point.find('y').text
+                                            ElementTree.SubElement(pointtp, 'z').text = str(0)
+                                            coordinates.extend([QgsPoint(float(point.find('x').text),float(point.find('y').text))])
+                                 if lane.find('id').text == str(tP[3]):
+                                    lane2 = lane
+                                    for point in lane2.iter('point'):
+                                        if int(point.find('seq_id').text)==0:
+                                            pointtp = ElementTree.SubElement(points,'point')
+                                            ElementTree.SubElement(pointtp, 'seq_id').text = str(1)
+                                            ElementTree.SubElement(pointtp, 'x').text = point.find('x').text
+                                            ElementTree.SubElement(pointtp, 'y').text = point.find('y').text
+                                            ElementTree.SubElement(pointtp, 'z').text = str(0)
+                                            coordinates.extend([QgsPoint(float(point.find('x').text),float(point.find('y').text))])
+                            feat2 = QgsFeature()
+                            feat2.initAttributes(2)
+                            feat2.setAttribute(0, tP[1])
+                            feat2.setAttribute(1, tP[0])
+                            feat2.setGeometry(QgsGeometry.fromPolyline(coordinates))
+                            self.layers[TYPE.TURNINGPATH].dataProvider().addFeatures([feat2])
 
         #update aimsunId
         # selectedNode.find("originalDB_ID").text = "\"aimsun-id\":\"%s\""%str(nodeData["aimsunId"])
@@ -248,7 +318,7 @@ class ActionHandler():
                 # return
                 for tG in turningGroup:
 
-                    if tG.find("tags") is not None:
+                    if tG.find("tags"):
                         tags = tG.find("tags").text
                     else:
                         tags = ""
@@ -257,7 +327,7 @@ class ActionHandler():
                     # if turningPaths:
                     for tP in selectedNode.iter('turning_path'):
                         if tP.find("group_id").text == tG.find("id").text:
-                            if tP.find("tags") is not None:
+                            if tP.find("tags"):
                                 tags1 = tP.find("tags").text
                             else:
                                 tags1 = ""
