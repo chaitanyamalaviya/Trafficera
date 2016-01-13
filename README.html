@@ -1,32 +1,603 @@
-<html>
-<body style='background-color:##D7ECF8;'>
-<h3>Plugin Builder Results</h3>
-<div id='help' style='font-size:.9em;'>
-Your plugin <b>iSimGis</b> was created in:<br>
-&nbsp;&nbsp;<b>C:\Users\user\.qgis2\python\plugins\iSimGis</b>
-<p>
-Your QGIS plugin directory is located at:<br>
-&nbsp;&nbsp;<b>C:/Users/user/.qgis2/python/plugins</b>
-<p>
-<b>What's Next</b>
-<ol>
-    <li>Copy the entire directory containing your new plugin to the QGIS plugin directory
-    <li>Compile the ui file using pyuic4
-    <li>Compile the resources file using pyrcc4
-    <li>Test the plugin by enabling it in the QGIS plugin manager
-    <li>Customize it by editing the implementation file <b>isimgis.py</b>
-    <li>Create your own custom icon, replacing the default <b>icon.png</b>
-    <li>Modify your user interface by opening <b>isimgis.ui</b> in Qt Designer (don't forget to compile it with pyuic4 after changing it)
-    <li>You can use the <b>Makefile</b> to compile your Ui and resource files when you make changes. This requires GNU make (gmake)
-</ul>
-</div>
-<div style='font-size:.9em;'>
-<p>
-For more information, see the PyQGIS Developer Cookbook at:
-<a href="http://www.qgis.org/pyqgis-cookbook/index.html">http://www.qgis.org/pyqgis-cookbook/index.html</a>.
-</p>
-</div>
-<img src="http://geoapt.com/geoapt_logo_p.png" alt='GeoApt LLC' title='GeoApt LLC' align='absmiddle'>
-&copy;2011-2014 GeoApt LLC - geoapt.com
-</body>
-</html>
+ 
+ 
+ 
+ 
+ 
+ 
+￼
+ 
+ 
+ 
+ 
+ 
+ 
+Report On
+Industrial Attachment 
+With
+Singapore-MIT Alliance For Research And Technology(SMART)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Prepared By – Chaitanya Malaviya
+U1221016E,
+School of Computer Engineering
+ 
+ 
+ 
+ 
+ 
+Table Of Contents
+ 
+ 
+ 
+ 
+Abstract                                                                                                                                3
+Acknowledgement                                                                                                               4
+                                                                                                                                                   
+Chapter One                                                                                                                            
+Introduction                                                                                                                      5
+                                                                                                                                               
+Chapter Two
+    Background                                                                                                              6
+         2.1 Useful Terms                                                                                                            6
+         2.2 Elements of the Road Network                                                                                 7
+         2.3 Previous Work and Shortcomings                                                                10
+ 
+Chapter Three4
+SimGDC Implementation                                                                                                                 
+         3.2 SimGDC Working Overview                                                                          11
+3.3 Functionalities of SimGDC                                                                                    13
+         3.4 Future Work and Improvements                                                                   22
+            
+                                                                                                                                                   
+Summary and Conclusion                                                                                                  23
+ 
+References                                                                                                                 24                                                                                                                                
+ 
+Appendix A                                                                                                                25
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Abstract
+ 
+ 
+ 
+This report describes my working experience during the 20 week industrial attachment with Singapore-MIT Alliance for Research and Technology. The SMART center is categorized into 4 interdisciplinary research groups and I was working under the Future Urban Mobility group and in particular, the Simmobility project. During the industrial attachment, I was tasked with the responsibility of developing a traffic network editor as a plugin in Quantum GIS. 
+ 
+Development of this editor proved to be a slightly challenging task which involved understanding the related work previously done by a student, gathering the requirement specifications over a period of time, implementation of required features and finally testing and documentation. 
+ 
+The project was broadly completed in 4 phases which overlapped with each other. 
+Firstly, a literature review was conducted on the Simmobiity project and the softwares and language being used to build a plugin in Quantum GIS. After this, a requirements gathering phase was conducted which required me to list the shortcomings of the existing plugin and the required consistency checks needed to be performed on a traffic network.  Implementation of the plugin followed after this with constant testing with a smaller sample network. Finally, testing and documentation were conducted from a user and developer perspective.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Acknowledgement
+ 
+ 
+I would like to thank my supervisors, Kakali Basak and Carlos Miguel Lima Azevedo for making this experience a fruitful learning experience for me. Their guidance, insights and comments have been very valuable. I would also like to thank my university, Nanyang Technological University, Singapore for giving me the opportunity to do an industrial attachment at Singapore-MIT Alliance for Research and Technology and the SMART center for their constant support and guidance. 
+ 
+ 
+This attachment has been a great learning experience and beneficial to me giving me the opportunity learn skills and knowledge that would not be taught in campus but can only be learnt by experience. Besides being able to improve my technical skills, I have also had the chance to improve my intangible skills like  time management, presentation skills, and planning task schedules.
+ 
+I would also like to thank the entire staff and employees of Future Urban Mobility group at Singapore-MIT Alliance for Research and Technology for the continous support and help in administrative formalities and project-related guidance. 
+I am thankful to Tong Ping Ping for helping me throughout the project by clearing my doubts and queries and also providing suggestions for the design of the plugin. 
+ 
+ 
+Besides that, I think this experience was also a great way for me to meet experienced professionals, professors and other students and develop my academic network.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+1. Introduction
+ 
+ 
+The purpose of this report is to highlight important learning experiences from the industrial attachment I completed at Singapore-MIT Alliance for Research and Technology, as a requirement of my B.Tech program at School of Computer Engineering, NTU. During the period of 20 weeks, I was given the opportunity to utilize and improve my technical skills and gain experience in a new research area. 
+ 
+The project that I had been assigned to was a component of the Simmobility research project, under the Future Urban Mobility research group. This project aims to integrate and link together several mobility-sensitive behavioral models with simulators to predict mobility demands on transportation networks, services and vehicular emissions.
+ 
+The task assigned to me was to build a traffic network editor in Quatum GIS to allow a user to easily edit and view traffic networks. This task involved the use of a few softwares and tools that I had never used before during the school curriculum. The prerequisite knowledge of programming languages like Python and Java from courses CE2002 and CE1003 was very useful in the successful completion of the project. 
+Some previous work had been completed on the same task but there were several improvements and additions I was responsible for making in the new plugin. The shortcomings in the previous editor will be highlighted in following section.
+The Simmobility project follows a specific traffic network format that is standard for the simulation on three levels. During my internship, this network format was modified into a new version 2.0, and I was tasked with adding support for the new format in the plugin.
+The following report covers the main phases in which the project was completed and some further improvements that are recommended to be made to the network editor.
+It concludes with a succinct conclusion, some references for QGIS plugin tutorials and an appendix.
+ 
+ 
+2. Background
+ 
+2.1 Useful Terms 
+ 
+§  Geographic Information Software(GIS) 
+A system designed to capture, analyze, edit and present all types of geospatial data. Examples of GIS systems are Quantum GIS and ArcGIS. QuantumGIS is an open source GIS system that allows open source contribution in the form of plugins specifically designed by users to perform some functionalities. During my project, I was working to build a QGIS plugin that lets a user to view and edit traffic networks in a specific Simmobility format( described later). GIS data is created, stored and shared in several formats.
+ 
+§  GIS Data Formats
+Raster - Raster files generally are used to store image information, such as scanned paper maps or aerial photographs. They are also used for data captured by satellite and other airborne imaging systems. Examples – ADRG, RPF.
+Vector – In vector data format, all geographical features are associated with a geometrical shapes like point, line/polyline and polygon. Each of these geometries is linked to its corresponding attributes in the vector format. Examples of vector data formats are SpatiaLite, GeoJSON and shapefiles. In SimGDC, the shapefile format is used for viewing and editing shapefiles.
+ 
+§  Shapefile 
+ESRI Shapefile is one of the most popular geospatial vector data formats. It is supported in almost all GIS softwares. QGIS uses Shapefile as the standard vector file format. Shapefile has advantages over other data sources in term of drawing speed and editing ability because it does not have the processing overhead of a topological data structure. Hence, Shapefile is used as the data format for our converter. 
+A Shapefile actually consists of several files because it does not only store nontopological geometry but also stores the attribute information. The following three files are required to make a Shapefile valid: 
+	•	“.shp” file: containing the geometries. 
+	•	“.dbf” file: containing the attributes associated with objects in “.shp” file. The attribute record size is limited to 4000 characters/object. 
+	•	“.shx” file: it is a geometry index file that allows seeking forwards and backwards quickly. 
+Shapefile supports different geometry types (such as polygon, point, polyline, etc.). However, each shapefile can contain only one geometry type, so the shapefile must be defined as storing polygons, polylines or points.
+ 
+§  PostGIS 
+PostGIS is an open source software program that adds support for geographic objects to the PostgreSQL object-relational database. The advantages of PostGIS are the spatial indexing, filtering and query capabilities it provides.
+The Simmobility database is stored in the PostGIS format. To load the traffic network to SimGDC, this database must be exported as an XML file and later imported into the editor. 
+ 
+2.2 Elements of the Road Network
+ 
+            ￼
+Figure 1 : Road Network Design
+ 
+·      Node<Point> – Nodes are points connecting links containing attributes id, node type, traffic light id and tags. The node type could have possible values as default(0), source/sink(1), intersection(2) and merging(3).  Tags are additional attributes which may store additional information about the feature type, such as the AIMSUN ID for the feature.  
+·      Turning Group – A turning group is contained within a node and essentially represents an intersection on the road network. It has attributes id, from_link, to_link, phases, rules, visibility distance and tags.
+The from_link and to_link are the connecting link IDs for a turning group. The phase information is a string with characters A,B,C or a combination of these. The phase signifies the turns allowed at an intersection. The visibility distance is the distance(in metres) at which an intersection is visible from a link.
+ 
+·      Turning Path<Polyline> – Each turning group contains a set of turning paths that connnect lanes at an intersection. The turning path has attributes group_id, id, from_lane, to_lane and max_speed. The lane IDs connected by the turning path are stored in the from_lane and to_lane while the max_speed is the maximum speed allowed at a turning path(in km/hr).
+ 
+￼
+                Figure 2 : A turning conflict pictorially represented with the conflict point
+ 
+·      Turning Conflict – A turning conflict is generated for a turning group based on the intersecting turning paths in the turning group and the phase information of the turning group. It has the attributes id, turning_path1, turning_path2, cd1,cd2, tags, priority, and gap_time(in sec). The IDs of the crossing turning paths are stored in turning_path1 and turning_path2 with the conflict distances cd1 and cd2. The priority attribute stores the priority set for the turning path that is going to be given way in case of a conflict of the vehicle.
+  
+·      Link<Polyline> – A link is a collection of road segments connected by lane connectors and is used to represent physical road links. A link has attributes id, road_type, category, from_node, to_node, road_name and tags. The road type can have the values default(0), expressway(1), urban(2), ramp(3), roundabouts(4) and access(5). The from_node and to_node store the node IDs that are connected by the link. 
+ 
+·      Segment<Polyline> – A road segment is a road polyline contained within links with the attributes id, sequence_no, capacity, max_speed and tags. The sequence_no is the sequence of the segment in the link (starting from 0) and the capacity is the number of vehicles that can be accommodated on the road segment.   
+·      Lane<Polyline> – A lane is contained within a road segment and has attributes id, width(meters), vehicle_mode, bus_lane, can_stop, can_park, high_occ_veh and has_road_shoulder.  The vehicle_mode stores a decimal integer which is converted from a 7-bit binary value. These 7 bits 0000000 store the boolean values for pedestrian, bicycle, car, van, truck, bus, taxi in this order. 
+The bus_lane attribute can contain the values in the range(0,2) that represent  0 : both bus and cars can use the lane whole day, 1: normal bus lane(Mon-Fri, 7.30-9.30 and 17.00-20.00) and 2 : full day bus lane(Mon-Sat, 7.30-20.00).
+The attributes can_stop, can_park, high_occ_veh, and has_road_shoulder contain boolean values depending on if a vehicle can stop, can park, allows high occupancy vehicles, and has road shoulder respectively.
+ 
+·      Lane Connector – Connectors are features that connect lanes inside the same link and have attributes id, from_segment, to_segment, from_lane and to_lane.   
+·      Bus Stop<Point> – A bus stop is represented as a point and has attributes id, segment_id, code, name, type, length(meters), offset and tags. The segment_id is the segment ID on which with the bus stop is located and the code is fixed for a bus stop as a string. The offset is the percentage of the segment covered when a perpendular is dropped from the bus stop to the segment polyline when calculated from the from_node.  
+·      Train Stop<Point> – A train stop is also represented as a point and has attributes id, segments, platform_name, station_name, type and tags. Here, the segments are a list of segments on which the train stop is located.
+ 
+Geometrical Attributes
+·      Point – All the features represented as points have an x, y and z coordinate.
+·      Polyline – The polyline contains a unique polyline ID, and a list of points with an extra attribute seq_id which represents the sequence of the point in the polyline (starting from 0).
+ 
+ 
+2.3 Previous Work and Shortcomings
+ 
+The previous plugin had a few shortcomings that have been improved in this plugin such as lack of consistency checks on the data a user enters, dependency on a specific format of shapefiles directory required for viewing the traffic network.
+ 
+These consistency checks can be categorized into three kinds of checks:
+1)    Data Validity Checks: Checks that verify if a user enters the correct format of data for a field. For example, the maxSpeed must always be an integer, the id must be an integer while the roadName should be a string.
+2)    Data Existence Checks: Users may enter feature ID information for IDs that do not exist. For example, while creating a link, a user might enter the from_node and to_node IDs as node IDs that do not yet exist. This corrupts the network.
+3)    Data Range Checks: All the data must be entered in a specific range of values and the user must be restricted to enter values beyond this range. For example, the maxSpeed cannot go beyond 300.
+ 
+3. SimGDC Implementation
+ 
+3.2 Working Overview
+ 
+To understand how SimGDC is implemented, we first need to compare the structure of two data formats XML and Shapefile to figure out the good approach to convert data between them. The main difference between these data formats is data dependency. All objects in Shapefile are independent of each other; one object in Shapefile contains geometric location and associated attribute information. In SimMobility geospatial xml file, the hierarchical structure is used. For instance, one link may contain many segments; each segment contains lanes. Furthermore, not all components in geospatial data have geometric information.
+ 
+The above diagram demonstrates our approach to convert the SimMobility geospatial data xml file to Shapefile. A single SimMobility geospatial data xml file is actually converted into nine Shapefiles and one xml file (called Data XML File). Each Shapefile is generated by extracting the location information from the input geospatial data xml file. They are classified by the type of components. The Data XML File is the same as the origin geospatial data xml file and all changes while editing are recorded in this data.xml files. Nine Shapefiles are linked to the Data XML File by ids. For example, each geometric object in the Shapefile for lane has the attribute in the format (link-id, segment-id, lane-number). This attribute helps SimGDC to associate the geometric object with the Data XML File when converting Shapefiles back to SimMobility geospatial data xml file.
+ 
+￼
+ 
+ 
+ 
+ 
+ 
+Figure 3: SimGDC Architecture Diagram
+ 
+SimGDC is implemented as a plugin for QGis. The main controller which handles the connection between QGis menubar, toolbar, canvas and SimGDC is simgdc.py. This main controller calls view components and other controllers to respond to users interaction.
+VIEW: The view of SimGDC are dialogs to get the user input or show the attributes of components. 
+CONTROLLER: Besides the main controller, there are three sub controllers to handle user’s requests.
+	•	XMLToShapefile: This controls all necessary actions to convert XML to Shapefile.
+	•	ShapefileToXML: this controls all necessary actions to convert Shapefile to XML.
+	•	ActionHandler: This handles all necessary actions to create, edit, delete the geospatial components.
+FILE MANIPULATION: SimGDC needs some components to read, write and modify XML file and Shapefiles. To handle XML file, we use the standard library provided by Python. It is XMLElementTree. For Shapefile, the ShapefileIO (containing ShapefileReader and ShapefileWriter) is implemented based on the QGis core module, QgsVectorFileWriter & QgsVectorLayer. 
+ 
+ 
+ 
+3.3 Functionalities of SimGDC
+ 
+The plugin is activated upon placing the SimGDC folder into .qgis/python/plugins folder of your QGIS directory.
+After the plugin is activated, the icons for SimGDC are shown on the toolbar and the SimGDC functionalities are listed in the menu bar.
+ 
+￼
+Figure 4a. SimGDC on the toolbar
+ 
+￼
+Figure 4b. SimGDC functionalities on the Plugin menu bar
+ 
+ 
+In the next section, we talk in detail about these functionalities.
+ 
+ 
+ 
+3.3.1 SimMobility Geospatial Data Converter 
+ 
+Icon: ￼
+Description: This functionality allows users to convert the SimMobility geospatial data from XML to shapefile format and from the shapefile format back to XML.
+One single SimMobility Geospatial Data XML file is converted into multiple shapefiles. Each shapefile contains a particular type of geospatial data. They are multinodes (or intersections), links, segments, lanes, lane edges, crossing, bus stops, turning paths, train stops. All these shapefiles are located in a single folder. This folder can be converted back into a single XML file.
+How to use: Clicks the icon, converter dialog is opened. There are two tabs in the dialog
+ 
+XML to Shapefiles
+ 
+￼
+Figure 5a: XML to Shapefile Converter Dialog  
+iSim XML File: SimMobility Geospatial XML file.
+Destination Dir: An empty folder is to contain all shapefiles after converting. The folder name is used as the prefix for shapefiles and vector layers in QGis. It is important to make the folder empty before selecting it as the destination. If the folder is not empty, some files may be overwritten unpredictably.
+Coordinate Conversion formula: This is useful when you want to change Coordinate Reference System. For example, the coordinate in XML is centimeter, you can change it to meter by the formula x’ = x/100; y’ = y/100.
+After converting, all generated shapefiles are automatically loaded into QGis.
+ 
+Shapefiles to XML
+ 
+￼
+Figure 5b: Shapefile to XML Converter Dialog
+ 
+Similar to “XML to Shapefiles”. 
+ 
+ 
+ 
+3.3.2 Open SimGDC shapefile directory 
+Icon: ￼
+Description:  There are many shapefiles generated from a single XML file. Hence, this functionality is a fast way to load all of these shapefiles into QGis.
+How to use: Clicks the icon, select the folder containing the shapefiles generated by SimGDC.
+All shapefiles in the folder are loaded into QGis.
+ 
+ 
+3.3.4 Manage links 
+ 
+Icon: ￼
+Description:  SimMobility Geospatial Data contains links, that are represented as polylines. Upon converting from XML to Shapefile, a link layer file will be created. SimGDC provides this functionality for users to manage the links.
+How to use: Clicks the icon, the link manager dialog is opened.
+Select “add new link” from LinkId option to add a new link.
+￼
+Figure 6: Link Manager Dialog
+ 
+You will see that new link ID is automatically generated by SimGDC by adding 1 to the maximum link ID existing in the network. Select a particular LinkId to edit the existing link’s information. Fields marked with * are mandatory fields.
+ 
+ 
+3.3.5 Add features to current active layer 
+Icon: ￼
+Description:  
+Components in SimMobility Geospatial Data XML does not contain only shape information, but also the attributes. Hence, if users use the normal QGis function to add a new feature into the shapefiles generated by SimGDC converter, they only add the shape but not the associated attributes. This is the reason why SimGDC provides this functionality. It allows users to add a new feature to the current active layer with the associated attributes. 
+How to use: 
+Step 1: Select the layer to which you want to add a feature.
+￼
+ 
+The above screenshot shows the i_node layer is selected to allow users to add a new node.
+Step 2: click the icon ￼, the mouse cursor becomes + when you move it on the canvas. 
+ 
+Step 3: click a point on the canvas to place the feature. The attribute dialog is shown for you to enter the data. You should refer to the original XML file to see how the data in XML is shown in the dialog.  
+￼
+Figure 7a: Node Dialog
+￼
+Figure 7b: Add Turning groups and Turning Paths to a Node
+ 
+ 
+To add a turning group, enter the required fields, then click Add new. To add a turning path, select the turning group from the turning group table first. Then, fill the turning path attribute fields and click Add new. Once you add the node, the node point is created at the clicked point and the turning path polylines are created between the fromLane and toLane.     
+To view the turning paths under a turning group, select the turning group in the turning group table and the corresponding turning paths will be displayed. 
+￼
+Figure 7c: The turning path polylines are generated between from_lane and to_lane (in green)
+ 
+ 
+Similarly, when adding a segment, select the segment layer and click Add new feature. The segment dialog shown below will be displayed.
+ 
+￼
+Figure 8a: Segment Dialog
+ 
+ 
+To add a segment, select the link ID first and then enter the segment attributes. Once you have done that and generated lanes for the segment, you can switch tabs to add a connector for which the current segment is a from_segment. The connector dialog is shown below.
+ 
+￼
+Figure 8b : Connectors tab under Segments Dialog
+ 
+            Step 4: After finishing step 3, the feature is added to the layer. You may need to edit the shape (especially, for segment) by using the normal QGis function.
+ 
+To add lane, lane edge, train stop, bus stop:
+As a lane, lane edge, crossing or bus stop must belong to a segment, to add those components you must select a segment first (few segments for train stop) and then follow the similar steps as above.
+Step 0: select the segment layer and select a segment you want to add a lane, lane edge, crossing or bus stop to that segment.
+ 
+Step 1, 2, 3, 4: similar to adding a node, segment.
+ 
+3.3.6 Edit attributes of the selected feature
+Icon: ￼
+Description:  Users can use the normal QGis function to edit the shape of features. However, they can only edit the associated attributes to the features by using this functionality.
+How to use: 
+Step 1: select the layer and the feature you want to edit.
+Step 2: click ￼icon, the attribute dialog is shown for you to edit.
+Note: You can not undo the edited attributes after editing.
+ 
+3.3.7 Delete selected features from current active layer
+Icon: ￼
+Description:  Users can not use the normal QGis function to add or remove the feature from shapefile because the geospatial data do not contain only shape information, but also the associated attributes. Hence, this functionality allows users to delete the geospatial data feature properly. It will delete both shape information and associated attributes. 
+How to use: 
+Step 1: select the layer and the feature you want to delete
+Step 2: click ￼icon to delete the feature.
+Note: 
++ You need to save all of your changes on the layer and deactivate the editing mode before deleting the feature (all editing icons are disabled)
+￼
+The screenshot of toolbar when the editing mode is deactivated.
++ You can not undo after deleting the feature.
+ 
+ 
+ 
+ 
+3.3.8 Generate lanes for the selected segment.
+ 
+Icon: ￼
+Description:  A segment has lanes and lane edges. It is troublesome to add lane, lane edges to a new segment one by one. Hence, this functionality provides a fast way to generate the lanes and lane edges based on the number of lanes and width of lane. 
+How to use: 
+Step 1: select the segment layer and select the segment to add lanes and lane edges.
+Step 2: click ￼icon, the dialog is shown:
+￼                            ￼
+Enter the number of lanes you want to generate and then enter the width of each lane. The lanes are automatically generated with proper offsetting. The associated attributes for lanes are set as default, so you may need to edit them later.
+ 
+Note: If the segment has some lanes and lane edges before generating, they will be removed.
+ 
+ 
+ 
+￼
+Before generating lanes for the segment
+ 
+￼
+After generating 5 lanes for the segment
+ 
+        Figure 9: Generation of Lanes
+ 
+ 
+3.4 Future Work
+ 
+1)    Implementation of lane edge and crossings as layers.
+2)    Deletion of features from bottom to top of the hierarchy  - A user must delete underlying features like bus stops, train stops, lanes before deleting nodes, links.
+3)    Generation of turning conflicts in the node dialog.
+4)    Possibility to import and edit PostGIS database directly without affecting the shapefile and xml structure.
+ 
+4. Conclusion
+ 
+ 
+After the development of the network editor, the testing phase was a very important component of the project. A few of the functionalities implemented needed to be altered after letting a user edit a toy network using the plugin. The user friendliness and effectiveness of any application can only be judged during the testing phase. 
+One of the important takeaways from this internship is task planning and making a schedule. It is important to keep considerable time for testing and documentation aside at the end of the project schedule.
+ 
+Regular documentation of code is very essential to avoid a lot of effort in commenting the code in the end. Maintaining a user documenatation is crucial for the proper usage of the application since the developer may not always be able to assist in the usage of the application. 
+ 
+I believe it is beneficial to do regular meetings with the team to update them about your progress and to seek further guidance from the supervisors. This lets you get more opinions about the application design and the features of the application and is also a good opportunity to clear your doubts.
+ 
+Besides that, I now understand that working in any organization as a new member is all about taking initiative to understand the project, seeking guidance and completing your tasks in the most effective and organized way. 
+Certainly, this attachment has been a great learning experience for me and I have many takeaways that will help me in my studies and career.
+ 
+ 
+ 
+ 
+ 
+References
+ 
+ 
+ 
+·       Read the QGis Developing Python Plugins http://www.qgis.org/en/docs/pyqgis_developer_cookbook/plugins.html  
+·       Read the tutorial to develop a simple QGis Plugin (important) http://www.qgisworkshop.org/html/workshop/plugins_tutorial.html  
+·       Python’s XML ElementTree Library - https://docs.python.org/2/library/xml.etree.elementtree.html  
+·       StackExchange Forum -  http://gis.stackexchange.com/questions/tagged/qgis  
+·       Useful QGIS tools:
+ 
+o   Topology Checker - Performs validation checks for chosen layers and displays the errors highlighted on the map (duplicacy)
+o   XyTools - Editing database directly, but the entire layer at once
+o   DBManager - Editing tables, viewing area of a map and corresponding entries
+o   PostGIS Query Builder - Run predefined PostGIS functions for the network
+  
+ 
+ 
+ 
+ 
+ 
+Appendix A : XML Hierarchy for Simmobility
+ 
+<geospatial>
+<road_network>
+<nodes>
+            <node>
+<id></id>
+<point>
+<x></x>
+<y></y>
+<z></z>
+</point>
+<node_type></node_type>
+<traffic_light_id></traffic_light_id>
+<tags>
+<tag></tag>
+</tags>
+<turning_groups>
+<turning_group>
+<id></id>
+<from_link></from_link>
+<to_link></to_link>
+<phases></phases>
+<rules></rules>
+<visibility></visibility>
+<tags>
+            <aimsun_id></aimsun_id>
+</tags>
+<turning_paths>
+<turning_path>
+<group_id></group_id>
+<id></id>
+<from_lane></from_lane>
+<to_lane></to_lane>
+<max_speed></max_speed>
+<polyline>
+<polyline_id></polyline_id>
+<points>
+<point>
+<seq_id></seq_id>                    <x></x>
+<y></y>
+<z></z>
+</point>
+<points>
+</polyline>
+<tags></tags>
+</turning_path>
+</turning_paths>
+                                                        <turning_conflicts>
+<turning_conflict>
+<id></id>
+<turning_path1></turning_path1>
+<turning_path2></turning_path2>
+<cd1></cd1>
+<cd2></cd2>
+<tags></tags>
+<priority></priority>
+<gap_time></gap_time>
+</turning_conflict>
+         </turning_conflicts>
+</turning_group>
+</turning_groups>
+            <turning_conflicts>
+<turning_conflict>
+<id></id>
+<turning_path1></turning_path1>
+<turning_path2></turning_path2>
+<cd1></cd1>
+<cd2></cd2>
+<tags></tags>
+<priority></priority>
+<gap_time></gap_time>
+</turning_conflict>
+</turning_conflicts>
+</node>
+</nodes>
+<links>
+<link>
+<id></id>
+<road_type></road_type>
+<category></category>
+<from_node></from_node>
+<to_node></to_node>
+<road_name></road_name>
+<tags></tags>
+<polylines>
+<polyline>
+<polyline_id></polyline_id>
+<points>
+<point>
+<seq_id></seq_id>
+<x></x>
+<y></y>
+<z></z>
+</point>
+<points>
+</polyline>
+</polylines>
+<segments>
+            <segment>
+                        <id></id>
+                        <sequence_no></sequence_no>
+                        <capacity></capacity>
+                        <max_speed></max_speed>
+<tags></tags>
+                        <polyline>
+<polyline_id></polyline_id>
+<points>
+                                                            <point>                        
+<seq_id></seq_id>
+<x></x>
+<y></y>
+<z></z>
+</point>
+<points>
+</polyline>
+<lanes>
+<lane>
+                        <id></id>
+                        <width></width>
+                        <vehicle_mode ></vehicle_mode >
+<bus_lane ></bus_lane >
+<can_stop ></can_stop >
+<can_park ></can_park >
+<high_occ_veh ></high_occ_veh >
+        <has_road_shoulder></has_road_shoulder>
+<tags></tags>
+<polyline>
+<id></id>
+<points>
+                                                                                    <point>
+<seq_id></seq_id>
+<x></x>
+<y></y>
+<z></z>
+</point>
+</points>
+</polyline>
+</lane>
+</lanes>
+</segment>
+</segments>
+<connectors>
+<connector>
+<id></id>
+                                                            <from_segment></from_segment        
+<to_segment></to_segment>
+                                                            <from_lane></from_lane>
+                                                            <to_lane></to_lane>
+</connector>
+</connectors>
+</link>
+</links>
+<pt_stops>
+<bus_stop>
+<id></id>
+<segment_id></segment_id>
+<code></code>
+<name></name>
+<type></type>
+<length></length>
+<offset></offset>
+<tags></tags>
+<point>
+<id></id>                      
+<x></x>
+<y></y>
+<z></z>
+</point>
+</bus_stop>
+<train_stop>
+            <id></id>
+            <segments>
+                        <segment_id></segment_id>
+            </segments>
+            <platform_name></platform_name>
+            <station_name></station_name>
+            <type></type>
+<tags></tags>
+<point>
+                        
+<x></x>
+<y></y>
+<z></z>
+</point>
+</train_stop>
+</pt_stops>
+</road_network>
+</geospatial>
